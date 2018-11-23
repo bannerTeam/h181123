@@ -1,0 +1,2 @@
+视频管理,vod/index
+插件文件菜单,/application/xxxx.html

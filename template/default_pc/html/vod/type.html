@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$obj.type_title} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.type_key}" />
+    <meta name="description" content="{$obj.type_des}" />
+    {include file="public/include"}
+</head>
+<body>
+{include file="public/head"}
+
+<!--频道循环分类影视-->
+<div class="fn-clear" id="channel-box">
+    <!-- 左侧影视 -->
+    <div class="qire-box">
+        {maccms:type parent="current" order="asc" by="sort"}
+        <div class="channel-item">
+            <div class="ui-title fn-clear"><span><a href="{:mac_url_type($vo)}">查看更多></a></span><h2>{$vo.type_name}</h2></div>
+            <div class="box_con">
+                <ul class="img-list">
+                    {maccms:vod num="8" type="'.$vo['type_id'].'" order="desc" by="time"}
+                    <li><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}"><img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}"/><h2>{$vo.vod_name}</h2><p>{$vo.vod_actor}</p><i>{$vo.vod_version}</i><em></em></a></li>
+                    {/maccms:vod}
+                </ul>
+            </div>
+        </div>
+        {/maccms:type}
+
+        {if condition="$obj.childids eq '' "}
+        <div class="channel-item">
+            <div class="ui-title fn-clear"><span><a href="{:mac_url_type($obj)}">查看更多></a></span><h2>{$obj.type_name}</h2></div>
+            <div class="box_con">
+                <ul class="img-list">
+                    {maccms:vod num="24" paging="yes" type="current" order="desc" by="time"}
+                    <li><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}"><img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}"/><h2>{$vo.vod_name}</h2><p>{$vo.vod_actor}</p><i>{$vo.vod_version}</i><em></em></a></li>
+                    {/maccms:vod}
+                </ul>
+            </div>
+        </div>
+        <!-- 分页 -->
+        <div class="ui-bar list-page fn-clear">
+            {include file="public/paging"}
+        </div>
+        {/if}
+
+    </div>
+    <!-- 右侧排行 -->
+    <div class="qire-l">
+        <div class="ui-ranking">
+            <h3>热播排行榜</h3>
+            <ul class="ranking-list">
+                {maccms:vod num="15" type="current" order="desc" by="hits_month"}
+                <li><span>{$vo.vod_hits_month}</span><i {if condition="$key lt 4"} class="stress" {/if}>{$key}</i><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">{$vo.vod_name}</a></li>
+                {/maccms:vod}
+            </ul>
+        </div>
+        <div class="ui-ranking">
+            <h3>好评排行榜</h3>
+            <ul class="ranking-list">
+                {maccms:vod num="15" type="current" order="desc" by="score"}
+                <li><span>{$vo.vod_score}</span><i {if condition="$key lt 4"}class="stress" {/if}>{$key}</i><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">{$vo.vod_name}</a></li>
+                {/maccms:vod}
+            </ul>
+        </div>
+        <div class="ui-ranking">
+            <h3>最新上映排行</h3>
+            <ul class="ranking-list">
+                {maccms:vod num="15" type="current" order="desc" by="time"}
+                <li><span>{$vo.vod_hits}</span><i {if condition="$key lt 4"}class="stress" {/if}>{$key}</i><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">{$vo.vod_name}</a></li>
+                {/maccms:vod}
+            </ul>
+        </div>
+    </div>
+</div>
+{include file="public/foot"}
+</body>
+</html>
