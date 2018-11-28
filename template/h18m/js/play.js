@@ -1,6 +1,5 @@
 function pageInit(options) {
 
-	
 	var settings = {
 		e: "#rlist",
 		loading: true,
@@ -51,7 +50,7 @@ function pageInit(options) {
 			str = "";
 
 		for(var i = 0; i < items.length; i++) {
-			str += `<li style="width: 49.5%;">
+			str += `<li>
 				<a href="/vod/detail/id/${items[i].vod_id}.html" >
 				<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
 					<div class="cnl-tag tag">
@@ -238,5 +237,55 @@ function pageInit(options) {
 	}
 
 	get_list();
+	
+	var browsevod = Number($.cookie('h18_browsevod'));
+	if((h18.userid) ==0 && browsevod > 0){
+		vod_disable();
+	}
+	else{
+		setTimeout(function() {
+			$.ajax({
+				type:"post",
+				url: "/vod/ajax_browse",
+				dataType: "json",
+				data: {
+					id: o.id
+				},
+				success: function(data) {				
+					if(data.code < 1) {
+						vod_disable(data.code);
+					}
+				}
+			});
+		}, 1000 * 30);
+	}
+	
+	
+	function vod_disable(status){
+		$("#video-container").html("");
+		//询问框
+		layer.open({
+			content: '需要升级VIP才能继续观看',
+			btn: ['升级', (h18.userid) ==0 ? '登录':'不要'],
+			yes: function(index) {
+				//升级
+				if(h18.userid > 0){
+					location.href = "/user/vip";
+				}else{
+					location.href = "/user/index";
+				}
+			},
+			no: function() {
+				if((h18.userid) == 0){
+					location.href = "/user/login";	
+				}else{
+					location.href = "/user/index";
+				}								
+			}
+		});
+	}
+	
+
+	
 
 }

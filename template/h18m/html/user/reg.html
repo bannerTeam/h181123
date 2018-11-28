@@ -5,51 +5,47 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>会员注册</title>
 		<meta name="keywords" content="{$maccms.site_keywords}" />
-		<meta name="description" content="{$maccms.site_description}" /> {include file="public/include" /}
-		<style>
-			body{   color: #000000;}
-		</style>
+		<meta name="description" content="{$maccms.site_description}" /> {include file="public/include_user" /}
+		
 	</head>
 
-	<body style="background: #FFFFFF;">
-		<div id="head">
-			<div class="fixtop">
-				<span id="home"><a href="/" rel="external"><i class="ico08"><img src="{$maccms.path_tpl}img/homepage.png" width="30px"></i></a></span>
-				<i class="ico21">会员注册</i>
-
+	<body>
+		<div class="signup">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<div class="hd"></div>
+			<div class="bd" style="margin-bottom:5rem;">
+				<h3>会员注册</h3>
+				<div class="form">
+					<div class="col weui-flex">
+						<i class="iconfont icon-xingmingyonghumingnicheng"></i>
+						<input class="weui-flex__item" id="user_name" placeholder="请输入用户名" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-mima1"></i>
+						<input class="weui-flex__item" id="user_pwd" placeholder="请输入密码" type="password" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-mima1"></i>
+						<input class="weui-flex__item" id="user_pwd2" placeholder="请再次输入密码" type="password" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-yanzhengma" style="line-height: 2rem;"></i>
+						<input class="weui-flex__item" id="verify" placeholder="请输入验证码" type="text" />
+						<img style="background: transparent;width: 8rem;" class="user_reg_but" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
+					</div>
+					<div class="submit">
+						<button id="btn_submit">
+							提交注册
+						</button>
+					</div>
+				</div>
 			</div>
-
+			<div class="ft">
+				<a href="/user/login">已有账号？立即登录</a>
+			</div>			
 		</div>
-		<section class="register" style="padding:40px 0 40px 0;">
-			<form id="RegForm" class="RegForm" action="" method="post" onsubmit="return CheckForm();" target="msgubotj">
-				<div class="form_up">
-					<div class="username"><span style="float:left;">用&nbsp;&nbsp;户&nbsp;&nbsp;名：</span>
-						<input type="text" id="user_name" name="user_name" autocomplete="off" placeholder="请输入您的用户名" class="input1">
-
-					</div>
-
-					<div class="username"><span style="float:left;">输入密码：</span><input type="password" name="user_pwd" id="user_pwd" placeholder="请输入您的密码" class="input1"></div>
-					<div class="username"><span style="float:left;">确认密码：</span>
-						<input name="user_pwd2" type="password" id="user_pwd2" placeholder="请再次输入您的密码" class="input1">
-					</div>
-
-					<div class="username"><span style="float:left;">验&nbsp;&nbsp;证&nbsp;&nbsp;码：</span>
-						<input autocomplete="off" type="text" id="verify" name="verify" placeholder="请输入验证码" class="input1">
-						<img style="background: transparent;width: 90px;" class="user_reg_but" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
-					</div>
-
-				</div>
-				<div class="botton">
-					<input name="reg" type="button" class="user_reg_but" id="btn_submit" value="立即注册">
-				</div>
-				<br>
-				<div class="botton">
-					<input type="button" class="user_reg_but" value="已有会员,马上登录" onclick="location.href='/user/login';">
-				</div>
-
-				<br><br>
-			</form>
-		</section>
+		
+		
 
 		<script type="text/javascript">
 			$(function() {
@@ -62,23 +58,23 @@
 				$('#btn_submit').click(function() {
 
 					if($('#user_name').val() == '') {
-						tips('请输入用户！');
+						tips('请输入用户名');
 						$("#user_name").focus();
 						return false;
 					}
 					if($('#user_pwd').val() == '') {
-						tips('请输入密码！');
+						tips('请输入密码');
 						$("#user_pwd").focus();
 						return false;
 					}
 					if($('#user_pwd').val() != $('#user_pwd2').val()) {
-						tips('两次密码不一致！');
+						tips('两次密码不一致');
 						$("#user_pwd2").focus();
 						return false;
 					}
 
 					if($('#verify').val() == '') {
-						tips('请输入验证码！');
+						tips('请输入验证码');
 						$("#verify").focus();
 						return false;
 					}
@@ -129,7 +125,6 @@
 			});
 		</script>
 
-		{include file="public/foot" /}
 	</body>
 
 </html>

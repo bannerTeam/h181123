@@ -17,7 +17,7 @@
 	var tpl_url ="{$maccms.path_tpl}";
 	var h18 = {
 		"path": "__ROOT__",
-		"userid": "{$user.user_id}",
+		"userid": Number("{$user.user_id}"),
 		login:function(jump){
 			if(Number(h18.userid) == 0){
 				if(jump){

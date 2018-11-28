@@ -1,0 +1,101 @@
+body{font-family:'Microsoft Yahei';line-height:1.5;font-size:16px;color:#fff;background-color:#f8f8f8;-webkit-user-select:none;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;outline:0}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}
+table{border-collapse:collapse;border-spacing:0}
+caption,th{text-align:left}
+fieldset,img{border:0}li{list-style:none}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+button,input,optgroup,option,select,textarea{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;outline:0}
+button{-webkit-appearance:none;border:0;background:none}
+a{-webkit-touch-callout:none;text-decoration:none}
+:focus{outline:0;-webkit-tap-highlight-color:transparent}
+em,i{font-style:normal}
+blockquote,body,button,dd,div,dl,dt,form,h1,h2,h3,h4,h5,h6,input,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}a:active,a:hover{outline:0}img{border:none}li{list-style:none}
+
+html{
+	font-size: 20px;
+}
+	
+@media only screen and (max-width: 420px),
+only screen and (max-device-width:420px) {
+	html{
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 375px),
+only screen and (max-device-width:375px) {
+	html{
+		font-size: 10px;
+	}
+}
+
+
+
+.ui-nowrap {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.weui-flex{display:-webkit-box;display:-webkit-flex;display:flex}
+.weui-flex__item{-webkit-box-flex:1;-webkit-flex:1;flex:1}
+
+body{ color: rgb(42,35,51);}
+.head_vod{}
+.navfix{ position: relative;}
+.navfix ul{height:4.5rem; line-height: 4.5rem; background: #2BAEB9; width: 100%; }
+.navfix ul li.active a{  color: #4D4E4C;}
+.navfix li{font-size:1.5rem;float:left;padding:0 1.2rem;height:100%;text-align:center;position:relative}
+.navfix li a{color:#FFF}
+.navfix{width:100%;display:-webkit-box;overflow-x:scroll;overflow-y:hidden;font-size:0;-webkit-overflow-scrolling:touch}
+.head_search{position: fixed; right: 0;top: 0; height:4.5rem; line-height: 4.5rem; background: #FFFFFF; width: 4rem; text-align: center;}
+.head_search i{ font-size: 2rem; color: #2BAEB9;}
+
+.chead{ height: 4.5rem; line-height: 4.5rem; position: relative; background: #2BAEB9;}
+.chead .back{ position: absolute; left: 1.4rem;}
+.chead .back i{ color: #FFFFFF; font-size: 1.4rem;}
+.chead h3{ color: #FFFFFF; text-align: center; font-size: 1.6rem;}
+/*搜索下拉区域*/
+.currents{width:100%;max-width:750px;min-width:320px;margin:0 auto;background:#FFF;position:absolute;top:0;padding:1rem 0;z-index:2}
+.currents.out{max-width:750px;min-width:320px;display:none}
+#search-box{background-color:#d64f4f;height:3.2rem;border-radius:0;margin:10px 2.33% 0 2%}
+.box-search{width:75.6%;background:#FFF;height:3rem;margin:1px 0 0 1px;padding:0 0 0 10px;position:relative;float:left;vertical-align:middle}
+.box-search input{width:100%;height:2.8rem;line-height:2.8rem;font:-webkit-small-control;font-size:1.4rem;color:initial;letter-spacing:normal;word-spacing:normal;text-transform:none;text-indent:0;text-shadow:none;display:inline-block;text-align:start;border:none;outline-style:none;word-break:normal;vertical-align:middle;margin-top:1px}
+.search_submit{width:20%;float:left;text-align:center}
+#search-box button{width:100%;background-color:#d64f4f;float:right;color:#fff;font-size:1.6rem;height:3.2rem;padding:0;margin-top:0;-webkit-box-sizing:border-box;border:0;border-radius:0;position:relative}
+.nav-list{position:absolute;width:100%;top:42px;background:rgba(255,255,255,1);padding-bottom:10px}
+.nav-list li{width:30%;float:left;height:30px;line-height:30px;text-align:center;margin:2%;margin-bottom:.2%;margin-right:0;border:1px solid #d64f4f;border-radius:0;background:rgba(253,255,250,1);color:#d64f4f}
+
+
+/*轮播*/
+.focusBox{ width:100%;  margin:0 auto;   position:relative; overflow:hidden;   }
+.focusBox .hd{ width:100%; height:11px;  position:absolute; z-index:1; bottom:5px; text-align:center;  }
+.focusBox .hd ul{display:inline-block;height:5px;padding:3px 5px;background-color:rgba(255,255,255,.7);-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;font-size:0;vertical-align:top}
+.focusBox .hd ul li{display:inline-block;width:5px;height:5px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background:#8C8C8C;margin:0 5px;vertical-align:top;overflow:hidden}
+.focusBox .hd ul .on{background:#ffcc01}
+.focusBox .bd{position:relative;z-index:0}
+.focusBox .bd li img{width:100%;height:140px;background:url(../img/loading32.gif) center center no-repeat}
+.focusBox .bd li a{-webkit-tap-highlight-color:transparent}
+
+
+.ui-grid-title{ padding: 0.5rem 1rem;}
+.ui-grid-title .title{ color: #000000; font-size: 1.4rem; height: 2.2rem; line-height: 2.2rem;}
+.ui-grid-title .title i{color: #2BAEB9;font-size: 2.2rem; vertical-align: middle;}
+.ui-grid-title .title span{color: #2BAEB9; padding: 0 0.5rem;}
+.ui-grid-title .sort{ text-align: right;    vertical-align: middle;}
+.ui-grid-title .sort .sort-btn{ text-align: center; display: inline-block; height: 2.2rem; line-height: 2.2rem; border: 1px solid #4D4E4C; color:#4D4E4C ; margin-left: 1rem; border-radius: 0.5rem; padding: 0 1rem;    vertical-align: middle;}
+.ui-grid-title .sort .active{ border-color: #2BAEB9; color:#2BAEB9 ;}
+.ui-grid-title .sort .sort-btn:first-child{ margin-left: 0;}
+
+/*列表*/
+.ui-grid-trisect{ width: 100%;}
+.ui-grid-trisect li{width:49%;padding-right:.5%;padding-left:.5%;padding-bottom:10px;float:left;position:relative;-webkit-box-sizing:border-box}
+.ui-grid-halve-img,.ui-grid-trisect-img{position:relative;width:100%;background:url(../img/loading.gif) 0 0 no-repeat #fff;background-position:center}
+.ui-grid-trisect-img>span{width:100%;height:100%;position:absolute;top:0;left:0;background-repeat:no-repeat}
+.ui-grid-trisect .tag{position:absolute;bottom:0;right:0;z-index:1;background:#000;filter:alpha(opacity=70);opacity:.7;color:#fff;font-size:.6rem;padding:.1rem .25rem;height:18px;overflow:hidden}
+.ui-grid-trisect h4{position:relative;margin:.5rem 0 .3rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap;color:#2a2333}
+.ui-grid-trisect h4 a{color:#2a2333}
+
+.loading{background:#fff;height: 50px;text-align: center;line-height: 50px;box-shadow: 0 0 2px rgba(0,0,0,.05);margin:1.5% 0 1.5% 0;}

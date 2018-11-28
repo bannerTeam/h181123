@@ -112,6 +112,24 @@ class User extends Base
         }
         return ['code' => 1, 'msg' => '设置成功'];
     }
+    
+    /**
+     * 更新字段
+     * @param unknown $where
+     * @param unknown $data
+     * @return number[]|string[]
+     */
+    public function fieldDatas($where, $data)
+    {
+        if (!isset($where) || !isset($data)) {
+            return ['code' => 1001, 'msg' => '参数错误'];
+        }
+        $res = $this->where($where)->update($data);
+        if ($res === false) {
+            return ['code' => 1002, 'msg' => '设置失败' . $this->getError()];
+        }
+        return ['code' => 1, 'msg' => '设置成功'];
+    }
 
     public function register($param)
     {
@@ -306,6 +324,7 @@ class User extends Base
 
     public function logout()
     {
+        //Cookie::delete('browsevodu'.$user_id,'think_');
         cookie('user_id', null);
         cookie('user_name', null);
         cookie('group_id', null);
@@ -432,6 +451,53 @@ class User extends Base
         return ['code' => 1, 'msg' => '密码找回成功成功'];
 
     }
+    
+    /**
+     * 修改密码
+     * @param unknown $param
+     * @return number[]|string[]
+     */
+    public function changepass($user_id,$param)
+    {
+        $data = [];
+        $old_pwd = htmlspecialchars(urldecode(trim($param['old_pwd'])));
+        $new_pwd = htmlspecialchars(urldecode(trim($param['new_pwd'])));
+       
+        if (empty($user_id) || empty($old_pwd) || empty($new_pwd)) {
+            return ['code' => 1001, 'msg' => '参数错误'];
+        }
+              
+        if(strlen($new_pwd)<6){
+            return ['code' => 1001, 'msg' => '密码长度不能少于6位'];
+        }
+        
+        $old_pwd = md5($old_pwd);
+        
+        $new_pwd = md5($new_pwd);
+        
+        $where = [];
+        $where['user_id'] = $user_id;
+        $where['user_pwd'] = $old_pwd;        
+        $info = $this->where($where)->find();
+        if (empty($info)) {
+            return ['code' => 1004, 'msg' => '账号密码不正确'];
+        }
+        
+        $update = [];
+        $update['user_pwd'] = $new_pwd;
+        
+        $where = [];
+        $where['user_id'] = $user_id;
+        $res = $this->where($where)->update($update);
+        
+        if (false === $res) {
+            return ['code' => 1005, 'msg' => '' . $this->getError()];
+        }
+        return ['code' => 1, 'msg' => '密码修改成功'];
+        
+    }
+    
+    
 
     public function popedom($type_id, $popedom, $group_id = 1)
     {

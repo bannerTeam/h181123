@@ -1,26 +1,35 @@
 ﻿<!DOCTYPE HTML>
 <html>
-
 	<head>
+		<meta charset="UTF-8">		
 		<title>我的收藏</title>
 		<meta name="keywords" content="{$maccms.site_keywords}">
-		<meta name="description" content=" {$maccms.site_description} "> 
-		{include file="public/include"}
-		<style>
-			body{  color: #000;}
-		</style>
-		<script src="{$maccms.path_tpl}js/user/favs.js"></script>
+		<meta name="description" content=" {$maccms.site_description} ">
+		 {include file="public/include_vod"}
+<script>
+			pageFontSize()
+		</script>
 	</head>
 
 	<body>
-		{include file="public/header_min"}
-
-		<div class="liebiao" >
-			<div class="left"><i></i>共有<span id="videos_total"></span>个</div>			
+		
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>我的收藏</h3>
+		</div>
+		
+		
+		<div class="ui-grid-title">
+			<div class="weui-flex">
+				<div class="title">
+					<i class="iconfont icon-shipin3"></i>&nbsp;全部<span id="videos_total"></span>部
+				</div>				
+			</div>
 		</div>
 		<section class="ui-panel">
-			<h2 class="ui-arrowlink"></h2>
-			<ul class="ui-grid-trisect" id="vlist">			
+					
+			<ul class="ui-grid-trisect" id="vlist">
+
 				{volist name="list" id="vo"}
 				<li style="width: 49.5%;">					
 					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('{:mac_url_img($vo.data.pic)}')"></span>
@@ -32,9 +41,12 @@
 					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/{$vo.data.id}" >{$vo.data.name}</a></h4>
 				</li>
 				{/volist}
+
 			</ul>
 			<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
 		</section>
+		
+		<script src="{$maccms.path_tpl}js/user/favs.js"></script>
 		<script type="text/javascript">
 			 $('#videos_total').html('{$__PAGING__.record_total}');
 			var s = {
@@ -42,9 +54,10 @@
 			};
 			pageInit(s);
 		</script>
-
+		
 		{include file="public/foot"}
-
+		
+		
 	</body>
 
 </html>

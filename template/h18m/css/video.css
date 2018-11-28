@@ -142,3 +142,21 @@
 	position: absolute; right: 10px;top: 10px; background: #000000; color: #FFFFFF;
 	padding:5px 15px;font-size:14px;
 }
+
+
+#change {margin:0 auto;padding-bottom:0px;background: #383535;overflow:hidden;margin-bottom:1rem; text-align: right; color: #FFFFFF;  padding: 1rem 2rem;}
+
+
+#playTip2 {
+    height:32px;
+    margin-top:10px;
+	width:100%
+}
+#playTip2 .ck1{height:32px;line-height:32px;background: #d64f4f;color:#fff;text-align:center;width:24%;float:left;margin-right:1.3%;font-size:14px;
+}
+#playTip2 .ck2{height:32px;line-height:32px;background: #d64f4f;color:#fff;text-align:center;width:24%;float:left;font-size:14px}
+
+
+/*页面内部模块标题*/
+.mould-title { padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ECEAEA;}
+.mould-title h3{ border-left:0.5rem solid #2BAEB9 ;text-indent: 1.4rem; height: 2.5rem; line-height: 2.5rem;font-size: 1.4rem;}

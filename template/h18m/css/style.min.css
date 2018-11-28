@@ -1023,7 +1023,7 @@ color: #B2B1B1;float:right;margin-top:5px
 
 #change {width:100%;margin:0 auto;padding-bottom:0px;border-bottom: 1px solid #d64f4f;overflow:hidden;margin-bottom:10px;}
 #change ul{width:100%;margin:0;padding:5px 0 0 0;list-style:none;overflow:hidden;
-    background: rgb(42,35,51);}
+    background: rgb(42,35,51); color: #FFFFFF;}
 #change ul li{display:block;height:30px;line-height:30px;background: #eee;color:#ccc;text-align:center;width:18%;float:left;margin-left:0.9%;margin-right:0.9%;font-size:14px;font-size:16px;margin-top:1px;BORDER: #eee 1px solid;}
 #change ul li.tabactive {color:#000000;background-color:#d64f4f;font-weight:bold;BORDER: #d64f4f 1px solid;}
 #change ul li.tabactive a{color:#fff;text-decoration:none;border:0px;display:block;}

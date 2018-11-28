@@ -19,7 +19,6 @@ class Init
             $mobile=1;
         }
         
-
         if( ($config['site']['mob_status']==2 && $mobile==1) || ($config['site']['mob_status']==1 && $_SERVER['HTTP_HOST']==$config['site']['site_wapurl']) ) {
             $TMP_ISWAP = 1;
             $TMP_TEMPLATEDIR = $config['site']['mob_template_dir'];

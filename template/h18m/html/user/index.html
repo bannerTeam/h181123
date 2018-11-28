@@ -5,53 +5,167 @@
 		<meta charset="UTF-8">
 		<title>会员中心</title>
 		{include file="public/include_user" /}
+
 	</head>
 
 	<body>
-		<div class="main">
-			<div class="user-head">
-				<div class="user-info">
-					<div class="am-fl thumb">
+
+		<div class="">
+
+			<div class="uhead">
+				<div class="uhead1 clearfix">
+					<div class="face">
+						<img src="{$maccms.path_tpl}img/user/face.jpg" alt="" />
 					</div>
-					<span class="user-name">{$user.user_name}</span><br>					
+					<div class="info {if $user_vip}info-vip{/if}">
+						<div class="tit">
+							<span>{$user_title}</span>
+						</div>
+						{if $user_vip}
+						<div class="desc">
+							VIP会员，无限看片
+						</div>
+						<div class="oper">
+							<span>{$vip_date}到期</span>
+							<a class="btn" href="/user/vip">续期</a>
+						</div>
+						{elseif $user.user_id > 0}
+						<div class="oper">
+							<span>普通会员</span>
+							<a class="btn" href="/user/vip">升级VIP</a>
+						</div>
+						{else /}
+						<div class="oper">
+							<a class="btn" href="/user/reg">注册</a>
+							<a class="btn" href="/user/login">登录</a>
+						</div>
+						{/if}						
+					</div>
 				</div>
-				<div class="statistics">
-					<ul>
-						<li>会员级别<span>注册会员</span></li>
-						<li>帐户余额<span>0.00 元</span></li>
-						<li class="integral">积分<span>0 点</span></li>
-						<li>
-							<a href="">
-								<i class="am-icon-pencil-square-o"></i>我的资料</a>
-						</li>
-					</ul>
+				<div class="uhead2 weui-flex">
+					<div class="weui-flex__item l">
+						{if $user_vip}
+						<span>无限</span>
+						{elseif $user.user_id > 0}
+						<span>{$vod_browse}/2</span>
+						{else /}
+						<span>{$vod_browse}/1</span>
+						{/if}
+						<p>您今日剩余观影次数</p>
+					</div>
+					<div class="weui-flex__item r">
+						<a class="item">
+							<p><i class="iconfont icon-shangchuan"></i></p>
+							<span class="name">我要看片</span>
+							<span>提升观看次数</span>
+						</a>
+						<a class="item">
+							<p><i class="iconfont icon-tuiguangzhuanqian"></i></p>
+							<span class="name">推广奖励</span>
+							<span>免费永久VIP</span>
+						</a>
+					</div>
 				</div>
 			</div>
-
-			<div class="weui-cells">
-				<a class="weui-cell weui-cell_access" href="javascript:;">
-					<div class="weui-cell__hd">
-						<i class="iconfont icon-qia"></i>
+			<div class="line"></div>
+			<div class="um1">
+				<div class="weui-flex">
+					<div class="weui-flex__item p-r">
+						<a href="/user/vip">
+						<div class="bd">
+							<i class="iconfont icon-huiyuan"></i>
+							<span class="name">升级会员</span>
+							<span>无限看片</span>
+						</div>
+						</a>
 					</div>
-					<div class="weui-cell__bd">
-						<p>cell standard</p>
+					<div class="weui-flex__item p-r">
+						<a href="/user/kalman.html">
+						<div class="bd">
+							<i class="iconfont icon-huiyuanqia1"></i>
+							<span class="name">卡密充值</span>
+							<span>在线充值</span>
+						</div>
+						</a>
 					</div>
-					<div class="weui-cell__ft">
-					</div>
-				</a>
-				<a class="weui-cell weui-cell_access" href="javascript:;">
-					<div class="weui-cell__bd">
-						<p>cell standard</p>
-					</div>
-					<div class="weui-cell__ft">
-					</div>
-				</a>
+				</div>
 			</div>
-			
-			<a href="/user/logout" class="weui-btn weui-btn_warn">退出</a>
-
+			<div class="um2">
+				<img src="{$maccms.path_tpl}img/user/banner-1.png" alt="" />
+			</div>
+			<div class="um3 un-grids">
+				<div class="weui-flex">
+					<div class="weui-flex__item">
+						<i class="iconfont icon-telegram-plane"></i>
+						<p>官方电报群</p>
+						<span>无限看片</span>
+					</div>
+					<div class="weui-flex__item ">
+						<i class="iconfont icon-weixin"></i>
+						<p>Potato群</p>
+						<span>在线充值</span>
+					</div>
+					<div class="weui-flex__item ">
+						<i class="iconfont icon-xiaoxi"></i>
+						<p>消息报告</p>
+						<span>官方发布</span>
+					</div>
+				</div>
+			</div>
+			<div class="line"></div>
+			<div class="um4 un-grids">
+				<div class="weui-flex">
+					<div class="weui-flex__item">
+						<i class="iconfont icon-29"></i>
+						<p>代理</p>
+						<span>返利高达50%</span>
+					</div>
+					<div class="weui-flex__item ">
+						<a href="/about/cooperation.html">
+						<i class="iconfont icon-meiyuan9"></i>
+						<p>商务合作</p>
+						<span>广告招商</span>
+						</a>
+					</div>
+					<div class="weui-flex__item ">
+						<a href="/about/website.html">
+						<i class="iconfont icon-http"></i>
+						<p>官网地址</p>
+						<span>回家不迷路</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="line"></div>
+			<div class="um5 un-grids">
+				<div class="weui-flex">
+					<div class="weui-flex__item">
+						<a href="/user/password.html">
+						<i class="iconfont icon-mima"></i>
+						<p>密码修改</p>
+						</a>
+					</div>
+					<div class="weui-flex__item ">
+						<a href="/about/about.html">
+						<i class="iconfont icon-guanyuwomen"></i>
+						<p>关于我们</p>
+						</a>
+					</div>
+					<div class="weui-flex__item ">
+						<a href="/about/feedback.html">
+						<i class="iconfont icon-wenti-m"></i>
+						<p>意见反馈</p>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="line"></div>
+			<div class="um-out">
+				<a href="/user/logout" class="weui-btn  weui-btn_warn">退出</a>
+			</div>
 		</div>
-		
+
+
 		{include file="public/foot" /}
 	</body>
 

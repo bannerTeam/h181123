@@ -11,28 +11,29 @@
 
 		<title>在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}</title>
 		<meta name="keywords" content=">在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}">
-		<meta name="description" content=">在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}"> {include file="public/include"}
-
-		
+		<meta name="description" content=">在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}"> 
+		{include file="public/include_vod"}
+		<script>
+			pageFontSize()
+		</script>
 
 		<script src="{$maccms.path_tpl}js/play.js"></script>
+		
 	</head>
 
 	<body>
-		{include file="public/header"}
+		
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3 style="padding: 0 3rem;">{$obj.vod_name}</h3>
+		</div>
 
-		<div class="container" id="container" style="margin-top: 45px;">
-			<div class="video-title">
-				{$obj.vod_name}
-			</div>
+		<div class="container" id="container" >			
 			<div>
 				{include file="vod/player"}
 			</div>
 			<div id="change">
-				<ul>
-					<li style="background: transparent;border: 0 none;">&nbsp;</li>
-					<span style="float: right; margin-right: .5rem;font-size: .8rem;">播放次数：<font id="shits">3277</font></span>
-				</ul>
+				播放次数：<font id="shits">3277</font>
 			</div>
 			<div id="playTip2">
 				<div class="ck1">
@@ -50,7 +51,9 @@
 				</div>
 			</div>
 			<div id="hotVideo">
-				<h2>猜你喜欢</h2>
+				<div class="mould-title">
+					<h3>猜你喜欢</h3>
+				</div>
 				<ul class="ui-grid-trisect" id="rlist">
 				</ul>
 				<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
@@ -64,7 +67,6 @@
 				"tid": "{$obj.type_id}"
 			});
 		</script>
-
 		{include file="public/foot"}
 
 	</body>

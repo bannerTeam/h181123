@@ -20,46 +20,24 @@ var player = null;
 var dtime = null;
 $(document).ready(function($) {
 
-	if($(window).width() < 620) {
-		var ww = $(window).width(),
-			w = (ww < 620) ? $("body").width() : ww,
-			h = w / 16 * 9;
-	
-		MacPlayer.w = w;
-		MacPlayer.h = h;
-	
-		$("#video").css({
-			width: MacPlayer.w,
-			height: MacPlayer.h
-		});
-		$("#video_adv").css({
-			width: MacPlayer.w,
-			height: MacPlayer.h
-		});
-		$("#video-container").css({
-			height: MacPlayer.h
-		});
-		
-	}else{
-		var w = $(".video-play").width(),
+	var ww = $(window).width(),
+		w = (ww < 620) ? $("body").width() : ww,
 		h = w / 16 * 9;
-		MacPlayer.w = w;
-		MacPlayer.h = h;
-		
-		$("#video").css({
-			width: MacPlayer.w,
-			height: MacPlayer.h
-		});
-		$("#video_adv").css({
-			width: MacPlayer.w,
-			height: MacPlayer.h
-		}).hide();
-		$("#video-container").css({
-			height: MacPlayer.h
-		});
-		
-	}
-	
+
+	MacPlayer.w = w;
+	MacPlayer.h = h;
+
+	$("#video").css({
+		width: MacPlayer.w,
+		height: MacPlayer.h
+	});
+	$("#video_adv").css({
+		width: MacPlayer.w,
+		height: MacPlayer.h
+	});
+	$("#video-container").css({
+		height: MacPlayer.h
+	});
 
 	if(/Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
 		loadCss("/static/player/video/video.css");
@@ -90,7 +68,10 @@ function yhVideo() {
 
 	getPlayerAdv(function() {
 
-		var playUrl = videoObject.video[0][0];
+		var playUrl = videoObject.video;
+		if(typeof(videoObject.video) == "object") {
+			playUrl = videoObject.video[0][0];
+		}
 
 		$("#video").append(`<video id="roomVideo1" class="video-js vjs-big-play-centered" controls preload="none" ><source id="source" src="${playUrl}" type="application/x-mpegURL"></video>`);
 
@@ -121,7 +102,7 @@ function getPlayerAdv(fn) {
 
 	$.ajax({
 		type: "get",
-		url: "/Adv/get_adv",
+		url: "/Ajax/get_playbanner",
 		dataType: "json",
 		success: function(ret) {
 			MacPlayer.Adv = {

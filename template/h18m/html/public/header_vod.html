@@ -1,0 +1,69 @@
+ <div id="head_vod" class="head_vod">
+	<div class="navfix">
+		<ul class="" id="head_ul">				
+			<li {if $typeParent}class="active"{/if}>									
+				<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">全部</a>
+				<i></i>
+			</li>							
+			{maccms:type parent="'.$vod_type.'" order="asc" by="sort" ids="'.$childids.'" }
+			<li {if condition=" ($vo.type_id eq MAC_TYPE_ID || $vo.type_id eq MAC_TYPE_PID) "} class="active"{/if}>
+				<a href="{:mac_url_type($vo,[],'type')}"  title="{$vo.type_name}">					
+					{$vo.type_name}
+				</a>
+				<i></i>
+			</li>
+			{/maccms:type}
+		</ul>
+		<div class="head_search" id="head_search">
+			<i class="iconfont icon-xingtaiduICON_sousuo--"></i>
+		</div>
+	</div>	
+	<div id="nav" class="view currents out " >
+		<div id="search-box">
+			<form method="get" action="{:mac_url('vod/search')}" id="search-form">
+				<div class="box-search">					
+					<input type="text" placeholder="请输入视频名称" autocomplete="off" value="" name="wd" id="search_query">
+				</div>
+				<div class="search_submit">
+					<button type="submit">搜索</button>
+				</div>
+			</form>
+		</div>		
+	</div>
+</div>
+<script>
+	var fun = function(doc, win) {
+		var docEl = doc.documentElement,
+			resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+			recalc = function() {
+				var clientWidth = docEl.clientWidth;
+				if(!clientWidth) return;
+
+				//这里是假设在640px宽度设计稿的情况下，1rem = 20px；
+				//可以根据实际需要修改
+				docEl.style.fontSize = 20 * (clientWidth / 750) + 'px';
+				
+				(function(){		
+					//计算导航宽度
+					var lis = $("#head_ul li"),
+						w = 0;
+					lis.each(function() {
+						w += $(this).innerWidth();
+					});		
+					$("#head_ul").width(w + 12 + $("#head_search").width());
+					$("#nav").css({
+						top:$("#head_vod").height()
+					})
+					
+				})();
+				
+			};
+		if(!doc.addEventListener) return;
+		win.addEventListener(resizeEvt, recalc, false);
+		doc.addEventListener('DOMContentLoaded', recalc, false);
+	}
+	fun(document, window);
+	
+	
+	
+</script>

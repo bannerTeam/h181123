@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
+use think\Cookie;
 use think\Request;
 use login\ThinkOauth;
 use app\index\event\LoginEvent;
@@ -15,10 +16,27 @@ class User extends Base
 
         //判断用户登录状态
         $ac = request()->action();
-        if(in_array($ac,['login','logout','ajax_login','reg','findpass','oauth','callback'])){
-
+      
+        if(in_array($ac,['index','login','logout','ajax_login','reg','findpass','oauth','callback'])){
+            $this->assign('vod_browse',0);
+            if(empty($GLOBALS['user']['user_id'])){
+                // 判断是否有cookie
+                $browsevod = Cookie::get('browsevod', 'h18_');
+                if ($browsevod) {
+                    $this->assign('vod_browse',1);
+                }
+                $this->assign('user_title','游客，注册即享更多看片权益');
+            }else {
+                $this->assign('user_title',$GLOBALS['user']['user_name']);                
+                if($GLOBALS['user']['vip_exp_time'] > time()){
+                    $this->assign('user_vip',true);
+                    $this->assign('vip_date',date('Y-m-d',$GLOBALS['user']['vip_exp_time']));
+                }
+                $this->assign('vod_browse',$GLOBALS['user']['user_vod_browse']);
+            }
         }
         else{
+            
             if($GLOBALS['user']['user_id'] <1){
                 model('User')->logout();
                 return $this->error('未登录', url('user/login'));
@@ -306,11 +324,12 @@ class User extends Base
     public function logout()
     {
         $res = model('User')->logout();
+                
         if(request()->isAjax()){
             return json($res);
         }
         else {
-            return redirect('user/login');
+            return redirect('user/index');
         }
     }
 
@@ -737,7 +756,7 @@ class User extends Base
 		$pages = mac_page_param($res['total'], $param['limit'], $param['page'], url('user/favs',['page' => 'PAGELINK']));
 		$this->assign('__PAGING__', $pages);
 		
-				
+		$this->assign('pageUser',0);
 		$this->assign('pageFavs',1);
 		
 		return $this->fetch('user/favs');
@@ -812,5 +831,48 @@ class User extends Base
         $this->assign('list',$res['list']);
         return $this->fetch('user/cards');
     }
-
+    
+    
+    /**
+     * 升级VIP
+     */
+    public function vip(){
+        
+        return $this->fetch('user/vip');
+        
+    }
+    
+    /**
+     * 选择支付
+     */
+    public function vip_payment(){
+        return $this->fetch('user/vip_payment');
+        
+    }
+    
+    /**
+     * 卡密充值
+     */
+    public function kalman(){
+        
+        return $this->fetch('user/kalman');
+        
+    }
+    
+    /**
+     * 修改密码
+     */
+    public function password(){
+        
+        if (Request()->isPost()) {
+            $param = input();
+            $res = model('User')->changepass($GLOBALS['user']['user_id'],$param);
+            return json($res);
+        }
+        return $this->fetch('user/password');
+        
+    }
+    
+    
+    
 }

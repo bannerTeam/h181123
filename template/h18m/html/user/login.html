@@ -5,35 +5,37 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>用户登录</title>
 		<meta name="keywords" content="{$maccms.site_keywords}" />
-		<meta name="description" content="{$maccms.site_description}" /> {include file="public/include" /}
+		<meta name="description" content="{$maccms.site_description}" /> 
+		{include file="public/include_user" /}
 	</head>
 
-	<body style="background: #FFFFFF;">
-		<div id="head">
-			<div class="fixtop">
-				<span id="home"><a href="/" rel="external"><i class="ico08"><img src="{$maccms.path_tpl}img/homepage.png" width="30px"></i></a></span>
-				<i class="ico21">会员登录</i>
+	<body style="">
 
-			</div>
-
-		</div>
-		<section class="register" style="padding:40px 0 40px 0;">
-			<form id="LoginForm" class="LoginForm" method="post" >
-				<div class="form_up">
-					<div class="username"><span style="float:left;margin-left:7px;">用 户 名：</span>
-						<input type="text" id="user_name" name="user_name" placeholder="请输入您的用户名" class="input1">
+		<div class="signup">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<div class="hd"></div>
+			<div class="bd">
+				<h3>会员登录</h3>
+				<div class="form">
+					<div class="col weui-flex">
+						<i class="iconfont icon-xingmingyonghumingnicheng"></i>
+						<input class="weui-flex__item" id="user_name" placeholder="请输入用户名" type="text" />
 					</div>
-					<div class="username"><span style="float:left;margin-left:5px;">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span><input type="password" name="user_pwd" id="user_pwd" placeholder="请输入您的密码" class="input1"></div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-mima1"></i>
+						<input class="weui-flex__item" id="user_pwd" placeholder="请输入密码" type="password" />
+					</div>
+					<div class="submit">
+						<button id="btn_submit">
+							立即登录
+						</button>
+					</div>
 				</div>
-				<div class="botton">
-					<input name="reg" type="button" class="user_reg_but" id="btn_submit" value="登 录">
-				</div><br>
-				<div class="botton">
-					<input type="button" class="user_reg_but"  value="注册会员" onclick="location.href='/user/reg';">
-				</div>
-				<br><br>
-			</form>
-		</section>
+			</div>
+			<div class="ft">
+				<a href="/user/reg">没有账号？立即注册</a>
+			</div>			
+		</div>
 
 		<script type="text/javascript">
 			$(function() {
@@ -46,12 +48,12 @@
 				$('#btn_submit').click(function() {
 
 					if($('#user_name').val() == '') {
-						tips('请输入用户！');
+						tips('请输入用户名');
 						$("#user_name").focus();
 						return false;
 					}
 					if($('#user_pwd').val() == '') {
-						tips('请输入密码！');
+						tips('请输入密码');
 						$("#user_pwd").focus();
 						return false;
 					}
@@ -72,7 +74,9 @@
 							layer.close(index);
 							if(r.code == 1) {								
 								jump();
-							} else {
+							} else if(r.code == 1003){
+								tips("用户不存在或密码错误");
+							}else {
 								tips(r.msg);
 							}
 						}
@@ -99,7 +103,6 @@
 			});
 		</script>
 
-		{include file="public/foot" /}
 	</body>
 
 </html>

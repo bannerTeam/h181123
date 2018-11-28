@@ -7,7 +7,7 @@ var list = {
 		{
 				'status': 'ok',
 				'name': '色喇叭',
-				'apiurl': 'http://www.zy.com/api.php',
+				'apiurl': 'http://api.h18av.cc/index.php/api',
 				'flag': 'selaba',
 				'xt': '1',
 				'group': '',

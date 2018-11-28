@@ -31,27 +31,7 @@ return array (
     'mob_status' => '2',
     'mob_template_dir' => 'h18m',
     'mob_html_dir' => 'html',
-    'site_tj' => '<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?c2d0d55bd224a0a578217d59d3814d9a";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?971a39ddef89acfa7cb0d02b307c3a38";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?64599d023a782fe7244819e0ffbb9600";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script><script src="https://s96.cnzz.com/z_stat.php?id=1275241343&web_id=1275241343" language="JavaScript"></script>',
+    'site_tj' => '',
     'site_status' => '1',
     'site_close_tip' => '站点暂时关闭，请稍后访问',
     'ads_dir' => 'ads',

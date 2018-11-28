@@ -27,10 +27,7 @@ define('BIND_MODULE','index');
 // 定义入口
 define('ENTRANCE', 'index');
 
-if(!is_file('./application/data/install/install.lock')) {
-    header("Location: ./install.php");
-    exit;
-}
+
 if (!@mb_check_encoding($_SERVER['PATH_INFO'], 'utf-8')){
     $_SERVER['PATH_INFO']=@mb_convert_encoding($_SERVER['PATH_INFO'], 'UTF-8', 'GBK');
 }

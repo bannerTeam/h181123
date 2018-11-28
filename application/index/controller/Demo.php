@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Config;
+use think\Request;
 
 class Demo extends Base
 {
@@ -11,14 +12,111 @@ class Demo extends Base
     }
 
     public function index(){
-                
+        echo ("0"+1);
+        exit;
         
         header("Cache-Control: no-store, no-cache, must-revalidate");//强制不缓存
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");//禁止本页被缓存
         
+        $return_array = $this->forWindows();
+        $temp_array = array();
+        foreach ( $return_array as $value ){
+            
+            if (
+                preg_match("/[0-9a-f][0-9a-f][:-]"."[0-9a-f][0-9a-f][:-]"."[0-9a-f][0-9a-f][:-]"."[0-9a-f][0-9a-f][:-]"."[0-9a-f][0-9a-f][:-]"."[0-9a-f][0-9a-f]/i",$value,
+                    $temp_array ) ){
+                        $mac_addr = $temp_array[0];
+                        break;
+            }
+            
+        }
+        unset($temp_array);
+        echo $mac_addr;
+        exit;
+        
+        $request = Request::instance();
+        
+        print_r($request);
+                 
+        echo $request->ip();
+       
+        exit();
         
         return $this->fetch('demo/index');
+    }
+    
+    function forLinux(){
+        @exec("ifconfig -a", $this->return_array);
+        return $this->return_array;
+    } 
+    
+    public function forWindows(){
+        @exec("ipconfig /all", $this->return_array);
+        if ( $this->return_array )
+            return $this->return_array;
+            else{
+                $ipconfig = $_SERVER["WINDIR"]."\system32\ipconfig.exe";
+                if ( is_file($ipconfig) )
+                    @exec($ipconfig." /all", $this->return_array);
+                    else
+                        @exec($_SERVER["WINDIR"]."\system\ipconfig.exe /all", $this->return_array);
+                        return $this->return_array;
+            }
+    } 
+    
+    
+    //方法3：
+    function getRealIp()
+    {
+        $ip=false;
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $ip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ips = explode (", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if ($ip) { array_unshift($ips, $ip); $ip = FALSE; }
+            for ($i = 0; $i < count($ips); $i++) {
+                if (!eregi ("^(10│172.16│192.168).", $ips[$i])) {
+                    $ip = $ips[$i];
+                    break;
+                }
+            }
+        }
+        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+    }
+    
+    
+    /**
+     * 获取真实IP
+     * @param int $type
+     * @param bool $client
+     * @return mixed
+     */
+    function get_client_ip($type = 0,$client=true)
+    {
+        $type       =  $type ? 1 : 0;
+        static $ip  =   NULL;
+        if ($ip !== NULL) return $ip[$type];
+        if($client){
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+                $pos    =   array_search('unknown',$arr);
+                if(false !== $pos) unset($arr[$pos]);
+                $ip     =   trim($arr[0]);
+            }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+                $ip     =   $_SERVER['HTTP_CLIENT_IP'];
+            }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+                $ip     =   $_SERVER['REMOTE_ADDR'];
+            }
+        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip     =   $_SERVER['REMOTE_ADDR'];
+        }
+        // 防止IP伪造
+        $long = sprintf("%u",ip2long($ip));
+        $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+        return $ip[$type];
+        
     }
     
      public function ckplay()
