@@ -140,7 +140,8 @@ class User extends Base
         $data['user_pwd'] = htmlspecialchars(urldecode(trim($param['user_pwd'])));
         $data['user_pwd2'] = htmlspecialchars(urldecode(trim($param['user_pwd2'])));
         $data['verify'] = $param['verify'];
-
+        
+       
         $uid = $param['uid'];
 
         if ($config['user']['status'] == 0 || $config['user']['reg_open'] == 0) {
@@ -168,19 +169,38 @@ class User extends Base
         if (!$validate->scene('add')->check($data)) {
             return ['code' => 1007, 'msg' => '参数错误：' . $validate->getError()];
         }
+        
         $fields = [];
+        
+        //邀请码
+        $invite_code = trim($param['inviter_user_code']);
+        
+        
+        //根据邀请码获取 推广用户 的id
+        if($invite_code && strlen($invite_code) > 5){
+            $where['invite_code'] = $invite_code;
+            $rdata = $this->infoData($where,'user_id');
+            if($rdata['code'] === 1){
+                $fields['inviter_user_id'] = $rdata['info']['user_id'];
+            }            
+        }
+        
+        
         $fields['user_name'] = $data['user_name'];
         $fields['user_pwd'] = md5($data['user_pwd']);
         $fields['group_id'] = $this->_def_group;
         $fields['user_points'] = intval($config['user']['reg_points']);
         $fields['user_status'] = intval($config['user']['reg_status']);
         $fields['user_reg_time'] = time();
-
-        $res = $this->insert($fields);
+        
+        $res = $this->insertGetId($fields);
         if ($res === false) {
             return ['code' => 1010, 'msg' => '注册失败'];
         }
-
+        
+        $reg_user_id = $res;
+        
+        //邀请得积分
         $uid = intval($uid);
         if ($uid > 0 && $config['user']['invite_reg_points'] > 0) {
             $where = [];
@@ -192,6 +212,17 @@ class User extends Base
                 $r = $this->where($where)->update($update);
             }
         }
+        
+        //插入邀请记录
+        if(isset($fields['inviter_user_id']) && $reg_user_id){
+                        
+            $uiData['reg_user_id']=$reg_user_id;
+            $uiData['invite_user_id']=$fields['inviter_user_id'];
+            $uiRes = model('UserInvite')->saveData($uiData);
+            
+        }
+        
+        
         return ['code' => 1, 'msg' => '注册成功,请登录去会员中心完善个人信息'];
     }
 

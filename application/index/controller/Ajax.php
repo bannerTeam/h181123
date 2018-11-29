@@ -517,9 +517,17 @@ class Ajax extends Base
         // 分类id
         $type = $this->_param['tid'];
         if (!empty($type)) {
-            $where['type_id'] = $type;
+                        
+            $param['id'] = $type;
+            $type_info = mac_label_type($param);
+            if($type_info['childids']){
+                $where['type_id'] = ['in',explode(",", $type_info['childids'])];
+            }else{
+                $where['type_id'] = $type;
+            }            
         }
         
+       
         
         // 每页显示条数
         $limit = $this->_param['limit'];

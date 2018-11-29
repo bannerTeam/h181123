@@ -13,6 +13,31 @@
 		
 		{include file="public/header_vod"}
 		
+		{if $typeParent}		
+		<div id="focusBox" class="focusBox">
+			<div class="hd">
+				<ul></ul>
+			</div>
+			<div class="bd">
+				<ul>
+					{maccms:adv type="1" }
+					<li>
+						<a href="{$vo.link}" ><img src="{$vo.img}" alt="{$vo.title}" /></a>
+					</li>
+					{/maccms:adv}					
+				</ul>
+			</div>
+		</div>
+		<script src="{$maccms.path_tpl}js/TouchSlide.1.1.js"></script>
+		<script>
+			$(function(){
+				if($("#focusBox li").length > 1){
+					TouchSlide({slideCell:"#focusBox",titCell:".hd ul",mainCell:".bd ul",effect:"leftLoop",autoPlay:true,autoPage:true});
+				}				
+			});
+		</script>
+		{/if}
+		
 		
 		<div class="ui-grid-title">
 			<div class="weui-flex">
@@ -46,8 +71,13 @@
 			<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
 		</section>
 		<script type="text/javascript">
-			$('#videos_total').html('{$__PAGING__.record_total}');
-			pagination();
+			 $('#videos_total').html('{$__PAGING__.record_total}');
+			var s = {
+				tid: "{$typeid}",
+				by:"{$sort}",
+				limit:20
+			};
+			pagination(s);
 		</script>
 		
 		{include file="public/foot"}

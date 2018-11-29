@@ -36,6 +36,8 @@ class Vod extends Base {
         
         $list = Db::name('Vod')->field($field)->where($where)->order($order)->limit($limit_str)->select();
 
+        
+        
         //分类
         $type_list = model('Type')->getCache('type_list');
         //用户组

@@ -16,7 +16,7 @@
 			<div class="navfix">
 				<ul class="" id="head_ul">				
 					<li class="{if $timeadd == 1}active{/if}">									
-						<a href="{:mac_url('/vod/index',['timeadd'=>1,'by'=>'hits'])}">今日推荐</a>
+						<a href="{:mac_url('/vod/index',['timeadd'=>1,'by'=>'hits'])}">24小时</a>
 						<i></i>
 					</li>	
 					<li class="{if $timeadd == 7}active{/if}">									
@@ -51,6 +51,22 @@
 			</div>
 		</div>
 		
+		<script type="text/javascript">
+			(function(){		
+				//计算导航宽度
+				var lis = $("#head_ul li"),
+					w = 0;
+				lis.each(function() {
+					w += $(this).innerWidth();
+				});		
+				$("#head_ul").width(w + 12 + $("#head_search").width());
+				$("#nav").css({
+					top:$("#head_vod").height()
+				})
+				
+			})();
+		</script>
+		
 		<div class="ui-grid-title">
 			<div class="weui-flex">
 				<div class="title">
@@ -62,7 +78,7 @@
 					
 			<ul class="ui-grid-trisect" id="vlist">
 
-				{maccms:vod num="10" paging="yes" type="all" by="time"  order="desc" timeadd="7" }
+				{maccms:vod num="10" paging="yes" type="all" by="time"  order="desc" timeadd="'.$timeadd.'"}
 				<li>
 					<a href="{:mac_url_vod_detail($vo)}">
 						<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('{:mac_url_img($vo.vod_pic)}')"></span>
@@ -80,7 +96,12 @@
 		</section>
 		<script type="text/javascript">
 			$('#videos_total').html('{$__PAGING__.record_total}');
-			pagination();
+			var s = {
+				limit:12,
+				by:"{$sort}",
+				timeadd:"{$timeadd}"
+			};
+			pagination(s);
 		</script>
 		
 		{include file="public/foot"}

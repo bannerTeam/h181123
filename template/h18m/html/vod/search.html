@@ -49,8 +49,14 @@
 			<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
 		</section>
 		<script type="text/javascript">
-			$('#videos_total').html('{$__PAGING__.record_total}');
-			pagination();
+			 $('#videos_total').html('{$__PAGING__.record_total}');
+			var s = {
+				tid: "{$typeid}",
+				by:"{$sort}",
+				wd:"{$wd}",
+				limit:20
+			};
+			pagination(s);
 		</script>
 		
 		{include file="public/foot"}

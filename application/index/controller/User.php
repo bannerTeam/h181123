@@ -479,10 +479,42 @@ class User extends Base
     public function reg()
     {
         if(Request()->isPost()){
+            
             $param = input();
+            
+            $param['inviter_user_code']= '';
+            
+            // 判断是否有 邀请码 cookie
+            $invite_code = Cookie::get('invite_code', 'h18_');
+                        
+            if ($invite_code) {
+                $param['inviter_user_code']= $invite_code;
+            }            
+            
             $res = model('User')->register($param);
+            
+            //注册成功删除邀请码
+            if($res['code'] === 1){
+                Cookie::delete('invite_code','h18_');
+                model('User')->logout();
+            }
+            
+            
             return json($res);
         }
+        
+        //邀请码 
+        $code = $_GET['code'];
+        if(strlen($code) > 5  && strlen($code) < 10){
+            // 设置Cookie 有效期为 秒
+            Cookie::set('invite_code', $code, [
+                'prefix' => 'h18_'
+            ]);
+        }
+        
+        
+        
+        
         return $this->fetch('user/reg');
     }
 
@@ -871,6 +903,47 @@ class User extends Base
         }
         return $this->fetch('user/password');
         
+    }
+    
+    /**
+     * 生成邀请码
+     */
+    public function share(){
+        
+        
+        $user_id = $GLOBALS['user']['user_id'];
+        
+        $invite_code = $GLOBALS['user']['invite_code'];
+        //不存在推荐码，就生成
+        if(empty($invite_code)){
+            $len =  6 - strlen($user_id);
+            if($len>0){                
+                $rand = $this->getInviteRand($len);                
+                $invite_code = $rand.$user_id;                
+            }else{
+                $invite_code = $user_id;
+            }
+            $where['user_id'] = $user_id;
+            model('User')->fieldData($where, 'invite_code', $invite_code);
+        }
+          
+        
+        $this->assign('invite',$invite_code);
+        
+        return $this->fetch('user/share');
+        
+    }
+    
+    /**
+     * 获取邀请随机数
+     */
+    private function getInviteRand($len){
+        $codeSet = '2345678abcdefhijkmnpqrstuvwxyz';
+        $code = '';
+        for ($i = 0; $i < $len; $i++) {
+            $code = $code.$codeSet[mt_rand(0, 29)];
+        }
+        return $code;
     }
     
     

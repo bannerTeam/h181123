@@ -61,6 +61,7 @@ class Vod extends Base
 
     public function type()
     {
+        
         $this->assign_param();
         
         $info = $this->label_type();
