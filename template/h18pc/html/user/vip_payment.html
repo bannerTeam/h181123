@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>升级VIP</title>
+		{include file="public/include_user" /}
+
+	</head>
+
+	<body>
+
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>升级VIP</h3>
+		</div>
+		
+		<div class="payment">
+			<div class="hd">
+				<div class="mould-title">
+					<h3>已选择套餐</h3>
+				</div>
+				<div class="desc weui-flex">
+					<span class="weui-flex__item">体验VIP（7天畅享无限次看片）</span>
+					<span class="price">￥15元</span>
+				</div>
+			</div>
+			<div class="bd">
+				<div class="mould-title">
+					<h3>请选择支付方式</h3>
+				</div>
+				<div class="items">
+					<a href=""><img src="{$maccms.path_tpl}img/pay/alipay.jpg" alt="" /></a>
+					<a href=""><img src="{$maccms.path_tpl}img/pay/wx.jpg" alt="" /></a>
+					<a href=""><img src="{$maccms.path_tpl}img/pay/qq.jpg" alt="" /></a>
+				</div>
+			</div>
+			
+		</div>
+	
+		{include file="public/foot" /}
+	</body>
+
+</html>

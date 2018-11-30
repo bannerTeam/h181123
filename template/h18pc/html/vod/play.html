@@ -1,0 +1,108 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+		<title>在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - {$maccms.site_name}</title>
+		<meta name="keywords" content=">在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - {$maccms.site_name}">
+		<meta name="description" content=">在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - {$maccms.site_name}"> {include file="public/include"}
+
+		<script src="{$maccms.path_tpl}js/play.js"></script>
+
+	</head>
+
+	<body>
+
+		{include file="public/header"}
+
+		<div class="vod-play page-w">
+
+			<h3 class="play_title">
+				{$obj.vod_name}
+			</h3>
+			<div class="play_bd clearfix">
+				<div class="play_player">
+					<div class="bd">
+						{include file="vod/player"}
+					</div>
+					<div class="ft">
+						<a href="javascript:;" class="j-up">顶+<b id="up">{$obj.vod_up}</b></a>
+						<a href="javascript:;" class="collection" id="collection">收藏</a>
+						<span><i class="iconfont icon-yanjing">&nbsp;播放次数：{$obj.vod_hits}次</i>
+						</span>
+						<span><i class="iconfont icon-shijian"></i>&nbsp;时长：{$obj.vod_duration}</span>
+						<span>
+							<i class="iconfont icon-riqi"></i>&nbsp;发布时间：{$obj.vod_time|date='Y-m-d',###}</span>
+						
+						
+					</div>
+				</div>
+				<div class="play_lucaowan">
+					{maccms:ad flag='d_right'}
+					<a href="{$d_right.link}" target="_blank">
+						<img style="width:100%;" src="{$d_right.img}">
+					</a>
+					{/maccms:ad}
+				</div>
+			</div>
+
+			<div class="play_pics">
+
+			</div>
+
+			<div class="play_list clearfix">
+				<div class="module-list clearfix">
+					<div class="hd clearfix">
+						<h4><i class="iconfont icon-huo1"></i>&nbsp;猜你喜欢</h4>
+						<a href="javascript:;" class="change">换一批</a>
+					</div>
+					<div class="bd clearfix">
+						{maccms:vod num="16" }
+						<div class="item">
+							<a target="_blank" href="{:mac_url_vod_detail($vo)}">
+								<div class="thumb">
+									<img alt="{$vo.vod_name}" src="{:mac_url_img($vo.vod_pic)}" />
+								</div>
+								<div class="title ui-nowrap">
+									{$vo.vod_name}
+								</div>
+								<div class="date clearfix">
+									<span class="l">
+									<i class="iconfont icon-riqi"></i>&nbsp;{$vo.vod_time|date='Y-m-d',###}
+								</span>
+									<span class="r">
+									<i class="iconfont icon-shijian"></i>&nbsp;{$vo.vod_duration}
+								</span>
+								</div>
+								<div class="ft clearfix">
+									<span class="l">
+									<i class="iconfont icon-huida"></i>&nbsp;{$vo.vod_up}
+								</span>
+									<span class="r">
+									<i class="iconfont icon-yanjing"></i>&nbsp;已被观看：{$vo.vod_hits}次
+								</span>
+								</div>
+							</a>
+						</div>
+						{/maccms:vod}
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			pageInit({
+				"id":"{$obj.vod_id}",
+				"tid": "{$obj.type_id}"
+			});
+		</script>
+		
+		{include file="public/foot"}
+
+	</body>
+
+</html>

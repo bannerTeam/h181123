@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{$maccms.site_name}-{$obj.type_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}"> 
+		{include file="public/include"}
+		
+
+	</head>
+
+	<body>
+		
+		{include file="public/header"}
+		
+		<div class="page-w">
+			
+			<div class="filter">
+				<div class="hd">视频分类</div>
+				<div class="bd">													
+					<a {if $timeadd=='7'}class="active"{/if} href="{:mac_url('/vod/index',['timeadd'=>7])}">本周热门</a>						
+					<a {if $timeadd=='30'}class="active"{/if} href="{:mac_url('/vod/index',['timeadd'=>30])}">本月热门</a>
+					<a {if $sort=='hits'}class="active"{/if} href="{:mac_url('/vod/index',['by'=>'hits'])}">热门总榜</a>
+					<a {if $sort=='up'}class="active"{/if} href="{:mac_url('/vod/index',['by'=>'up'])}">好评榜</a>
+				</div>
+			</div>
+			
+			<div class="module-list clearfix">
+				<div class="hd clearfix">
+					<h4><i class="iconfont icon-huo1"></i>&nbsp;						
+						{if $timeadd=='30' }本月热门
+						{elseif $sort=='hits' }热门总榜
+						{elseif $sort=='up' }好评榜
+						{else}本周热门
+						{/if}
+					<span id="videos_total"></span>
+					</h4>	
+					
+				</div>
+				<div class="bd clearfix">
+					{maccms:vod num="10" paging="yes" type="all" by="'.$sort.'"  order="desc" timeadd="'.$timeadd.'"}
+					<div class="item">
+						<a target="_blank" href="{:mac_url_vod_detail($vo)}">
+							<div class="thumb">
+								<img alt="{$vo.vod_name}" src="{:mac_url_img($vo.vod_pic)}"/>
+							</div>
+							<div class="title ui-nowrap">
+								{$vo.vod_name}
+							</div>
+							<div class="date clearfix">
+								<span class="l">
+									<i class="iconfont icon-riqi"></i>&nbsp;{$vo.vod_time|date='Y-m-d',###}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-shijian"></i>&nbsp;{$vo.vod_duration}
+								</span>
+							</div>
+							<div class="ft clearfix">
+								<span class="l">
+									<i class="iconfont icon-huida"></i>&nbsp;{$vo.vod_up}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-yanjing"></i>&nbsp;已被观看：{$vo.vod_hits}次
+								</span>
+							</div>							
+						</a>
+					</div>
+					 {/maccms:vod}
+					 
+					 <div class="clearfix">
+					 	{include file="public/paging"}
+					 </div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript">
+			$('#videos_total').html('{$__PAGING__.record_total}');			
+		</script>
+		
+		{include file="public/foot"}
+		
+		
+	</body>
+
+</html>

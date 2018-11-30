@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>会员注册</title>
+		<meta name="keywords" content="{$maccms.site_keywords}" />
+		<meta name="description" content="{$maccms.site_description}" /> 
+		{include file="public/include" /}
+		
+	</head>
+
+	<body>
+		{include file="public/header" /}
+		<div class="signup">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<div class="hd"></div>
+			<div class="bd" style="margin-bottom:5rem;">
+				<h3>会员注册</h3>
+				<div class="form">
+					<div class="col weui-flex">
+						<i class="iconfont icon-xingmingyonghumingnicheng"></i>
+						<input class="weui-flex__item" id="user_name" placeholder="请输入用户名" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-mima1"></i>
+						<input class="weui-flex__item" id="user_pwd" placeholder="请输入密码" type="password" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-mima1"></i>
+						<input class="weui-flex__item" id="user_pwd2" placeholder="请再次输入密码" type="password" />
+					</div>
+					<div class="col weui-flex">
+						<i class="iconfont icon-yanzhengma" style="line-height: 2rem;"></i>
+						<input class="weui-flex__item" id="verify" placeholder="请输入验证码" type="text" />
+						<img style="background: transparent;width: 8rem;" class="user_reg_but" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
+					</div>
+					<div class="submit">
+						<button id="btn_submit">
+							提交注册
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="ft">
+				<a href="/user/login">已有账号？立即登录</a>
+			</div>			
+		</div>
+		
+		
+
+		<script type="text/javascript">
+			$(function() {
+				$("body").bind('keyup', function(event) {
+					if(event.keyCode == 13) {
+						$('#btn_submit').click();
+						return false;
+					}
+				});
+				$('#btn_submit').click(function() {
+
+					if($('#user_name').val() == '') {
+						tips('请输入用户名');
+						$("#user_name").focus();
+						return false;
+					}
+					if($('#user_pwd').val() == '') {
+						tips('请输入密码');
+						$("#user_pwd").focus();
+						return false;
+					}
+					if($('#user_pwd').val() != $('#user_pwd2').val()) {
+						tips('两次密码不一致');
+						$("#user_pwd2").focus();
+						return false;
+					}
+
+					if($('#verify').val() == '') {
+						tips('请输入验证码');
+						$("#verify").focus();
+						return false;
+					}
+					var index = layer.open({
+						type: 2
+					});
+					$.ajax({
+						url: "/user/reg",
+						type: "post",
+						dataType: "json",
+						data: {
+							user_name: $.trim($('#user_name').val()),
+							user_pwd: $.trim($('#user_pwd').val()),
+							user_pwd2: $.trim($('#user_pwd2').val()),
+							verify: $.trim($('#verify').val()),
+							iverify: true
+						},
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+
+								//信息框
+								layer.open({
+									content: '注册成功',
+									btn: '确定',
+									yes: function() {
+										location.href = "/user/login.html";
+									}
+								});
+
+							} else {
+								tips(r.msg);
+								$("#verify_img").click();
+								$('#verify').val("");
+							}
+						}
+					});
+
+				});
+
+				function tips(msg) {
+					layer.open({
+						content: msg,
+						skin: 'msg',
+						time: 2
+					});
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

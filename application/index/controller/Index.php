@@ -24,6 +24,7 @@ class Index extends Base
         
         $this->assign('pageHome',true);
         
+        
         return $this->fetch( 'index/index');
     }
     

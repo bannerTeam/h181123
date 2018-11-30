@@ -1,0 +1,42 @@
+<div class="header">	
+	<div class="hd ">
+		<div class="page-w">
+		<div class="logo"><img src="{$maccms.path_tpl}img/logo.png" alt="{$maccms.site_name}" /></div>
+		<div class="search">
+			<div class="search-inner">
+			<form action="{:mac_url('vod/search')}">
+				<input placeholder="输入关键词搜索..." type="text" name="wd" class="text" id="" value="" /><input type="submit" class="btn" name="" id="" value="搜索" />	
+			</form>
+			</div>
+		</div>
+		<div class="tags ui-nowrap">			
+			<a>热门标签：</a>
+			{maccms:foreach name="$maccms.search_hot_arr" id="hot"}
+			<a href="/vod/search/wd/{$hot}" title="{$hot}" >{$hot}</a>
+			{/maccms:foreach}	
+		</div>
+		<div class="signup">
+			<div class="signup-inner">
+			<a href="/user/reg" class="btn">注册</a>
+			<a href="/user/login" class="btn">登录</a>
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="nav">		
+		<ul class=" page-w">
+			<li class="{if $pageHome}active{/if}"><a href="/">今日推荐</a></li>
+			{maccms:type ids="parent" order="asc" by="sort"}
+			<li {if condition=" ($vo.type_id eq MAC_TYPE_ID || $vo.type_id eq MAC_TYPE_PID) "} class="active"{/if}>
+				<a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
+			</li>
+			{/maccms:type}
+			<li class="{if $vodindex}active{/if}"><a href="{:mac_url('vod/index')}">热门视频</a></li>
+			<li><a href="">加入VIP</a></li>
+			<li><a href="">推广奖励</a></li>
+			<li><a href="">三级分销</a></li>
+			<li><a href="">网址找回</a></li>
+			<li><a href="">手机APP</a></li>
+		</ul>
+	</div>
+</div>

@@ -23,8 +23,8 @@
 					<i class="iconfont icon-shipin3"></i>&nbsp;全部<span id="videos_total"></span>部
 				</div>
 				<div class="weui-flex__item sort">
-					<a class="sort-btn {if $sort=='time' }active {/if}" href="{:mac_url('/vod/type',['id'=>MAC_TYPE_ID])}">最新发布</a>
-					<a class="sort-btn {if $sort=='hits' }active {/if}" href="{:mac_url('/vod/type',['by'=>'hits','id'=>MAC_TYPE_ID])}">热门视频</a>
+					<a class="sort-btn {if $sort=='time' }active {/if}" href="{:mac_url('/vod/search',['wd'=>$param.wd])}">最新发布</a>
+					<a class="sort-btn {if $sort=='hits' }active {/if}" href="{:mac_url('/vod/search',['by'=>'hits','wd'=>$param.wd])}">热门视频</a>
 				</div>
 			</div>
 		</div>

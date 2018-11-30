@@ -55,6 +55,7 @@ class Vod extends Base
         } else if ($param['timeadd'] == 7) {
             $this->assign('title', '发现');
         }
+                
         
         return $this->fetch('vod/index');
     }
