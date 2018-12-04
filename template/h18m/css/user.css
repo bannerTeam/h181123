@@ -130,6 +130,9 @@ ul,li{list-style: none;}
 .coo-item i.icon-youjian{ color: red;}
 
 .feedback{  padding: 3rem;}
-.feedback textarea{ width: 100%; border: 1px solid #888888; height: 20rem; padding: 1rem;    box-sizing: border-box; border-radius: 0.5rem;font-size: 1.2rem;}
+.feedback textarea{ width: 100%; border: 1px solid #efefef; height: 20rem; padding: 1rem;    box-sizing: border-box; border-radius: 0.5rem;font-size: 1.2rem;}
+.feedback input{ width: 100%; border: 1px solid #efefef; width: 10rem; height: 3.5rem; padding-left: 1rem; }
+.feedback .verify_img{background: transparent;height: 3.5rem;vertical-align: middle;}
 .feedback p{ margin-top: 2rem; text-align: center;}
 .feedback p button{ border: 1px solid #2BAEB9; background: #FFFFFF; width: 80%; height: 4rem; line-height: 4rem; color: #2BAEB9; font-size: 1.4rem; border-radius: 2rem;}
+

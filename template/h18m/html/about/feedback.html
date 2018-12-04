@@ -19,15 +19,79 @@
 			<div class="bd">
 				<h1>意见反馈</h1>
 				<div class="feedback">
-					<textarea></textarea>
+					<textarea id="gbook_content"></textarea>
+					<div>
+						<input autocomplete="off" type="text" name="verify" id="verify" value="" placeholder="请输入验证码" />
+						<img class="verify_img" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
+					</div>
 					<p>
-						<button>提交</button>
+						<button id="submit">提交</button>
 					</p>
 				</div>				
 			</div>					
 		</div>
 
-		
+		<script type="text/javascript">
+			$(function() {
+
+				var gbook = $("#gbook_content");
+				var verify = $("#verify");
+
+				$("#submit").click(function() {
+					if(h18.login()) {
+						save();
+					} else {
+						tips("请先登录");
+					}
+
+				});
+
+				function save() {
+					var con = $.trim(gbook.val()),
+						ver = $.trim(verify.val());
+
+					if(con.length < 10) {
+						tips("请认真填写");
+						return false;
+					}
+					if(ver == "") {
+						tips("请填写验证码");
+						return false;
+					}
+					$.ajax({
+						type: "post",
+						url: "/Gbook/saveData",
+						dataType: "json",
+						data: {
+							gbook_content: con,
+							verify: ver
+						},
+						success: function(res) {
+							if(res.code == 1) {
+								tips('提交成功');
+								setTimeout(function(){									
+									location.href = "/user/index";
+								},1500);
+							} else {
+								tips(res.msg);
+								$("#verify_img").click();
+								verify.val("");
+							}
+						}
+					});
+				}
+				
+				function tips(msg) {
+					layer.open({
+						content: msg,
+						skin: 'msg',
+						time: 2
+					});
+				}
+
+			});
+		</script>
+
 		{include file="public/foot" /}
 	</body>
 

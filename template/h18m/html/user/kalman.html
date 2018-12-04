@@ -18,11 +18,11 @@
 				<div class="form">
 					<div class="col weui-flex">
 						<i class="iconfont icon-huiyuanqia"></i>
-						<input class="weui-flex__item" id="card" placeholder="请输入充值卡号" type="text" />
+						<input class="weui-flex__item" id="card_no" placeholder="请输入充值卡号" type="text" />
 					</div>
 					<div class="col weui-flex">
 						<i class="iconfont icon-mima"></i>
-						<input class="weui-flex__item" id="card_pwd" placeholder="请输入充值卡密码" type="password" />
+						<input class="weui-flex__item" id="card_pwd" placeholder="请输入充值卡密码" type="text" />
 					</div>
 					<div class="submit">
 						<button id="btn_submit">
@@ -44,9 +44,9 @@
 				});
 				$('#btn_submit').click(function() {
 
-					if($('#card').val() == '') {
+					if($('#card_no').val() == '') {
 						tips('请输入充值卡号');
-						$("#card").focus();
+						$("#card_no").focus();
 						return false;
 					}
 					if($('#card_pwd').val() == '') {
@@ -62,14 +62,16 @@
 						type: "post",
 						dataType: "json",
 						data: {
-							user_name: $.trim($('#card').val()),
-							user_pwd: $.trim($('#card_pwd').val()),
-							iverify: true
+							card_no: $.trim($('#card_no').val()),
+							card_pwd: $.trim($('#card_pwd').val())						
 						},
 						success: function(r) {
 							layer.close(index);
 							if(r.code == 1) {								
-								;
+								tips('充值成功');
+								setTimeout(function(){									
+									location.href = "/user/index";
+								},1500);
 							} else {
 								tips(r.msg);
 							}

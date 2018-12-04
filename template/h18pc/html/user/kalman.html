@@ -21,11 +21,11 @@
 					<div class="form">
 						<div class="col weui-flex">
 							<label>充值卡号</label>
-							<input class="weui-flex__item" id="card_no" placeholder="请输入充值卡号" type="text" />
+							<input class="weui-flex__item" id="card_no" placeholder="请输入充值卡号" type="text" autocomplete="off" />
 						</div>
 						<div class="col weui-flex">
 							<label>充值卡密码</label>
-							<input class="weui-flex__item" id="card_pwd" placeholder="请输入充值卡密码" type="password" />
+							<input class="weui-flex__item" id="card_pwd" placeholder="请输入充值卡密码" type="text" autocomplete="off" />
 						</div>
 						<div class="submit">
 							<button id="btn_submit">
@@ -74,7 +74,11 @@
 						},
 						success: function(r) {
 							layer.close(index);
-							if(r.code == 1) {;
+							if(r.code == 1) {
+								layer.msg('充值成功', {icon: 1}); 
+								setTimeout(function(){									
+									location.href = "/user/index";
+								},1500);
 							} else {
 								tips(r.msg);
 							}
