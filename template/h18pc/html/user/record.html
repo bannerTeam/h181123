@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -16,34 +16,32 @@
 		
 		<div class="page-w">
 			
-			
 			<div class="filter">
 				<div class="hd">视频分类</div>
-				<div class="bd">					
-					<a {if $timeadd=='7'}class="active"{/if} href="{:mac_url('/vod/index',['timeadd'=>7])}">本周热门</a>						
-					<a {if $timeadd=='30'}class="active"{/if} href="{:mac_url('/vod/index',['timeadd'=>30])}">本月热门</a>
-					<a {if $sort=='hits'}class="active"{/if} href="{:mac_url('/vod/index',['by'=>'hits'])}">热门总榜</a>
-					<a {if $sort=='up'}class="active"{/if} href="{:mac_url('/vod/index',['by'=>'up'])}">好评榜</a>
-					<a {if $timeadd=='3'}class="active"{/if} href="{:mac_url('/vod/index',['timeadd'=>3])}">最新上传</a>
+				<div class="bd">													
+					<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">我的收藏</a>	
+					<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">观看记录</a>	
+					<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">顶记录</a>	
+					
 				</div>
 			</div>
-		
 			
 			<div class="module-list clearfix">
 				<div class="hd clearfix">
-					<h4><i class="iconfont icon-huo1"></i>&nbsp;	
-						{if $timeadd ==3 }最新上传
-						{elseif $timeadd=='30' }本月热门
-						{elseif $sort=='hits' }热门总榜
-						{elseif $sort=='up' }好评榜
-						{else}本周热门
-						{/if}
+					<h4><i class="iconfont icon-huo1"></i>&nbsp;
+						{if $sort=='time' }最新更新 {/if}
+						{if $sort=='hits' }播放最多 {/if}
+						{if $sort=='up' }最多人顶 {/if}						
 					<span id="videos_total"></span>
 					</h4>	
-					
+					<div class="by r">
+						<a class="{if $sort=='time' }active {/if}" href="{:mac_url('/vod/type',['id'=>MAC_TYPE_ID])}">最新更新</a>
+						<a class="{if $sort=='hits' }active {/if}" href="{:mac_url('/vod/type',['by'=>'hits','id'=>MAC_TYPE_ID])}">播放最多</a>
+						<a class="{if $sort=='up' }active {/if}" href="{:mac_url('/vod/type',['by'=>'up','id'=>MAC_TYPE_ID])}">最多人顶</a>
+					</div>
 				</div>
 				<div class="bd clearfix">
-					{maccms:vod num="12" paging="yes" type="all" by="'.$sort.'"  order="desc" timeadd="'.$timeadd.'"}
+					{maccms:vod num="12" paging="yes" type="all" by="time" order="desc"  }
 					<div class="item">
 						<a target="_blank" href="{:mac_url_vod_detail($vo)}">
 							<div class="thumb">
@@ -72,7 +70,7 @@
 					</div>
 					 {/maccms:vod}
 					 
-					 <div class="clearfix">
+					  <div class="clearfix">
 					 	{include file="public/paging"}
 					 </div>
 				</div>

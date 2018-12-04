@@ -1,51 +1,80 @@
 ﻿<!DOCTYPE HTML>
 <html>
 	<head>
-		<meta charset="UTF-8">		
-		<title>我的收藏</title>
+		<meta charset="UTF-8">
+		<title>我的收藏-观看记录</title>
 		<meta name="keywords" content="{$maccms.site_keywords}">
-		<meta name="description" content=" {$maccms.site_description} ">
-		 {include file="public/include_vod"}
-<script>
-			pageFontSize()
-		</script>
+		<meta name="description" content="{$maccms.site_description}"> 
+		{include file="public/include"}
+		
+
 	</head>
 
 	<body>
 		
-		<div class="chead">
-			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
-			<h3>我的收藏</h3>
-		</div>
+		{include file="public/header"}
 		
-		
-		<div class="ui-grid-title">
-			<div class="weui-flex">
-				<div class="title">
-					<i class="iconfont icon-shipin3"></i>&nbsp;全部<span id="videos_total"></span>部
-				</div>				
-			</div>
-		</div>
-		<section class="ui-panel">
+		<div class="page-w">
+			
+			<div class="filter">
+				<div class="hd">视频分类</div>
+				<div class="bd">													
+					<a {if $pageFavs}class="active"{/if} href="{:mac_url('/vod/type',['id'=>$typeAll])}">我的收藏</a>	
+					<!--<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">观看记录</a>	
+					<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">顶记录</a>	-->
 					
-			<ul class="ui-grid-trisect" id="vlist">
-
-				{volist name="list" id="vo"}
-				<li style="width: 49.5%;">					
-					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('{:mac_url_img($vo.data.pic)}')"></span>
-						<div class="cnl-tag tag">
-							{$vo.data.timeadd}
+				</div>
+			</div>
+			
+			<div class="module-list clearfix">
+				<div class="hd clearfix">
+					<h4><i class="iconfont icon-huo1"></i>&nbsp;
+						我的收藏										
+					<span id="videos_total"></span>
+					</h4>	
+					<div class="by r">
+						
+					</div>
+				</div>
+				<div class="bd clearfix" id="vlist">
+					{volist name="list" id="vo"}
+					<div class="item">
+						<a target="_blank" href="{:mac_url_vod_detail($vo)}">
+							<div class="thumb">
+								<img alt="{$vo.data.name}" src="{:mac_url_img($vo.data.pic)}"/>
+							</div>
+							<div class="title ui-nowrap">
+								{$vo.data.name}
+							</div>
+							<div class="date clearfix">
+								<span class="l">
+									<i class="iconfont icon-riqi"></i>&nbsp;{$vo.data.time_add|date='Y-m-d',###}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-shijian"></i>&nbsp;{$vo.data.duration}
+								</span>
+							</div>
+							<div class="ft clearfix">
+								<span class="l">
+									<i class="iconfont icon-huida"></i>&nbsp;{$vo.data.up}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-yanjing"></i>&nbsp;已被观看：{$vo.data.hits}次
+								</span>
+							</div>							
+						</a>
+						<div class="del" data-id="{$vo.ulog_id}" title="删除">
+							<i class="iconfont icon-shanchu1"></i>
 						</div>
-						<div class="delete" data-id = "{$vo.ulog_id}"><i></i>移除</div>
-					</div>					
-					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/{$vo.data.id}" >{$vo.data.name}</a></h4>
-				</li>
-				{/volist}
-
-			</ul>
-			<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
-		</section>
-		
+					</div>
+					{/volist}
+				  <div class="clearfix">
+				 	{include file="public/paging"}
+				 </div>
+				</div>
+			</div>
+			
+		</div>
 		<script src="{$maccms.path_tpl}js/user/favs.js"></script>
 		<script type="text/javascript">
 			 $('#videos_total').html('{$__PAGING__.record_total}');

@@ -1,0 +1,58 @@
+html,body{
+	background: #efefef; width: 100%; 
+}
+.user{ min-height: 500px;}
+.user-side{ width: 280px; float: left;
+ background: #FFFFFF;min-height: 500px;}
+.user-side .uhead{}
+.user-side li{ height: 70px; line-height: 70px; border-bottom: 1px solid #efefef;}
+.user-side li.active{background: #efefef; }
+.user-side li:first-child{border-top: 1px solid #efefef;}
+.user-side li a{ font-size: 18px; padding-left: 20px;}
+.user-side li img{ height: 35px; margin-right: 10px;}
+.uhead { padding: 25px 0 ;}
+.uhead .face{ float: left; width: 120px; text-align: center;}
+.uhead .face img{ width: 100px; height: 100px; border-radius: 50%; overflow: hidden;}
+.uhead .info{ float: left; width: 140px; margin-left: 10px;margin-top: 20px;}
+.uhead .info .tit{ font-size: 16px; line-height: 35px;}
+.uhead .info .desc{ line-height: 30px;}
+.uhead .info .oper{ line-height: 35px;}
+.uhead .info .oper .btn{ height: 33px; line-height: 33px;
+border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
+
+
+.user-con{
+	float: right;
+	width:900px;	
+}
+.user-con .form{ width: 600px; margin: 0 auto;}
+.user-con .form .col{ margin-top: 20px;}
+.user-con .form label{ width: 80px;line-height: 35px; text-align: right; margin-right: 12px;}
+.user-con .form input{ border: 1px solid #e6e6e6; height: 35px; line-height: 35px; text-indent: 12px;}
+.user-con .form .submit{ text-align: center; margin-top: 50px;}
+.user-con .form button{width: 50%;border: 0 none;
+	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer;
+}
+.user-con .form .tip{ visibility: hidden; color: red; clear: both;height: 35px; line-height: 35px;}
+
+/*VIP*/
+.vipmain{ margin-top: 30px;}
+.vip-title{ font-size: 18px; line-height: 35px; margin-bottom: 10px;color: #000000;}
+.vipmain .vipmain-item{width:20%;float:left; cursor: pointer;}
+.vipmain .vipmain-item .item{margin:5px;border:1px solid #2BAEB9;background:#FFF;text-align:center;padding:15px 0;border-radius:5px;overflow:hidden}
+.vipmain .active .item{background:#7ed9e0;color:#000}
+.vipmain .active .item .p1{color:#000}
+.vipmain .active .item .p2{color:#000}
+.vipmain .p1{height:28px;line-height:28px;text-align:center;font-size:20px;font-weight:700;color:#896623;text-overflow:ellipsis;overflow:hidden}
+.vipmain .p2{font-size:40px;line-height:40px;color:#896623;padding:10px 0}
+.vipmain .p2 span{font-size:16px;line-height:23px}
+.vipmain .p3{height:25px;line-height:25px;font-size:14px;color:#fff;text-align:center;background-image:linear-gradient(45deg,#FFB167 0,#FF2937 100%);box-shadow:0 2px 4px 0 rgba(255,76,67,.53);border-radius:100px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;margin:0 8px}
+
+.playment{ }
+.playment li{ float: left; margin-right: 30px;}
+.playment li img{ width: 200px;}
+.playment li p{ line-height: 30px; text-align: center; }
+
+.vip-btn{ text-align: center; padding: 30px 0; margin-top: 30px;}
+.vip-btn button{width: 30%;border: 0 none;
+	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer;}

@@ -1,5 +1,9 @@
 
-{if $videoplay}
+{if $browsevodFalse}
+<div class="video-container" id="video-container">
+	<div id="video_banner"></div>
+</div>
+{else}
 <script>
 	var player_data = {
 		"flag": "play",
@@ -33,10 +37,5 @@
 			video: "{$obj.player_info.url}"
 		};		
 		VideoPlayer.init();
-	</script>
-
-{else}
-<div class="video-container" id="video-container">
-	
-</div>
+</script>
 {/if}

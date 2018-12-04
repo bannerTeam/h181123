@@ -1,0 +1,68 @@
+<div class="user-side">
+	<div class="uhead">
+		<div class=" clearfix">
+			<div class="face">
+				<img src="{$maccms.path_tpl}img/user/face.jpg" alt="" />
+			</div>
+			<div class="info {if $user_vip}info-vip{/if}">
+				<div class="tit">
+					<span>{$user_title}</span>
+				</div>
+				{if $user_vip}
+				<div class="desc">
+					VIP会员，无限看片
+				</div>
+				<div class="oper">
+					<span>{$vip_date}到期</span>
+					<br />
+					<a class="btn" href="/user/vip">续期</a>
+				</div>
+				{elseif $user.user_id > 0}
+				<div class="tit">
+					<span>{$user.user_name}</span>
+				</div>
+				<div class="oper">
+					<span>普通会员</span>
+					<a class="btn" href="/user/vip">升级VIP</a>
+				</div>
+				{else /}
+				<div class="oper">
+					<a class="btn" href="/user/reg">注册</a>
+					<a class="btn" href="/user/login">登录</a>
+				</div>
+				{/if}						
+			</div>
+		</div>		
+	</div>
+	<ul>
+		<li>
+			<a href="/user/">
+				<img src="{$maccms.path_tpl}/img/user/3.png" />
+				推广奖励</a>
+		</li>
+		<li>
+			
+			<a href="/user/vip"><img src="{$maccms.path_tpl}/img/user/2.png" />升级VIP,无限看片</a>
+		</li>
+		<li>
+			<a href="/user/kalman"><img src="{$maccms.path_tpl}/img/user/1.png" />卡密充值,快速到账</a>
+		</li>
+		<li>
+			
+			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/4.png" />修改密码</a>
+		</li>
+		<li>
+			<a id="out" href="javascript:;"><img src="{$maccms.path_tpl}/img/user/out.png" />退出</a>
+		</li>
+		<li></li>		
+	</ul>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#out").click(function(){
+			layer.confirm('确认要退出吗？', {}, function(){
+				  location.href = "/user/logout";
+			});
+		})
+	})
+</script>

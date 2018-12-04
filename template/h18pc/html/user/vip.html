@@ -4,78 +4,73 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>升级VIP</title>
-		{include file="public/include_user" /}
-
+		{include file="public/include" /}
+		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
 	</head>
 
 	<body>
 
-		<div class="chead">
-			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
-			<h3>升级VIP</h3>
-		</div>
-		
-		<div class="vipmain">
-			
-			<div class="vipmain-item">
-				<a href="/user/vip_payment.html">
-				<div class="item-l">
-					<p>体验VIP</p>
-					<p>￥15</p>
-				</div>
-				<div class="item-r">
-					<p>7天畅享</p>
-					<p>无限次看片</p>
-				</div>
-				</a>
-			</div>
-			<div class="vipmain-item">
-				<a href="/user/vip_payment.html">
-				<div class="item-l">
-					<p>VIP月卡</p>
-					<p>￥30</p>
-				</div>
-				<div class="item-r">
-					<p>30天畅享</p>
-					<p>无限次看片</p>
-				</div>
-				</a>
-			</div>
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>VIP季卡</p>
-					<p>￥60</p>
-				</div>
-				<div class="item-r">
-					<p>92天畅享</p>
-					<p>无限次看片</p>
-				</div>
-			</div>
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>VIP年卡</p>
-					<p>￥288</p>
-				</div>
-				<div class="item-r">
-					<p>365天畅享</p>
-					<p>无限次看片</p>
-				</div>
-			</div>		
+		{include file="public/header" /}
 
+		<div class="user page-w clearfix">
+			{include file="user/side" /}
+			<div class="user-con">
+				<div class="vipmain">
+					<div class="vip-title clearfix">
+						1.选择会员类型
+					</div>
+					<div class="clearfix">
+						{volist name="list" id="vo"}
+						<div class="vipmain-item ">
+							<div class="item ">
+								<p class="p1">{$vo.name}</p>
+								<p class="p2"><span>￥</span>{:intval($vo.cost)}</p>
+								<p class="p3">{$vo.describe}</p>
+							</div>
+						</div>
+						{/volist}
+						
+					</div>
+					<div class="vip-title clearfix" style="margin-top: 30px;">
+						2.选择支付方式
+					</div>
+					<div class="playment clearfix">
+						<ul>
+							<li>
+								<img src="{$maccms.path_tpl}img/pay/alipay.jpg" />
+								<p>
+									<input type="radio" name="playment" id="playment1" value="" />选择支付宝</p>
+							</li>
+							<li>
+								<img src="{$maccms.path_tpl}img/pay/wx.jpg" />
+								<p>
+									<input type="radio" name="playment" id="playment2" value="" />选择微信</p>
+							</li>
+						</ul>
 
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>永久VIP</p>
-					<p>￥888</p>
+					</div>
+					
+					<div class="vip-btn">
+						<button>立即支付</button>
+					</div>
+				
 				</div>
-				<div class="item-r">
-					<p>永久畅享</p>
-					<p>无限次看片</p>
-				</div>
+
 			</div>
-			
 		</div>
-	
+
+		<script>
+			$(function() {
+
+				$('.vipmain-item').click(function() {
+
+					$(this).addClass('active').siblings().removeClass('active')
+
+				}).eq(0).click();
+
+			})
+		</script>
+
 		{include file="public/foot" /}
 	</body>
 

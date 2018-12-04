@@ -20,6 +20,7 @@ class About extends Base
      */
     public function website()
     {
+        $this->assign('aboutWebsite',1);
         return $this->fetch('about/website');
     }
 
@@ -30,6 +31,7 @@ class About extends Base
      */
     public function cooperation()
     {
+        $this->assign('aboutCooperation',1);
         return $this->fetch('about/cooperation');
     }
     
@@ -53,5 +55,20 @@ class About extends Base
         return $this->fetch('about/feedback');
     }
    
+    /**
+     * 加入VIP 介绍
+     * @return mixed|string
+     */
+    public function vip()
+    {
+        
+        $res = model('Vip')->listData();
+        
+        $this->assign('list',$res['list']);
+        
+        $this->assign('aboutVip',1);
+        
+        return $this->fetch('about/vip');
+    }
 
 }

@@ -3,31 +3,87 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>意见反馈</title>
+		<title>意见反馈-{$maccms.site_name}</title>
 		<meta name="keywords" content="{$maccms.site_keywords}" />
-		<meta name="description" content="{$maccms.site_description}" /> 
-		{include file="public/include_user" /}
+		<meta name="description" content="{$maccms.site_description}" /> {include file="public/include" /}
 	</head>
 
-	<body style="">		
-		
-		<div class="about">
-			
-			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>	
-			
-			<div class="hd abg1"></div>
-			<div class="bd">
-				<h1>意见反馈</h1>
-				<div class="feedback">
-					<textarea></textarea>
+	<body style="">
+		{include file="public/header"}
+		<div class="mod_hand_banner cooperation_banner">
+			<div class="">
+			</div>
+		</div>
+		<div class="page-w">
+			<div class="about cooperation feedback">
+
+				<fieldset>
+					<legend>意见反馈</legend>
+				</fieldset>
+
+				<div class="form">
+					<textarea id="gbook_content"></textarea>
 					<p>
-						<button>提交</button>
+						<input autocomplete="off" type="text" name="verify" id="verify" value="" placeholder="请输入验证码" />
+						<img style="background: transparent;width: 100px;" class="user_reg_but" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
 					</p>
-				</div>				
-			</div>					
+					<p class="submit">
+						<button id="submit">提交</button>
+					</p>
+				</div>
+
+			</div>
 		</div>
 
-		
+		<script type="text/javascript">
+			$(function() {
+
+				var gbook = $("#gbook_content");
+				var verify = $("#verify");
+
+				$("#submit").click(function() {
+					if(h18.login()) {
+						save();
+					} else {
+						layer.msg("请先登录");
+					}
+
+				});
+
+				function save() {
+					var con = $.trim(gbook.val()),
+						ver = $.trim(verify.val());
+
+					if(con.length < 10) {
+						layer.msg("请认真填写");
+						return false;
+					}
+					$.ajax({
+						type: "post",
+						url: "/Gbook/saveData",
+						dataType: "json",
+						data: {
+							gbook_content: con,
+							verify: ver
+						},
+						success: function(res) {
+							if(res.code == 1) {
+								layer.alert('提交成功', function(index) {
+
+									location.href = "/";
+								});
+							} else {
+								layer.msg(res.msg);
+								$("#verify_img").click();
+								verify.val("");
+							}
+						}
+					});
+				}
+
+			});
+		</script>
+
 		{include file="public/foot" /}
 	</body>
 

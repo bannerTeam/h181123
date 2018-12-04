@@ -54,7 +54,8 @@ class Ulog extends Base {
                     'id'=>$vod_info['info']['vod_id'],
                     'name'=>$vod_info['info']['vod_name'],
                     'pic'=>mac_url_img($vod_info['info']['vod_pic']),
-                    'link'=>$vod_info['info']['link'],                    
+                    'link'=>$vod_info['info']['link'],     
+                    'time_add'=>$vod_info['info']['vod_time_add'],
                     'timeadd'=>date('m-d',$vod_info['info']['vod_time_add']),
                     'type'=>[
                         'type_id'=>$vod_info['info']['type']['type_id'],

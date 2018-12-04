@@ -16,3 +16,28 @@ function date(format,timestamp){var a,jsdate=((timestamp)?new Date(timestamp*100
  * @param {Object} options
  */
 jQuery.cookie=function(name,value,options){if(typeof value!='undefined'){options=options||{};if(value===null){value='';options.expires=-1}var expires='';if(options.expires&&(typeof options.expires=='number'||options.expires.toUTCString)){var date;if(typeof options.expires=='number'){date=new Date();date.setTime(date.getTime()+(options.expires*24*60*60*1000))}else{date=options.expires}expires='; expires='+date.toUTCString()}var path=options.path?'; path='+options.path:'';var domain=options.domain?'; domain='+options.domain:'';var secure=options.secure?'; secure':'';document.cookie=[name,'=',encodeURIComponent(value),expires,path,domain,secure].join('')}else{var cookieValue=null;if(document.cookie&&document.cookie!=''){var cookies=document.cookie.split(';');for(var i=0;i<cookies.length;i++){var cookie=jQuery.trim(cookies[i]);if(cookie.substring(0,name.length+1)==(name+'=')){cookieValue=decodeURIComponent(cookie.substring(name.length+1));break}}}return cookieValue}};
+
+ /**
+ * 时间秒数格式化
+ * @param s 时间戳（单位：秒）
+ * @returns {*} 格式化后的时分秒
+ */
+var sec_to_time = function(s) {
+    var t;
+    if(s > -1){
+        var hour = Math.floor(s/3600);
+        var min = Math.floor(s/60) % 60;
+        var sec = s % 60;
+        if(hour < 10) {
+            t = '0'+ hour + ":";
+        } else {
+            t = hour + ":";
+        }
+
+        if(min < 10){t += "0";}
+        t += min + ":";
+        if(sec < 10){t += "0";}
+        t += sec.toFixed(2);
+    }
+    return t;
+}

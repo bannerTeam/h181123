@@ -23,7 +23,7 @@ class Vod extends Base
         $this->assign('sort', $by);
         
         $timeadd = $param['timeadd'];
-        if (empty($by)) {
+        if (empty($timeadd)) {
             $timeadd = 0;
         }
         
@@ -40,6 +40,8 @@ class Vod extends Base
         $this->assign('wd', $wd);
         
         $this->assign('timeadd', $timeadd);
+        
+        
         
         return $param;
     }
@@ -137,8 +139,26 @@ class Vod extends Base
     }
 
     public function play()
-    {
-       
+    {       
+        
+        // 當前登錄用戶id
+        $user_id = $GLOBALS['user']['user_id'];
+        if(empty($user_id)){
+            // 判断是否有cookie
+            $browsevod = Cookie::get('browsevod', 'h18_');
+            if ($browsevod) {
+                $this->assign('browsevodFalse',1);
+            }
+        }else{
+            // 判断是否有cookie
+            $browsevod2 = Cookie::get('browsevodu'.$user_id, 'h18_');
+            if ($browsevod2) {
+                $this->assign('browsevodFalse',1);
+            }
+        }
+        
+        
+        
         $this->assign('videoplay', true);
         $info = $this->label_vod_play('play');
         
@@ -152,7 +172,7 @@ class Vod extends Base
     }
 
     public function player()
-    {
+    { 
         $info = $this->label_vod_play('play', [], 0, 1);
         return $this->fetch();
     }

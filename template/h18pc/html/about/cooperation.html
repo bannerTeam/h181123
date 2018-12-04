@@ -6,58 +6,78 @@
 		<title>商务合作</title>
 		<meta name="keywords" content="{$maccms.site_keywords}" />
 		<meta name="description" content="{$maccms.site_description}" /> 
-		{include file="public/include_user" /}
+		{include file="public/include" /}
 	</head>
 
 	<body style="">		
 		
-		<div class="about">
+		{include file="public/header"}
+		
+		<div class="mod_hand_banner cooperation_banner">
+			<div class="">
+			</div>
+		</div>		
+		<div class="page-w">
 			
-			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>	
+		
+		<div class="about cooperation">
 			
-			<div class="hd abg1"></div>
-			<div class="bd">
-				<h1>商务合作</h1>
-				<div class="coo">
-					<div class="coo-tit">
-						广告、代理等合作事宜请联系
-					</div>
-					<div class="coo-items">
-						<div class="coo-item weui-flex">
-							<span>
-								<i class="iconfont icon-xiaofeiji"></i>
-							</span>
-							<div class="weui-flex__item">
-								<p>Telegram帐号：</p>
-								<p>111052558888</p>
-							</div>
-						</div>
-						<div class="coo-item weui-flex">
-							<span>
-								<i class="iconfont icon-skype1"></i>
-							</span>
-							<div class="weui-flex__item">
-								<p>Skype帐号：</p>
-								<p>111052558888</p>
-							</div>
-						</div>
-						<div class="coo-item weui-flex">
-							<span>
-								<i class="iconfont icon-youjian"></i>
-							</span>
-							<div class="weui-flex__item">
-								<p>发送邮件至：</p>
-								<p>111052@Gmail.com</p>
-							</div>
-						</div>
-					</div>	
-					
-				</div>
+			<fieldset>
+				<legend>招商合作</legend>
+			</fieldset>
+			<div class="article">
+				<p>H18视频站，包含网页版、安卓版、苹果版。由专业团队，实力运作，多年项目操作经验。 </p>
+				<p>支持多种合作方式，如有意向，请速联系：</p>
 				
-			</div>					
+			</div>
+			<div class="sns">
+				<ul>
+					<li class=" clearfix">
+						<div class="logo">
+							<img src="{$maccms.path_tpl}img/about/tg.jpg" alt="" width="200" height="65" />
+						</div>
+						<div class="desc">
+							<p>Telegram账号</p>
+							
+							<p class="number">
+								
+								3425345345
+								
+							</p>
+						</div>
+					</li>
+					<li class=" clearfix">
+						<div class="logo">
+							<img src="{$maccms.path_tpl}img/about/skype.jpg" alt="" width="200" height="65" />
+						</div>
+						<div class="desc">
+							<p>Skype账号</p>
+							
+							<p class="number">
+								53453453
+							</p>
+						</div>
+					</li>
+					<li class=" clearfix">
+						<div class="logo">
+							<img src="{$maccms.path_tpl}img/about/mail.jpg" alt="" width="200" height="65" />
+						</div>
+						<div class="desc">
+							<p>发送邮件至:</p>							
+							<p class="number">								
+								213123423@gmail.com								
+							</p>
+						</div>
+					</li>
+				</ul>
+			
+			
+			</div>
+			
+			
 		</div>
 
-		
+		</div>
 		{include file="public/foot" /}
 	</body>
 

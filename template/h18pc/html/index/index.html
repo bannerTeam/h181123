@@ -17,10 +17,32 @@
 		
 		<div class="page-w">
 			
+			
+			
 			<div class="module-1 clearfix">
-				<div class="banner">
-					<img src="{$maccms.path_tpl}img/demo/20170809020137255.jpg" />
+				<div class="banner clearfix">					
+					<div class="slideBox">
+					    <div class="hd">
+					        <ul></ul>
+					    </div>
+					    <div class="bd">					    	
+					        <ul>
+					            {maccms:adv type='2'}	
+					            <li>
+					            	<a href="{$vo.link}" title="{$vo.title}" target="_blank">
+								        <img src="{$vo.img}">
+								     </a> 
+					            </li>
+					            {/maccms:adv}					            
+					        </ul>					        
+					    </div>
+					</div>					
 				</div>
+				<script type="text/javascript">
+					$(function(){
+						jQuery(".slideBox").slide({mainCell:".bd ul",autoPlay:true,autoPage:"<li><a></a></li>",titCell:".hd ul"});
+					})
+				</script>
 				<div class="recommend">
 					{maccms:vod num="6" }
 					<div class="item">
@@ -38,7 +60,7 @@
 			<div class="module-list clearfix">
 				<div class="hd clearfix">
 					<h4><i class="iconfont icon-huo1"></i>&nbsp;最新上传</h4>	
-					<a href="" class="more">更多视频&nbsp;<i class="iconfont icon-llmainpageback"></i></a>
+					<a href="{:mac_url('/vod/index',['timeadd'=>3])}" class="more">更多视频&nbsp;<i class="iconfont icon-llmainpageback"></i></a>
 				</div>
 				<div class="bd clearfix">
 					{maccms:vod num="4" }
@@ -55,7 +77,7 @@
 									<i class="iconfont icon-riqi"></i>&nbsp;{$vo.vod_time|date='Y-m-d',###}
 								</span>
 								<span class="r">
-									<i class="iconfont icon-shijian"></i>&nbsp;{$vo.vod_duration}
+									<i class="iconfont icon-shijian"></i>&nbsp;{:mac_to_time($vo.vod_duration)}
 								</span>
 							</div>
 							<div class="ft clearfix">
@@ -71,6 +93,47 @@
 					 {/maccms:vod}
 				</div>
 			</div>
+			
+			
+			{maccms:type order="asc" by="sort" mid="1" ids="child" id="vo1"}
+			<div class="module-list clearfix">
+				<div class="hd clearfix">
+					<h4><i class="iconfont icon-huo1"></i>&nbsp;{$vo1.type_name}</h4>	
+					<a href="{:mac_url_type($vo1)}" class="more">更多视频&nbsp;<i class="iconfont icon-llmainpageback"></i></a>
+				</div>
+				<div class="bd clearfix">
+					{maccms:vod num="4" type="'.$vo1['type_id'].'" order="desc" by="time"}
+					<div class="item">
+						<a target="_blank" href="{:mac_url_vod_detail($vo)}">
+							<div class="thumb">
+								<img alt="{$vo.vod_name}" src="{:mac_url_img($vo.vod_pic)}"/>
+							</div>
+							<div class="title ui-nowrap">
+								{$vo.vod_name}
+							</div>
+							<div class="date clearfix">
+								<span class="l">
+									<i class="iconfont icon-riqi"></i>&nbsp;{$vo.vod_time|date='Y-m-d',###}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-shijian"></i>&nbsp;{:mac_to_time($vo.vod_duration)}
+								</span>
+							</div>
+							<div class="ft clearfix">
+								<span class="l">
+									<i class="iconfont icon-huida"></i>&nbsp;{$vo.vod_up}
+								</span>
+								<span class="r">
+									<i class="iconfont icon-yanjing"></i>&nbsp;已被观看：{$vo.vod_hits}次
+								</span>
+							</div>							
+						</a>
+					</div>
+					 {/maccms:vod}
+				</div>
+			</div>
+			
+			{/maccms:type}
 			
 		</div>
 		

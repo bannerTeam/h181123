@@ -6,9 +6,18 @@ ul,ol,li {list-style:none;}
 a:link,a:visited,a:active{text-decoration:none;color:#666; font-size:14px;}
 a:hover{text-decoration:none;color:#1989da; font-size:14px;} 
 .block{margin:0 auto; padding:0;}
+fieldset, iframe, img {
+    border: 0 none;
+}
+.hide{ display: none;}
 .clear{ clear:both;}
 .clearfix:after,.clearfix:before{content:"";display:block;height:0;clear:both;visibility:hidden}
 .ui-nowrap{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.weui-flex{display:-webkit-box;display:-webkit-flex;display:flex}
+.weui-flex__item{-webkit-box-flex:1;-webkit-flex:1;flex:1}
+
+
 .page-w{width:1200px;clear:both;margin:0 auto}
 .header .hd{height:90px;line-height:90px;background:#000}
 .header .logo{width:220px;vertical-align:middle;float:left}
@@ -20,18 +29,36 @@ a:hover{text-decoration:none;color:#1989da; font-size:14px;}
 .header .tags a{color:#FFF;margin-left:12px}
 .header .signup{float:right;height:90px}
 .header .signup .btn{padding:4px 20px;color:#2BAEB9;border:1px solid #2BAEB9;border-radius:4px;overflow:hidden;text-align:center;margin-right:10px}
+
+.signup .signup-user{ width: 180px; height: 45px; margin-top: 18px; background: #282828;line-height: 45px; text-align: right;}
+.signup .signup-user a{color:#2BAEB9; font-size: 14px; line-height: 45px; font-weight: bold;}
+.signup .signup-user span{ float: right; width: 43px; height: 43px; border-radius: 50%; }
+.signup .signup-user span img{ border-radius: 50%;width: 42px; height: 42px;overflow: hidden;}
+
+
+
 .header .nav{height:50px;line-height:50px;background:#2BAEB9}
 .header .nav li{width:107px;height:50px;line-height:50px;text-align:center;float:left}
 .header .nav li a{display:block;height:50px;line-height:50px;color:#fff;border-right:1px #FFF solid}
 .header .nav li:first-child a{border-left:1px #FFF solid}
 .header .nav li.active a{background:#4D4E4C;border-left:1px solid transparent;border-right:1px solid transparent}
 /*首页模块1*/
-.module-1{height:300px;overflow:hidden;margin-top:10px}
-.banner{width:600px;float:left;margin-right:20px}
+.module-1{height:300px;overflow:hidden;margin-top:10px; margin-bottom: 20px;}
+.banner{width:600px;float:left;margin-right:20px; overflow: hidden;}
+
+.slideBox{position:relative}
+.slideBox .hd{height:15px;overflow:hidden;position:absolute;right:5px;bottom:5px;z-index:1}
+.slideBox .hd ul{float:left}
+.slideBox .hd ul li{float:left;margin-right:2px;width:15px;height:15px;line-height:14px;text-align:center;background:#fff;cursor:pointer;margin-left:3px}
+.slideBox .hd ul li.on{background:#f60}
+.slideBox .bd ul{zoom:1}
+
+
 /*推荐模块*/
 .recommend{width:580px;float:right}
 .recommend .item{width:180px;float:left;margin-right:20px;margin-bottom:20px}
-.recommend .item img{width:180px;height:100px}
+.recommend .item p{ line-height: 30px;}
+.recommend .item img{width:180px;height:110px}
 .recommend .item:nth-child(3),.recommend .item:nth-child(6){margin-right:0}
 
 
@@ -55,13 +82,16 @@ a:hover{text-decoration:none;color:#1989da; font-size:14px;}
 .module-list .l{float:left}
 .module-list .r{float:right}
 .module-list .bd{padding-top:15px}
-.module-list .item{overflow:hidden;width:285px;float:left;margin-right:20px;margin-bottom:25px;border:1px #eee solid;transition:.5s;background:#fff;box-shadow:0 0 15px #C6D2C5;box-sizing:border-box}
+.module-list .item{overflow:hidden;width:285px;float:left;margin-right:20px;margin-bottom:25px;border:1px #eee solid;transition:.5s;background:#fff;box-shadow:0 0 15px #C6D2C5;box-sizing:border-box;position: relative;}
 .module-list .item:nth-child(4n+0){margin-right:0}
 .module-list .item .thumb{height:160px}
 .module-list .item .thumb img{height:100%;width:100%}
 .module-list .item .title{color:#000;line-height:35px;padding:0 12px}
 .module-list .item .date{line-height:30px;padding:0 12px}
 .module-list .item .ft{line-height:35px;border-top:1px solid #e5e6e4;padding:0 12px}
+.module-list .item .del{ position: absolute;top: 0;right: 0; width: 50px; height: 30px; line-height: 30px; background:rgb(0,0,0,0.5); text-align: center;cursor: pointer;z-index: 2;}
+.module-list .item .del i{ color: #FFFFFF;}
+.module-list .item .del i:hover{ color: red;}
 
 
 
@@ -83,7 +113,7 @@ a:hover{text-decoration:none;color:#1989da; font-size:14px;}
 #video_banner .banner_box img{max-height:100%;max-width:100%}
 #video_banner .adv_count_down{position:absolute;right:20px;top:20px;color:#FFF}
 
-.play_list{ margin-top: 20px;}
+.play_list{ margin-top: 20px; }
 
 /*公共底部*/
 .foot{ background: #000000;}
@@ -91,8 +121,72 @@ a:hover{text-decoration:none;color:#1989da; font-size:14px;}
 .foot-inner p{ line-height: 22px;}
 
 /*登录注册*/
-.user-signup{
-	width: 100%;
-    height: 640px;
-    background: url(../img/login-bg.jpg) no-repeat;
-}
+.user-bg{width:100%;height:640px;background:url(../img/login-bg.jpg) no-repeat}
+.user-signup{margin-top:100px;width:470px;float:right;border-radius:10px;box-sizing:border-box;background:rgba(0,0,0,.1);padding:10px}
+.user-main{border-radius:10px;background:#FFF;overflow:hidden}
+.user-signup h3{height:45px;line-height:45px;background:#2BAEB9;color:#FFF;padding:0 25px;font-size:18px}
+.user-signup .bd .form{margin:40px auto;width:360px;margin-bottom:20px}
+.user-signup .bd .form .col{margin-top:20px}
+.user-signup .bd label{width:50px;text-align:right;line-height:37px;margin-right:20px}
+.user-reg .bd label{width:60px}
+.user-signup .form input{border:1px solid #eee;height:35px;line-height:35px;font-size:14px;text-indent:10px}
+.user-signup .form .submit{text-align:center;margin-top:40px}
+.user-signup .form button{width:240px;border:0 none;height:40px;color:#FFF;font-size:16px;background:#2BAEB9;cursor:pointer}
+.user-signup .form .tip{visibility:hidden;color:red;clear:both;height:35px;line-height:35px}
+.user-signup .ft{text-align:center;padding:30px 0}
+
+
+/*加入vip*/
+.mod_hand_banner{padding-top:3px;width:100%;height:280px;background:#65b9c9 url(../img/vip/bg_hand_banner.jpg) no-repeat center top}
+.mod_hand_banner h3{padding-top:175px;font-size:34px;line-height:44px;color:#0c4d5d;text-align:center;font-weight:700}
+.mod_hand_banner p{font-size:20px;line-height:28px;color:#0c4d5d;text-align:center}
+.integral{padding-top:40px}
+.integral .hd{font-size:28px;color:#333;margin-bottom:30px;text-align:center}
+.integral .hd fieldset{display:block;height:44px;border-top:1px solid #b1b2b5;padding-left:430px}
+.integral .hd legend{width:320px;font-size:34px;line-height:44px;color:#000;text-align:center}
+.integral .bd li{float:left;width:31.9%;height:150px;background-color:#fff;margin-right:1.41%;margin-bottom:1.41%;padding-top:3%;padding-left:8%;box-sizing:border-box}
+.integral .bd ul li:nth-child(3n){margin-right:0}
+.integral .bd ul li>img{width:58px;height:58px;margin-right:18px;vertical-align:bottom}
+.integral .bd ul li>div{color:#666;display:inline-block;text-align:left}
+.integral .bd ul li>div>p{font-size:22px;margin-bottom:5px}
+.integral .bd ul li>div>span{font-size:16px}
+.mod_vip_join .vip_join{position:relative;}
+.mod_vip_join .vip_join .item{position:relative;float:left;display:inline;width:19%;height:184px;background:#fff;margin-right:1%;box-sizing:border-box;}
+.mod_vip_join .vip_join .item .tit{padding-top:39px;font-size:26px;line-height:44px;color:#000;text-align:center}
+.mod_vip_join .vip_join .item .txt{font-size:12px;line-height:20px;color:#969696;text-align:center}
+.mod_vip_join .vip_join .item .btn_pay{position:absolute;left:0;bottom:0;width:100%;height:25px;padding:15px 0;background:#f7463b;font-size:20px;color:#fff;line-height:25px;text-align:center;font-weight:700}
+.mod_vip_join .vip_join .item .num{display:inline-block;color:#f75d51;font-size:40px;min-width:52px;padding:0 5px;text-align:center}
+.mod_vip_join .vip_join .item:last-child{ margin-right: 0;}
+
+/*网站屏蔽*/
+.website{ padding: 50px 0;}
+.website a{ color: #007cff;}
+.website .title{line-height: 50px; border-bottom: 1px solid #EFEFEF; font-size: 20px;}
+.website .domain{ padding: 20px 0;}
+.website .domain a{ margin-right: 20px;}
+.website .forget{ margin-top: 20px;}
+.website .forget>p{ line-height: 30px;}
+.website .sns{}
+.website .sns li{ margin-top: 20px;}
+.website .sns .logo{ width: 200px; float: left;}
+.website .sns .desc{ margin-left: 20px; width: 500px; float: left;}
+
+.about{}
+.about fieldset{display:block;height:44px;border-top:1px solid #b1b2b5;padding-left:430px}
+.about legend {width:320px;font-size:34px;line-height:44px;color:#000;text-align:center}
+
+.cooperation{ margin-top: 50px; padding-bottom: 100px;}
+.cooperation_banner{	background-image: url('../img/about/cooperation_banner.png');}
+.cooperation .article{margin-top: 30px; font-size: 18px; line-height: 35px;}
+.cooperation .sns li{ margin-top: 20px;}
+.cooperation .sns .logo{ width: 70px; float: left;}
+.cooperation .sns .logo img{ width: 60px; height: 60px;}
+.cooperation .sns .desc{ line-height: 25px; font-size: 16px;  width: 500px; float: left;}
+
+
+.feedback{}
+.feedback .form{ width: 600px; margin: 0 auto; margin-top: 50px;}
+.feedback .form textarea{ width: 100%; padding: 10px; box-sizing: border-box; height: 250px;}
+.feedback .form .submit{ text-align: center; margin-top: 20px;}
+.feedback .form button{ width: 60%; height: 50px; line-height: 50px; color: #FFFFFF; border-radius: 5px; background: #2BAEB9; border: 0 none; font-size: 16px; cursor: pointer;}
+.feedback .form input{ height: 30px; line-height: 30px; width: 100px; border: 1px solid #EFEFEF;}

@@ -765,6 +765,7 @@ class User extends Base
 		return $this->fetch('user/downs');
     }
 
+    
     /**
      * 收藏
      * @return mixed|string
@@ -774,7 +775,9 @@ class User extends Base
 		$param = input();
         $param['page'] = intval($param['page']) <1 ? 1 : intval($param['page']);
         $param['limit'] = intval($param['limit']) <20 ? 20 : intval($param['limit']);
-
+        
+        
+        
 		$where = [];
 		$where['user_id'] = $GLOBALS['user']['user_id'];
 		$where['ulog_type'] = 2;
@@ -783,6 +786,7 @@ class User extends Base
 
 
         $this->assign('list',$res['list']);
+      
         
         $this->assign('title','我的收藏');
 		$pages = mac_page_param($res['total'], $param['limit'], $param['page'], url('user/favs',['page' => 'PAGELINK']));
@@ -870,6 +874,11 @@ class User extends Base
      */
     public function vip(){
         
+        
+        $res = model('Vip')->listData();
+        
+        $this->assign('list',$res['list']);
+        
         return $this->fetch('user/vip');
         
     }
@@ -886,6 +895,16 @@ class User extends Base
      * 卡密充值
      */
     public function kalman(){
+        
+        if (Request()->isPost()) {
+            $param = input();
+            
+            $card_no = htmlspecialchars(urldecode(trim($param['card_no'])));
+            $card_pwd =htmlspecialchars(urldecode(trim($param['card_pwd'])));
+            
+            $res = model('Card')->useData($card_no,$card_pwd,$GLOBALS['user']);
+            return json($res);
+        }
         
         return $this->fetch('user/kalman');
         

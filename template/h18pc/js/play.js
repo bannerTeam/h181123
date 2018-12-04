@@ -130,8 +130,6 @@ function pageInit(options) {
 	}
 	get_collection();
 
-	
-
 	var is_collection = false,
 		is_up = false,
 		is_down = false;
@@ -210,17 +208,15 @@ function pageInit(options) {
 	}
 
 	function tips(msg) {
-		layer.open({
-			content: msg,
-			skin: 'msg',
-			time: 2
-		});
+		layer.msg(msg);
 	}
 
 	get_list();
 
 	var browsevod = Number($.cookie('h18_browsevod'));
-	if((h18.userid) == 0 && browsevod > 0) {
+	if($("#video").length == 0) {
+		vod_disable();
+	} else if((h18.userid) == 0 && browsevod > 0) {
 		vod_disable();
 	} else {
 		setTimeout(function() {
@@ -242,26 +238,29 @@ function pageInit(options) {
 
 	function vod_disable(status) {
 		$("#video-container").html("");
-		//询问框
+
 		layer.open({
-			content: '需要升级VIP才能继续观看',
-			btn: ['升级', (h18.userid) == 0 ? '登录' : '不要'],
-			yes: function(index) {
-				//升级
+			content: (h18.userid) == 0 ? '今日的看片次数已经用完，请明日再来<br/>注册会员享更多看片次数<br/>推广给朋友可获得永久VIP' : '今日的看片次数已经用完，请明日再来<br/>购买VIP会员享无限次看片权益<br/>推广给朋友可获得永久VIP',
+			btn: [(h18.userid) == 0 ? '注册' : '升级', (h18.userid) == 0 ? '登录' : '不要'],
+			yes: function(index, layero) {
 				if(h18.userid > 0) {
 					location.href = "/user/vip";
 				} else {
-					location.href = "/user/index";
+					location.href = "/user/reg";
 				}
 			},
-			no: function() {
+			btn2: function(index, layero) {
 				if((h18.userid) == 0) {
 					location.href = "/user/login";
 				} else {
-					location.href = "/user/index";
+					location.href = "/about/vip";
 				}
+			},
+			cancel: function() {
+				location.href = "/about/vip";
 			}
 		});
+
 	}
 
 }
@@ -326,7 +325,7 @@ var VideoPlayer = {
 		if(typeof(videojs) == "undefined") {
 			setTimeout(function() {
 				VideoPlayer.newVideo();
-			}, 2000);			
+			}, 2000);
 		} else {
 			$("#video_banner").remove();
 			var myPlayer = videojs('roomVideo1', {

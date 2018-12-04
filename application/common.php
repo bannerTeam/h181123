@@ -1712,3 +1712,37 @@ function mac_curstr($str,$len){
     
 }
 
+function mac_to_time($s){
+    $s = intval($s);    
+    $t = '';
+    if($s < 60){
+        
+        if($s < 10) {
+            $t = '00:0'. $s;
+        } else {
+            $t = '00:'.$s;
+        }
+        
+    }else{
+        //$hour =sprintf("%.2f",$s/3600);
+        //$min = sprintf("%.2f",$s/60) % 60;
+        $min = intval($s/60);
+        $sec = $s % 60;       
+        
+        if($min < 10){
+            $t .= "0";
+        }
+        $t .= $min . ":";
+        if($sec < 10){
+            $t .= "0";
+        }
+        $t .= $sec;
+        
+    }
+    
+    return $t;
+   
+}
+
+
+

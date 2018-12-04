@@ -1,11 +1,11 @@
 <div class="header">	
 	<div class="hd ">
 		<div class="page-w">
-		<div class="logo"><img src="{$maccms.path_tpl}img/logo.png" alt="{$maccms.site_name}" /></div>
+		<div class="logo"><a href="/"><img src="{$maccms.path_tpl}img/logo.png" alt="{$maccms.site_name}" /></a></div>
 		<div class="search">
 			<div class="search-inner">
 			<form action="{:mac_url('vod/search')}">
-				<input placeholder="输入关键词搜索..." type="text" name="wd" class="text" id="" value="" /><input type="submit" class="btn" name="" id="" value="搜索" />	
+				<input placeholder="输入关键词搜索..." type="text" name="wd" class="text" id="wd" value="" /><input type="submit" class="btn"  value="搜索" />	
 			</form>
 			</div>
 		</div>
@@ -16,10 +16,21 @@
 			{/maccms:foreach}	
 		</div>
 		<div class="signup">
-			<div class="signup-inner">
-			<a href="/user/reg" class="btn">注册</a>
-			<a href="/user/login" class="btn">登录</a>
-			</div>
+			{if $user.user_id > 0}
+				<div class="signup-user">
+					<a href="/user/vip" class="link">充值会员</a>
+					&nbsp;
+					<a href="/user/favs.html" class="link">观看记录</a>
+					<span>
+						<a href="/user/index"><img src="{$maccms.path_tpl}img/user/face.jpg" alt="" /></a>						
+					</span>
+				</div>
+			{else}
+				<div class="signup-inner ">
+					<a href="/user/reg" class="btn">注册</a>
+					<a href="/user/login" class="btn">登录</a>
+				</div>
+			{/if}
 		</div>
 		</div>
 	</div>
@@ -32,11 +43,11 @@
 			</li>
 			{/maccms:type}
 			<li class="{if $vodindex}active{/if}"><a href="{:mac_url('vod/index')}">热门视频</a></li>
-			<li><a href="">加入VIP</a></li>
-			<li><a href="">推广奖励</a></li>
-			<li><a href="">三级分销</a></li>
-			<li><a href="">网址找回</a></li>
-			<li><a href="">手机APP</a></li>
+			<li class="{if $aboutVip}active{/if}"><a href="/about/vip">加入VIP</a></li>
+			<li><a href="#">推广奖励</a></li>
+			<li><a href="#">三级分销</a></li>
+			<li class="{if $aboutWebsite}active{/if}"><a href="/about/website">网址找回</a></li>
+			<li class="{if $aboutCooperation}active{/if}"><a href="/about/cooperation">招商合作</a></li>
 		</ul>
 	</div>
 </div>
