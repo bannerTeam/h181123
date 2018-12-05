@@ -80,6 +80,10 @@ function pageInit(options) {
 				layer.close(index);
 				delCollection(id);
 				$(obj).parents('li').fadeOut("slow");
+				
+				var  total = $.trim(Number($('#videos_total').text()));
+				$('#videos_total').text( total - 1);
+				
 			}
 		});
 	})

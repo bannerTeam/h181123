@@ -520,5 +520,27 @@ class Vod extends Base {
         }
         return ['code'=>1,'msg'=>'获取成功','data'=> join(',',$ids) ];
     }
+    
+   /**
+    * 自增
+    * @param unknown $where
+    * @param unknown $field
+    * @param number $num
+    * @return unknown
+    */
+    public function updateSetInc($where,$field,$num = 1){
+        return $this->where($where)->setInc($field, $num);
+    }
+    
+   /**
+    * 自减
+    * @param unknown $where
+    * @param unknown $field
+    * @param number $num
+    * @return unknown
+    */
+    public function updateSetDec($where,$field,$num = 1){
+        return $this->where($where)->setDec($field, $num);
+    }
 
 }

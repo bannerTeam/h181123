@@ -4,7 +4,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>推广/分享</title>
-		{include file="public/include_user" /}
+		{include file="public/include" /}
+		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
 		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
 		<style type="text/css">
 			.share {
@@ -13,28 +14,46 @@
 			}
 			
 			.share {}
+			
+			textarea {
+				resize: none;
+			}
+			
+			.share p {
+				padding: 10px 0;
+			}
+			
+			.share textarea {
+				padding: 10px;
+			}
+			.share button{border-radius: 5px; color: #FFFFFF; border: 0 none; height: 35px; line-height: 35px; padding: 0 15px;    background: #2BAEB9; cursor: pointer;}
 		</style>
 	</head>
 
 	<body>
 
-		<div class="chead">
-			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
-			<h3>推广</h3>
-		</div>
+		{include file="public/header" /}
 
-		<div class="share">
-			<div class="qrcode" id="qrcode">
+		<div class="user page-w clearfix">
+			{include file="user/side" /}
+			<div class="user-con">
+				<div class="share">
+					<div class="qrcode" id="qrcode">
 
-			</div>
-			<div id="qrcode_url" style="display: none;">
-				
+					</div>
+					<p>推广链接</p>
+					<textarea id="qrcode_url" rows="3"></textarea>
+					<div id="">
+						<button id="copy">复制链接</button>
+					</div>
+					
+				</div>
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			(function() {
-				var wh = $(window).width() * 0.6,
+				var wh = $(".user-con").width() * 0.3,
 					code = "{$invite}",
 					l = "http://" + document.domain + "/user/reg?code=" + code;
 				jQuery('#qrcode').qrcode({
@@ -43,8 +62,25 @@
 					height: wh,
 					text: l
 				});
-				$("#qrcode_url").text(l);
+				$("#qrcode_url").val(l).width(wh);
 			})()
+		</script>
+
+		<script src="/static/zeroclipboard/jquery.zeroclipboard.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+
+				$("#copy")
+					.on("beforecopy copy aftercopy", function(e) {						
+					})
+					.on("copy", function(e) {
+						e.clipboardData.clearData();
+						e.clipboardData.setData("text/plain", $("#qrcode_url").val());
+						e.preventDefault();
+						layer.msg('复制成功', {icon: 1}); 
+					});
+
+			});
 		</script>
 
 		{include file="public/foot" /}

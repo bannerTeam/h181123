@@ -387,6 +387,7 @@ class User extends Base
         $info = $info->toArray();
         $login_check = md5($info['user_random'] . '-' . $info['user_id'] . '-' . $info['group_id']);
         if ($login_check != $user_check) {
+            $this->logout();
             return ['code' => 1003, 'msg' => '未登录'];
         }
         //用户组

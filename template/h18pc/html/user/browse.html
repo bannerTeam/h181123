@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>我的收藏-观看记录</title>
+		<title>观看记录-{$maccms.site_name}</title>
 		<meta name="keywords" content="{$maccms.site_keywords}">
 		<meta name="description" content="{$maccms.site_description}"> 
 		{include file="public/include"}
@@ -21,8 +21,7 @@
 				<div class="bd">													
 					<a {if $pageFavs}class="active"{/if} href="/user/favs">我的收藏</a>
 					<a {if $pageBrowse}class="active"{/if} href="/user/browse">观看记录</a>
-					<!--<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">观看记录</a>	
-					<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">顶记录</a>	-->
+					<!--<a href="{:mac_url('/vod/type',['id'=>$typeAll])}">顶记录</a>	-->
 					
 				</div>
 			</div>
@@ -30,7 +29,7 @@
 			<div class="module-list clearfix">
 				<div class="hd clearfix">
 					<h4><i class="iconfont icon-huo1"></i>&nbsp;
-						我的收藏										
+						观看记录										
 					<span id="videos_total"></span>
 					</h4>	
 					<div class="by r">

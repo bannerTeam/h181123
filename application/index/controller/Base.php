@@ -82,7 +82,7 @@ class Base extends All
         }
         else{
             if($res===false){
-                return ['code'=>1001,'msg'=>'您没有权限访问此页面，请升级会员组'];
+                return ['code'=>1001,'msg'=>'您没有权限访问，请升级会员组'];
             }
             if($popedom == 4){
                 if( $group['group_id'] ==1 && $points>0){

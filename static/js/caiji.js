@@ -7,7 +7,7 @@ var list = {
 		{
 				'status': 'ok',
 				'name': '色喇叭',
-				'apiurl': 'http://api.h18av.cc/index.php/api',
+				'apiurl': 'http://dlbet33.com/index.php/api',
 				'flag': 'selaba',
 				'xt': '1',
 				'group': '',

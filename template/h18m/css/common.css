@@ -97,5 +97,14 @@ body{ color: rgb(42,35,51);}
 .ui-grid-trisect .tag{position:absolute;bottom:0;right:0;z-index:1;background:#000;filter:alpha(opacity=70);opacity:.7;color:#fff;font-size:.6rem;padding:.1rem .25rem;height:18px;overflow:hidden}
 .ui-grid-trisect h4{position:relative;margin:.5rem 0 .3rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap;color:#2a2333}
 .ui-grid-trisect h4 a{color:#2a2333}
+.ui-grid-trisect .delete{
+	    background: rgb(0,0,0,0.5);
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 35px;line-height: 30px;
+	height: 30px;text-align: center;
+}
+.ui-grid-trisect .delete i{ color: #FFFFFF; width: 25px; height: 25px;}
 
 .loading{background:#fff;height: 50px;text-align: center;line-height: 50px;box-shadow: 0 0 2px rgba(0,0,0,.05);margin:1.5% 0 1.5% 0;}

@@ -103,7 +103,7 @@ function pageInit(options) {
 			success: function(data) {
 				is_collection = true;
 				if(data.code == 1) {
-					$("#collection span").text("已收藏");
+					$("#collection").text("已收藏");
 				}
 				tips(data.msg);
 			}
@@ -113,7 +113,7 @@ function pageInit(options) {
 	 * 获取收藏状态
 	 */
 	function get_collection() {
-		!h18.login() && $.ajax({
+		h18.login() && $.ajax({
 			url: "/index.php/user/ajax_collection",
 			dataType: "json",
 			data: {
@@ -123,7 +123,7 @@ function pageInit(options) {
 			success: function(data) {
 				if(data.code == 1) {
 					is_collection = true;
-					$("#collection span").text("已收藏");
+					$("#collection").text("已收藏");
 				}
 			}
 		});

@@ -10,7 +10,35 @@ class Demo extends Base
     {
         parent::__construct();
     }
-
+    
+    public function user(){
+        $user_id = intval(cookie('user_id'));
+        $user_name = cookie('user_name');
+        $user_check = cookie('user_check');
+        
+        echo '===$user_id='.$user_id;
+        echo '===$user_name='.$user_name;
+        echo '===$user_check='.$user_check;
+        
+        $user = ['user_id'=>0,'user_name'=>'游客','user_portrait'=>'static/images/touxiang.png','group_id'=>1,'points'=>0];
+        if(!empty($user_id) || !empty($user_name) || !empty($user_check)){
+            echo '===$checkLogin=';
+            $res = model('User')->checkLogin();
+            var_dump($res);
+            if($res['code'] == 1){
+                $user = $res['info'];
+            }
+        }
+        else{
+            echo '===$else=';
+            $group_list = model('Group')->getCache();
+            $user['group'] = $group_list[1];
+            var_dump($group_list[1]);
+        }
+        
+        
+    }
+    
     public function index(){
         echo ("0"+1);
         exit;
@@ -46,12 +74,12 @@ class Demo extends Base
         return $this->fetch('demo/index');
     }
     
-    function forLinux(){
+    function forLinux(){exit;
         @exec("ifconfig -a", $this->return_array);
         return $this->return_array;
     } 
     
-    public function forWindows(){
+    public function forWindows(){exit;
         @exec("ipconfig /all", $this->return_array);
         if ( $this->return_array )
             return $this->return_array;

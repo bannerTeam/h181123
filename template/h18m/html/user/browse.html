@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">		
-		<title>我的收藏-{$maccms.site_name}</title>
+		<title>观看记录-{$maccms.site_name}</title>
 		<meta name="keywords" content="{$maccms.site_keywords}">
 		<meta name="description" content=" {$maccms.site_description} ">
 		 {include file="public/include_vod"}
@@ -13,15 +13,14 @@
 
 	<body>
 		
-		
 		<div id="head_vod" class="head_vod">
 			<div class="navfix">
 				<ul class="" id="head_ul">				
-					<li class="active">									
+					<li>									
 						<a href="/user/favs">我的收藏</a>
 						<i></i>
 					</li>	
-					<li>									
+					<li class="active">									
 						<a href="/user/browse">观看记录</a>
 						<i></i>
 					</li>										
@@ -43,11 +42,11 @@
 
 				{volist name="list" id="vo"}
 				<li style="width: 49.5%;">					
-					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('{:mac_url_img($vo.data.pic)}')"></span>
+					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;">						
+						<span style="background-image:url('{:mac_url_img($vo.data.pic)}')"></span>
 						<div class="cnl-tag tag">
 							{$vo.data.timeadd}
 						</div>
-						<div class="delete" data-id = "{$vo.ulog_id}"><i class="iconfont icon-shanchu"></i></div>
 					</div>					
 					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/{$vo.data.id}" >{$vo.data.name}</a></h4>
 				</li>

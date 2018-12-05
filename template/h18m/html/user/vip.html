@@ -15,66 +15,39 @@
 			<h3>升级VIP</h3>
 		</div>
 		
-		<div class="vipmain">
+		<div class="vipmain" id="vipmain">
 			
+			
+						
+			{volist name="list" id="vo"}
 			<div class="vipmain-item">
-				<a href="/user/vip_payment.html">
+				<a href="/user/vip_payment?id={$vo.id}">
 				<div class="item-l">
-					<p>体验VIP</p>
-					<p>￥15</p>
+					<p>{$vo.name}</p>
+					<p>￥{:intval($vo.cost)}</p>
 				</div>
-				<div class="item-r">
-					<p>7天畅享</p>
-					<p>无限次看片</p>
+				<div class="item-r j-describe">
+					<p class="">{$vo.describe}</p>					
 				</div>
 				</a>
 			</div>
-			<div class="vipmain-item">
-				<a href="/user/vip_payment.html">
-				<div class="item-l">
-					<p>VIP月卡</p>
-					<p>￥30</p>
-				</div>
-				<div class="item-r">
-					<p>30天畅享</p>
-					<p>无限次看片</p>
-				</div>
-				</a>
-			</div>
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>VIP季卡</p>
-					<p>￥60</p>
-				</div>
-				<div class="item-r">
-					<p>92天畅享</p>
-					<p>无限次看片</p>
-				</div>
-			</div>
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>VIP年卡</p>
-					<p>￥288</p>
-				</div>
-				<div class="item-r">
-					<p>365天畅享</p>
-					<p>无限次看片</p>
-				</div>
-			</div>		
-
-
-			<div class="vipmain-item">
-				<div class="item-l">
-					<p>永久VIP</p>
-					<p>￥888</p>
-				</div>
-				<div class="item-r">
-					<p>永久畅享</p>
-					<p>无限次看片</p>
-				</div>
-			</div>
+			{/volist}
 			
 		</div>
+		
+		<script type="text/javascript">
+			
+			$(".j-describe").each(function(){
+				var tt = $.trim($(this).text());
+				var ar = tt.split('，');
+				if(ar.length == 2){
+					$(this).html(`<p>${ar[0]}</p><p>${ar[1]}</p>`);
+				}
+			})
+			//
+			
+		</script>
+		
 	
 		{include file="public/foot" /}
 	</body>

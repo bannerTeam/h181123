@@ -35,19 +35,18 @@
 		</div>		
 	</div>
 	<ul>
-		<li>
-			<a href="/user/">
+		<li {if $pageAction == 'share'}class="active"{/if} >
+			<a href="/user/share">
 				<img src="{$maccms.path_tpl}/img/user/3.png" />
 				推广奖励</a>
 		</li>
-		<li>
-			
+		<li {if $pageAction == 'vip'}class="active"{/if}>			
 			<a href="/user/vip"><img src="{$maccms.path_tpl}/img/user/2.png" />升级VIP,无限看片</a>
 		</li>
-		<li>
+		<li {if $pageAction == 'kalman'}class="active"{/if}>
 			<a href="/user/kalman"><img src="{$maccms.path_tpl}/img/user/1.png" />卡密充值,快速到账</a>
 		</li>
-		<li>
+		<li {if $pageAction == 'password'}class="active"{/if}>
 			
 			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/4.png" />修改密码</a>
 		</li>
