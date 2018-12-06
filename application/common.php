@@ -245,7 +245,10 @@ function mac_send_mail($to, $title, $body,$conf=[]) {
     if(!empty($conf)){
         $config = $conf;
     }
-    $mail = new \phpmailer\src\PHPMailer();
+    
+    vendor('phpmailer.src.PHPMailer');    
+    
+    $mail = new \PHPMailer\PHPMailer\PHPMailer();
     //$mail->SMTPDebug = 2;
     $mail->isSMTP();
     $mail->CharSet = "UTF-8";

@@ -31,7 +31,7 @@ $(document).ready(function($) {
 		width: MacPlayer.w,
 		height: MacPlayer.h
 	});
-	$("#video_adv").css({
+	$("#video_pb").css({
 		width: MacPlayer.w,
 		height: MacPlayer.h
 	});
@@ -96,7 +96,7 @@ function getPlayerAdv(fn) {
 			fn();
 		}
 		$("#video").show();
-		$("#video_adv").hide();
+		$("#video_pb").hide();
 		return false;
 	}
 
@@ -114,17 +114,17 @@ function getPlayerAdv(fn) {
 
 				var ti = parseInt(MacPlayer.Adv.front.time);
 
-				$("#video_adv").append(`<div id="ad_front" style="" class="ad_box">
-						<div><span id="adv_count_down" class="adv_count_down"></span><a target="_blank" href="${MacPlayer.Adv.front.link}"><img src="${MacPlayer.Adv.front.file}" /></a></div>						
+				$("#video_pb").append(`<div id="b_front" style="" class="bp_box">
+						<div><span id="b_count_down" class="b_count_down"></span><a target="_blank" href="${MacPlayer.Adv.front.link}"><img src="${MacPlayer.Adv.front.file}" /></a></div>						
 					</div>`);
 
 				var aaa = setInterval(function() {
-					$("#adv_count_down").text('(' + ti + 's)');
+					$("#b_count_down").text('(' + ti + 's)');
 					ti--;
 					if(ti < 0) {
 						clearInterval(aaa);
 						$("#video").show();
-						$("#video_adv").hide();
+						$("#video_pb").hide();
 						if(fn && $.isFunction(fn)) {
 							fn();
 						}
@@ -133,13 +133,13 @@ function getPlayerAdv(fn) {
 			}
 
 			if(MacPlayer.Adv.pause) {
-				$("#video_adv").append(`<div id="ad_pause" style="display: none;" class="ad_box">
+				$("#video_pb").append(`<div id="ad_pause" style="display: none;" class="bp_box">
 						<div><a target="_blank" href="${MacPlayer.Adv.pause.link}"><img src="${MacPlayer.Adv.pause.file}" /></a></div>
-						<span href="javascript:;" class="ad_close"><span class="ad_close_s"></span></span>
+						<span href="javascript:;" class="bp_close"><span class="bp_close_s"></span></span>
 					</div>`);
 			}
 
-			$("#video_adv img").css({
+			$("#video_pb img").css({
 				"max-height": MacPlayer.h,
 				"max-width": MacPlayer.w
 			});

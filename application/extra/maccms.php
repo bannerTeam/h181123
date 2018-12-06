@@ -348,7 +348,14 @@ art/search => art/search
 
 label/:file => label/index',
   ),
-  'email' => NULL,
+  'email' => 
+  array (
+    'host' => 'smtp.office365.com',
+    'port' => '587',
+    'username' => 'h18av@outlook.com',
+    'password' => '1qaz2WSX3edc',
+    'test' => 'lucaowan@outlook.com',
+  ),
   'play' => 
   array (
     'width' => '0',

@@ -187,4 +187,37 @@ class Demo extends Base
     public function ajax(){
     	return $this->fetch('demo/ajax');
     }
+    
+    
+    public function mail(){
+             
+        $to = 'lucaowan@outlook.com';
+        $title = '测试邮件';
+        $body = '平台开发测试邮件';
+        
+        $config = config('maccms.email');
+        
+        vendor('phpmailer.src.PHPMailer');       
+        vendor('phpmailer.src.SMTP');
+        $mail = new \PHPMailer\PHPMailer\PHPMailer();
+        
+        //$mail->SMTPDebug = 2;
+        $mail->isSMTP();
+        $mail->CharSet = "UTF-8";
+        $mail->Host = $config['host'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $config['username'];
+        $mail->Password = $config['password'];
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = $config['port'];
+        $mail->setFrom($config['username']);
+        $mail->addAddress($to);
+        $mail->isHTML(true);
+        $mail->Subject = $title;
+        $mail->Body    = $body;
+        //unset($config);
+        $r = $mail->send();
+        var_dump($r);
+        exit;
+    }
 }
