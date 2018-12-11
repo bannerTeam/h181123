@@ -17,7 +17,7 @@ class System extends Base
             'port' => $post['port'],
             'test' => $post['test'],
         ];
-        $res = mac_send_mail($conf['test'], '发送邮件测试', '当您看到这封邮件说明邮件配置正确了！感谢使用苹果CMS相关产品！', $conf);
+        $res = mac_send_mail($conf['test'], '发送邮件测试', '当您看到这封邮件说明邮件配置正确了！感谢使用！', $conf);
         if ($res==true) {
             return json(['code' => 1, 'msg' => '测试成功']);
         }

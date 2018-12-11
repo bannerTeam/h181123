@@ -4,10 +4,11 @@ function pageInit(options) {
 		e: "#rlist",
 		loading: true,
 		url: "/ajax/get_vod_relevant",
-		page: 2,
+		page: 1,
 		limit: 12,
 		id: 0,
 		tid: 0,
+		tpid: 0,
 		timeadd: 0,
 		by: "",
 		wd: "",
@@ -19,7 +20,7 @@ function pageInit(options) {
 	 * 获取列表
 	 */
 	function get_list() {
-		$("#loading").show();
+		layer.load();
 		o.loading = false;
 		$.ajax({
 			url: o.url,
@@ -28,18 +29,22 @@ function pageInit(options) {
 				by: o.by,
 				timeadd: o.timeadd,
 				tid: o.tid,
+				tpid: o.tpid,
 				wd: o.wd,
 				page: o.page,
 				limit: o.limit
 			},
 			success: function(data) {
-
+				layer.closeAll();
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
 				}
-
-				$("#loading").hide();
-
+				if(o.page == data.pagecount){
+					o.page = 1;
+				}else{
+					o.page++;
+				}
+				
 			}
 		});
 	}
@@ -50,21 +55,47 @@ function pageInit(options) {
 			str = "";
 
 		for(var i = 0; i < items.length; i++) {
-			str += `<li>
-				<a href="/vod/detail/id/${items[i].vod_id}.html" >
-				<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
-					<div class="cnl-tag tag">
-						${date('m-d',items[i].vod_time_add)}
-					</div>
-				</div>
-				</a>
-				<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/${items[i].vod_id}.html" >${items[i].vod_name}</a></h4>
-			</li>`;
+			
+			str +=`<div class="item">
+						<a target="_blank" href="/vod/detail/id/${items[i].vod_id}">
+							<div class="thumb">
+								<img alt="${items[i].vod_name}" src="${items[i].vod_pic}" />
+							</div>
+							<div class="title ui-nowrap">
+								${items[i].vod_name}
+							</div>
+							<div class="date clearfix">
+								<span class="l">
+								<i class="iconfont icon-riqi"></i>&nbsp;${date('Y-m-d',items[i].vod_time_add)}
+							</span>
+								<span class="r">
+								<i class="iconfont icon-shijian"></i>&nbsp;${items[i].vod_duration}
+							</span>
+							</div>
+							<div class="ft clearfix">
+								<span class="l">
+								<i class="iconfont icon-huida"></i>&nbsp;${items[i].vod_up}
+							</span>
+								<span class="r">
+								<i class="iconfont icon-yanjing"></i>&nbsp;已被观看：${items[i].vod_hits}次
+							</span>
+							</div>
+						</a>
+					</div>`;
+			
+
 		}
 
-		$(o.e).append(str);
+		$(o.e).html(str);
 	}
 
+	/**
+	 * 换一批
+	 */
+	$("#rchange").click(function(){
+		get_list();
+	})
+	
 	/**
 	 * 格式化日期
 	 * @param {Object} sj
@@ -78,15 +109,12 @@ function pageInit(options) {
 	}
 
 	$("#collection").click(function() {
-		h18.login(true);
-		if(!is_collection) {
+		if(h18.login(true)) {
 			Collection(this);
 		}
-		$("#collection").text("已收藏");
-		tips("已收藏");
 	})
 	/**
-	 * 收藏
+	 * 收藏/取消
 	 */
 	function Collection(obj) {
 		if($(obj).data('loading')) {
@@ -97,15 +125,22 @@ function pageInit(options) {
 			url: "/index.php/user/ajax_collection",
 			dataType: "json",
 			data: {
-				ac: "set",
+				ac: $(obj).hasClass('active') ? "delr" : "set",
 				id: o.id
 			},
 			success: function(data) {
-				is_collection = true;
 				if(data.code == 1) {
-					$("#collection").text("已收藏");
+					if($(obj).hasClass('active')) {
+						$("#collection").text("收藏").removeClass('active');
+						tips("已取消");
+					} else {
+						$("#collection").text("已收藏").addClass('active');
+						tips("收藏成功");
+					}
+				} else {
+					tips(data.msg);
 				}
-				tips(data.msg);
+				$(obj).data('loading', false);
 			}
 		});
 	}
@@ -123,7 +158,7 @@ function pageInit(options) {
 			success: function(data) {
 				if(data.code == 1) {
 					is_collection = true;
-					$("#collection").text("已收藏");
+					$("#collection").text("已收藏").addClass('active');
 				}
 			}
 		});

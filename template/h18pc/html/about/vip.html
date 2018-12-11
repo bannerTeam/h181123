@@ -22,7 +22,28 @@
 		<div class="page-w">
 
 			<div class="integral clearfix">
-				<div class="hd">
+				<div class="hd" >
+					<fieldset>
+						<legend>立即开通</legend>
+					</fieldset>
+				</div>
+				<div class="mod_vip_join clearfix">
+					<div class="vip_join">
+						<ul class="list list_4 cf js_package_list">
+							{volist name="list" id="vo"}
+							<li class="item">
+								<p class="tit">{$vo.name}<span class="num">{:intval($vo.cost)}</span>元</p>
+								<p class="txt">（仅需<span class="js_price_perMonth">{:sprintf("%.1f",$vo.cost/$vo.duration)}</span>元/日）</p>
+								<a class="btn_pay" href="/user/vip" >
+									立即开通</a>
+							</li>
+							{/volist}
+							
+						</ul>
+					</div>
+				</div>
+				
+				<div class="hd" style="margin-top: 40px;">
 					<fieldset>
 						<legend>VIP特权</legend>
 					</fieldset>
@@ -72,26 +93,6 @@
 							</div>
 						</li>
 					</ul>
-				</div>
-				<div class="hd" style="margin-top: 40px;">
-					<fieldset>
-						<legend>立即开通</legend>
-					</fieldset>
-				</div>
-				<div class="mod_vip_join clearfix">
-					<div class="vip_join">
-						<ul class="list list_4 cf js_package_list">
-							{volist name="list" id="vo"}
-							<li class="item">
-								<p class="tit">{$vo.name}<span class="num">{:intval($vo.cost)}</span>元</p>
-								<p class="txt">（仅需<span class="js_price_perMonth">{:sprintf("%.1f",$vo.cost/$vo.duration)}</span>元/月）</p>
-								<a class="btn_pay" href="/user/vip" >
-									立即开通</a>
-							</li>
-							{/volist}
-							
-						</ul>
-					</div>
 				</div>
 				
 			</div>

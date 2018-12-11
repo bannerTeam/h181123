@@ -2,21 +2,23 @@ html,body{
 	background: #efefef; width: 100%; 
 }
 .user{ min-height: 500px;}
-.user-side{ width: 280px; float: left;
+.user-side{ width: 260px; float: left;
  background: #FFFFFF;min-height: 500px;}
 .user-side .uhead{}
 .user-side li{ height: 70px; line-height: 70px; border-bottom: 1px solid #efefef;}
-.user-side li.active{background: #efefef; }
+.user-side li.active,.user-side li:hover{background: #2BAEB9; }
+.user-side li.active a,.user-side li:hover a{ color: #FFFFFF;}
 .user-side li:first-child{border-top: 1px solid #efefef;}
 .user-side li a{ font-size: 18px; padding-left: 20px;}
 .user-side li img{ height: 35px; margin-right: 10px;}
+.user-side ul li a{ display: block;}
 .uhead { padding: 25px 0 ;}
 .uhead .face{ float: left; width: 120px; text-align: center;}
 .uhead .face img{ width: 100px; height: 100px; border-radius: 50%; overflow: hidden;}
-.uhead .info{ float: left; width: 140px; margin-left: 10px;margin-top: 20px;}
+.uhead .info{ float: left; width: 125px; margin-left: 5px;margin-top: 10px;}
 .uhead .info .tit{ font-size: 16px; line-height: 35px;}
 .uhead .info .desc{ line-height: 30px;}
-.uhead .info .oper{ line-height: 35px;}
+.uhead .info .oper{ line-height: 25px;}
 .uhead .info .oper .btn{ height: 33px; line-height: 33px;
 border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 
@@ -29,8 +31,15 @@ border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 .user-con .form .col{ margin-top: 20px;}
 .user-con .form label{ width: 80px;line-height: 35px; text-align: right; margin-right: 12px;}
 .user-con .form input{ border: 1px solid #e6e6e6; height: 35px; line-height: 35px; text-indent: 12px;}
+.user-con .form .send{
+	cursor: pointer;
+	border: 0 none;
+	    line-height: 35px;
+	    width: 120px;
+	    color: #FFFFFF; font-size: 14px; background: #2BAEB9; 
+}
 .user-con .form .submit{ text-align: center; margin-top: 50px;}
-.user-con .form button{width: 50%;border: 0 none;
+.user-con .form .submit button{width: 50%;border: 0 none;
 	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer;
 }
 .user-con .form .tip{ visibility: hidden; color: red; clear: both;height: 35px; line-height: 35px;}

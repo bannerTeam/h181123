@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>邮箱设置</title>
+		<meta name="keywords" content="{$maccms.site_keywords}" />
+		<meta name="description" content="{$maccms.site_description}" /> {include file="public/include" /}
+		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
+	</head>
+
+	<body style="">
+
+		{include file="public/header" /}
+
+		<div class="user page-w clearfix">
+			{include file="user/side" /}
+			<div class="user-con">
+				<div style="margin-top: 120px;">
+
+					<div class="form">
+						<div class="col weui-flex">
+							<label>电子邮箱</label>
+							<input class="weui-flex__item" id="email" placeholder="请输入电子邮箱" type="text" autocomplete="off" />
+						</div>
+						<div class="col weui-flex">
+							<label>验证码</label>
+							<input class="weui-flex__item" id="code" placeholder="请输入验证码" type="text" autocomplete="off" />
+							<button class="send" id="send">获取验证码</button>
+						</div>
+						<div class="submit">
+							<button id="btn_submit">
+							提交
+						</button>
+						<p id="tip" class="tip"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(function() {
+				$("body").bind('keyup', function(event) {
+					if(event.keyCode == 13) {
+						$('#btn_submit').click();
+						return false;
+					}
+				});
+				$(".form input").bind({
+					"click":function(){
+						tips();
+					}
+				})
+				$('#btn_submit').click(function() {
+
+					if($('#card_no').val() == '') {
+						tips('请输入充值卡号');
+						$("#card_no").focus();
+						return false;
+					}
+					if($('#card_pwd').val() == '') {
+						tips('请输入充值卡密码');
+						$("#card_pwd").focus();
+						return false;
+					}
+
+					var index = layer.load();
+					$.ajax({
+						type: "post",
+						dataType: "json",
+						data: {
+							card_no: $.trim($('#card_no').val()),
+							card_pwd: $.trim($('#card_pwd').val())
+						},
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								layer.msg('充值成功', {icon: 1}); 
+								setTimeout(function(){									
+									location.href = "/user/index";
+								},1500);
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+
+				});
+				
+				$("#send").click(function(){
+					sendEmail();
+				})
+				
+				function sendEmail(){
+					var val = $.trim($('#email').val());
+					if(!/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(val)){
+						tips("电子邮箱格式错误");
+						return false;
+					}
+					var index = layer.load();
+					$.ajax({
+						type: "post",
+						dataType: "json",
+						data: {
+							ac: "send",
+							email: $.trim($('#email').val())
+						},
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								layer.msg('发送成功', {icon: 1}); 								
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+				}
+				
+				function tips(msg) {
+					if(msg){
+						$("#tip").css({
+							"visibility":"visible"
+						}).text(msg);
+					}else{
+						$("#tip").css({
+							"visibility":"hidden"
+						}).text("");
+					}
+					
+				}
+			});
+		</script>
+		{include file="public/foot" /}
+	</body>
+
+</html>

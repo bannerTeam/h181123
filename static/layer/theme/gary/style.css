@@ -1,0 +1,7 @@
+.layui-layer-dialog{    border-radius: 5px;}
+.layui-layer-title{ background-color: #2BAEB9; color: #FFFFFF;}
+.layui-layer-btn .layui-layer-btn0{    border-color: #2BAEB9;
+    background-color: #2BAEB9;}
+    .layui-layer-setwin .layui-layer-close1{background: url(del.png) no-repeat; background-position: center;}
+.layui-layer-title{ border-top-left-radius: 5px; border-top-right-radius: 5px;}
+..layui-layer-btn{border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;}

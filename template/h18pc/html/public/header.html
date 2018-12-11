@@ -4,13 +4,23 @@
 		<div class="logo"><a href="/"><img src="{$maccms.path_tpl}img/logo.png" alt="{$maccms.site_name}" /></a></div>
 		<div class="search">
 			<div class="search-inner">
-			<form action="{:mac_url('vod/search')}">
-				<input placeholder="输入关键词搜索..." type="text" name="wd" class="text" id="wd" value="" /><input type="submit" class="btn"  value="搜索" />	
+			<form action="{:mac_url('vod/search')}" id="search_form">
+				<input placeholder="输入关键词搜索..." type="text" name="wd" class="text" id="wd" value="" /><input type="button" id="search_btn" class="btn"  value="搜索" />	
 			</form>
+			<script type="text/javascript">
+				$("#search_btn").click(function(){
+					var k = $.trim($("#wd").val());
+					if(k == ""){
+						layer.msg("请输入搜索关键字");
+						return false;
+					}
+					$("#search_form")[0].submit();
+				});
+			</script>
 			</div>
 		</div>
 		<div class="tags ui-nowrap">			
-			<a>热门标签：</a>
+			<span>热门标签：</span>
 			{maccms:foreach name="$maccms.search_hot_arr" id="hot"}
 			<a href="/vod/search/wd/{$hot}" title="{$hot}" >{$hot}</a>
 			{/maccms:foreach}	
@@ -21,6 +31,7 @@
 					<a href="/user/vip" class="link">充值会员</a>
 					&nbsp;
 					<a href="/user/favs.html" class="link">观看记录</a>
+					&nbsp;
 					<span>
 						<a href="/user/index"><img src="{$maccms.path_tpl}img/user/face.jpg" alt="" /></a>						
 					</span>
@@ -42,7 +53,7 @@
 				<a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
 			</li>
 			{/maccms:type}
-			<li class="{if $vodindex}active{/if}"><a href="{:mac_url('vod/index')}">热门视频</a></li>
+			<li class="{if $vodindex}active{/if}"><a href="{:mac_url('vod/index',['timeadd'=>'week','by'=>'hits'])}">热门视频</a></li>
 			<li class="{if $aboutVip}active{/if}"><a href="/about/vip">加入VIP</a></li>
 			<li><a href="#">推广奖励</a></li>
 			<li><a href="#">三级分销</a></li>

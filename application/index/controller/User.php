@@ -50,6 +50,13 @@ class User extends Base
                 model('User')->logout();
                 return $this->error('未登录', url('user/login'));
             }
+            
+            $this->assign('user_title', $GLOBALS['user']['user_name']);
+            if ($GLOBALS['user']['vip_exp_time'] > time()) {
+                $this->assign('user_vip', true);
+                $this->assign('vip_date', date('Y-m-d', $GLOBALS['user']['vip_exp_time']));
+            }
+            
             /*
              * $res = model('User')->checkLogin();
              * if($res['code']>1){
@@ -102,11 +109,20 @@ class User extends Base
         } else if ($param['ac'] == 'del') {
             $where = [];
             $where['user_id'] = $GLOBALS['user']['user_id'];
-            $where['ulog_type'] = 2;
+            $where['ulog_type'] = 2;            
+            //记录id
             $where['ulog_id'] = intval($param['id']);
             $return = model('Ulog')->delData($where);
             return json($return);
-        } else if ($param['ac'] == 'get') {
+        }else if ($param['ac'] == 'delr') {
+            $where = [];
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $where['ulog_type'] = 2;
+            //视频ID
+            $where['ulog_rid'] = intval($param['id']);
+            $return = model('Ulog')->delData($where);
+            return json($return);
+        }else if ($param['ac'] == 'get') {
             
             if ($GLOBALS['user']['user_id'] > 0) {
                 
@@ -118,7 +134,6 @@ class User extends Base
                 $uwhere['ulog_type'] = 2;
                 $res = model('Ulog')->infoData($uwhere, 'ulog_id');
                 $this->add_browse_record($uwhere);
-                
             } else {
                 $res = [
                     'code' => 1001,
@@ -132,7 +147,7 @@ class User extends Base
 
     /**
      * 添加浏览记录
-     * 
+     *
      * @return \think\response\Json
      */
     private function add_browse_record($ulogData)
@@ -153,8 +168,8 @@ class User extends Base
         }
         model('Ulog')->saveData($data);
         
-        $w['vod_id']= $ulogData['ulog_rid']; 
-        model('Vod')->updateSetInc($w,'vod_hits',1);
+        $w['vod_id'] = $ulogData['ulog_rid'];
+        model('Vod')->updateSetInc($w, 'vod_hits', 1);
     }
 
     /**
@@ -564,7 +579,6 @@ class User extends Base
             // 注册成功删除邀请码
             if ($res['code'] === 1) {
                 Cookie::delete('invite_code', 'h18_');
-                model('User')->logout();
             }
             
             return json($res);
@@ -869,7 +883,7 @@ class User extends Base
 
     /**
      * 收藏
-     * 
+     *
      * @return mixed|string
      */
     public function favs()
@@ -897,7 +911,7 @@ class User extends Base
         
         return $this->fetch('user/favs');
     }
-    
+
     /**
      * 观看记录。浏览历史
      *
@@ -1040,9 +1054,9 @@ class User extends Base
         $id = $param['id'];
         
         $where['id'] = $id;
-        $rs =  model('Vip')->findData($where);
-        if($rs['code'] === 1){
-            $this->assign('vipinfo',$rs['info']);
+        $rs = model('Vip')->findData($where);
+        if ($rs['code'] === 1) {
+            $this->assign('vipinfo', $rs['info']);
         }
         
         return $this->fetch('user/vip_payment');
@@ -1077,6 +1091,70 @@ class User extends Base
             return json($res);
         }
         return $this->fetch('user/password');
+    }
+
+    /**
+     * 安全中心
+     */
+    public function security()
+    {
+        if (Request()->isPost()) {
+            $param = input();
+            $res = model('User')->changepass($GLOBALS['user']['user_id'], $param);
+            return json($res);
+        }
+        return $this->fetch('user/security');
+    }
+
+    /**
+     * 绑定修改邮箱
+     */
+    public function email()
+    {
+        if (Request()->isPost()) {
+            $param = input();
+            $res = ['code'=>1003,'msg'=>'邮箱发送失败!'];
+            if ($param['ac'] == 'send') {
+                $email = $param['email'];               
+                if(mac_check_email($email)){
+                    
+                    $site_name = $GLOBALS['config']['site']['site_name'];
+                    
+                    $code = mac_get_rndstr(8);
+                    
+                    $data['user_id'] = $GLOBALS['user']['user_id'];
+                    $data['email'] = $email;
+                    $data['code'] = $code;
+                    // 30分钟过期
+                    $data['exp_time'] = time() + (60 * 30);
+                    // 1.找回密码 2.绑定邮箱 3.修改邮箱
+                    $data['type'] = 2;
+                    $res = model('SendEmail')->saveData($data);
+                    if($res['code'] === 1){
+                        $to = $email;
+                        $title = '帐户邮箱绑定';
+                        $body = '您好!<p>欢迎绑定邮箱!</p>您的验证码是:' . $code;
+                        $result = mac_send_mail($to, $title, $body);
+                        if($result === false){
+                            $res = ['code'=>1002,'msg'=>'邮箱发送失败'];
+                        }else{
+                            $res = ['code'=>1,'msg'=>'保存成功'];
+                        }
+                    }
+                }else{
+                    $res = ['code'=>1005,'msg'=>'邮箱格式错误'];
+                }
+               
+                
+                return json($res);
+            }
+            
+           return json($res);
+        }
+        
+       
+        
+        return $this->fetch('user/email');
     }
 
     /**

@@ -56,6 +56,12 @@ class Vod extends Base
             $this->assign('title', '今日更新');
         } else if ($param['timeadd'] == 7) {
             $this->assign('title', '发现');
+        }else if ($param['timeadd'] == 'week') {
+            $this->assign('title', '本周热门');
+        }else if ($param['timeadd'] == 'month') {
+            $this->assign('title', '本月热门');
+        }else{
+            $this->assign('title', '热门视频');
         }
                 
         

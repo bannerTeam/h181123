@@ -37,7 +37,6 @@ class Vod extends Base {
         $list = Db::name('Vod')->field($field)->where($where)->order($order)->limit($limit_str)->select();
 
         
-        
         //分类
         $type_list = model('Type')->getCache('type_list');
         //用户组
@@ -124,7 +123,7 @@ class Vod extends Base {
         $num = intval(abs($lp['num']));
         $half = intval(abs($lp['half']));
         
-        $timeadd =  intval($lp['timeadd']);
+        $timeadd =  $lp['timeadd'];
         
         $page = 1;
         $where=[];
@@ -304,9 +303,24 @@ class Vod extends Base {
         /**
          * 时间范围检索  单位 天
          */
-        if(!empty($timeadd)){            
-            $start_time = strtotime('-'.$timeadd.' day');            
-            $where['vod_time_add'] = ['gt', $start_time];
+        if(!empty($timeadd)){  
+            
+            if(is_numeric($timeadd)){
+                $start_time = strtotime('-'.$timeadd.' day'); 
+            }
+            else if($timeadd == 'week'){
+                //本周
+                $start_time = strtotime("-1 week Monday");
+                
+            }else if($timeadd == 'month'){
+                //本月
+                $start_time = mktime(0, 0 , 0,date("m"),1,date("Y"));
+                
+            }
+            
+            if(isset($start_time)){
+                $where['vod_time_add'] = ['gt', $start_time];
+            }
             
         }
         

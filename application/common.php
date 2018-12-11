@@ -246,8 +246,8 @@ function mac_send_mail($to, $title, $body,$conf=[]) {
         $config = $conf;
     }
     
-    vendor('phpmailer.src.PHPMailer');    
-    
+    vendor('phpmailer.src.PHPMailer');
+    vendor('phpmailer.src.SMTP');
     $mail = new \PHPMailer\PHPMailer\PHPMailer();
     //$mail->SMTPDebug = 2;
     $mail->isSMTP();
@@ -1061,6 +1061,7 @@ function mac_param_url(){
     $param['page'] = intval($input['page']) <1 ? 1 : intval($input['page']);
     $param['ajax'] = intval($input['ajax']);
     $param['tid'] = intval($input['tid']);
+    $param['tpid'] = intval($input['tpid']);
     $param['mid'] = intval($input['mid']);
     $param['rid'] = intval($input['rid']);
     $param['pid'] = intval($input['pid']);
@@ -1090,7 +1091,7 @@ function mac_param_url(){
     $param['url'] = htmlspecialchars(urldecode(trim($input['url'])));
     $param['type'] = htmlspecialchars(urldecode(trim($input['type'])));
     
-    $param['timeadd'] = intval($input['timeadd']);
+    $param['timeadd'] = htmlspecialchars(trim($input['timeadd']));
 
     return $param;
 }
@@ -1747,5 +1748,15 @@ function mac_to_time($s){
    
 }
 
-
-
+/***
+ * 
+ * 验证邮箱格式
+ * 正确返回1 ，错误返回 0
+ * */
+function mac_check_email($str){
+    $regex= '/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/';
+    
+    $result = preg_match($regex,$str);
+    
+    return $result;
+}

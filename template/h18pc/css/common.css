@@ -4,7 +4,7 @@ h1,h2,h3,h4,h5,h6{ font-size:16px; font-weight:normal;}
 img{border:none;vertical-align:middle;}
 ul,ol,li {list-style:none;}
 a:link,a:visited,a:active{text-decoration:none;color:#666; font-size:14px;}
-a:hover{text-decoration:none;color:#1989da; font-size:14px;} 
+a:hover{text-decoration:none;color:#2BAEB9; font-size:14px;} 
 .block{margin:0 auto; padding:0;}
 fieldset, iframe, img {
     border: 0 none;
@@ -24,14 +24,19 @@ fieldset, iframe, img {
 .header .logo img{max-height:80px}
 .header .search{width:380px;height:90px;border-radius:5px;overflow:hidden;float:left}
 .header .search .text{width:270px;height:40px;line-height:40px;font-size:14px;padding-left:10px;border:0 none;border-top-left-radius:4px;border-bottom-left-radius:4px}
-.header .search .btn{font-size:16px;width:90px;color:#FFF;background:#2BAEB9;border:0 none;height:40px;line-height:40px;border-top-right-radius:4px;border-bottom-right-radius:4px}
+.header .search .btn{font-size:16px;width:90px;color:#FFF;background:#2BAEB9;border:0 none;height:40px;line-height:40px;border-top-right-radius:4px;border-bottom-right-radius:4px; cursor: pointer;}
+.header .search .btn:hover{ background: #118e98;}
 .header .tags{float:left;width:360px}
-.header .tags a{color:#FFF;margin-left:12px}
+.header .tags a,.header .tags span{color:#FFF;margin-left:12px}
+.header .tags a:hover{ color: #2BAEB9;}
 .header .signup{float:right;height:90px}
 .header .signup .btn{padding:4px 20px;color:#2BAEB9;border:1px solid #2BAEB9;border-radius:4px;overflow:hidden;text-align:center;margin-right:10px}
-
-.signup .signup-user{ width: 180px; height: 45px; margin-top: 18px; background: #282828;line-height: 45px; text-align: right;}
-.signup .signup-user a{color:#2BAEB9; font-size: 14px; line-height: 45px; font-weight: bold;}
+.header .signup .btn:hover{
+	 background: #2BAEB9; color: #FFFFFF;
+}
+.signup .signup-user{ width: 185px; height: 45px; margin-top: 22px; background: #282828;line-height: 45px; text-align: right; border-radius: 5px;}
+.signup .signup-user a{color:#2BAEB9; font-size: 14px; line-height: 45px; }
+.signup .signup-user a:hover{ color: #5de1ec;}
 .signup .signup-user span{ float: right; width: 43px; height: 43px; border-radius: 50%; }
 .signup .signup-user span img{ border-radius: 50%;width: 42px; height: 42px;overflow: hidden;}
 
@@ -41,9 +46,9 @@ fieldset, iframe, img {
 .header .nav li{width:107px;height:50px;line-height:50px;text-align:center;float:left}
 .header .nav li a{display:block;height:50px;line-height:50px;color:#fff;border-right:1px #FFF solid}
 .header .nav li:first-child a{border-left:1px #FFF solid}
-.header .nav li.active a{background:#4D4E4C;border-left:1px solid transparent;border-right:1px solid transparent}
+.header .nav li.active a,.header .nav li:hover a{background:#4D4E4C;border-left:1px solid transparent;border-right:1px solid transparent}
 /*首页模块1*/
-.module-1{height:300px;overflow:hidden;margin-top:10px; margin-bottom: 20px;}
+.module-1{height:300px;margin-top:10px; margin-bottom: 20px;}
 .banner{width:600px;float:left;margin-right:20px; overflow: hidden;}
 
 .slideBox{position:relative}
@@ -55,9 +60,10 @@ fieldset, iframe, img {
 
 
 /*推荐模块*/
-.recommend{width:580px;float:right}
-.recommend .item{width:180px;float:left;margin-right:20px;margin-bottom:20px}
-.recommend .item p{ line-height: 30px;}
+.recommend{width:580px;float:right;padding-top: 2px;}
+.recommend .item{width:180px;float:left;margin-right:19px;margin-bottom:18px;box-shadow: 0 0 5px #C6D2C5; overflow: hidden; }
+.recommend .item:hover{box-shadow: 0 0 5px #2BAEB9;}
+.recommend .item p{ line-height: 30px; text-indent: 12px;}
 .recommend .item img{width:180px;height:110px}
 .recommend .item:nth-child(3),.recommend .item:nth-child(6){margin-right:0}
 
@@ -66,7 +72,7 @@ fieldset, iframe, img {
 .filter{padding:20px 0;border:1px #e8e8e8 solid;margin-bottom:20px;overflow:hidden;margin-top:20px}
 .filter .hd{float:left;width:100px;text-align:center}
 .filter .bd{float:left}
-.filter .bd a.active{background:#2BAEB9;color:#FFF}
+.filter .bd a.active,.filter .bd a:hover{background:#2BAEB9;color:#FFF}
 .filter .bd a{border:1px solid #2BAEB9;padding:5px 8px;color:#2BAEB9;border-radius:4px;margin-right:12px}
 
 
@@ -74,25 +80,29 @@ fieldset, iframe, img {
 .module-list .hd{position:relative;border-bottom:2px #eee solid;height:44px}
 .module-list .hd h4{line-height:42px;border-bottom:2px #2BAEB9 solid;margin-bottom:-2px;padding:0 10px;color:#2BAEB9;display:inline-block}
 .module-list .hd .more{float:right;background:#2BAEB9;color:#fff;padding:2px 6px;border-radius:5px;margin-top:10px}
+.module-list .hd .more:hover{ background:  #118e98;;}
 .module-list .hd .more i{font-size:10px;padding:1px;background:#FFF;color:#2BAEB9;font-weight:700;border-radius:2px}
 .module-list .hd .change{float:right;margin-top:17px}
 .module-list .hd .by{margin-top:10px;line-height:20px}
 .module-list .hd .by a{padding-left:15px}
-.module-list .hd .by a.active{color:#2BAEB9}
+.module-list .hd .by a.active{}
 .module-list .l{float:left}
 .module-list .r{float:right}
 .module-list .bd{padding-top:15px}
 .module-list .item{overflow:hidden;width:285px;float:left;margin-right:20px;margin-bottom:25px;border:1px #eee solid;transition:.5s;background:#fff;box-shadow:0 0 15px #C6D2C5;box-sizing:border-box;position: relative;}
+.module-list .item:hover{box-shadow:0 0 15px #2BAEB9}
+.module-list .item a:hover{ color: #2BAEB9;}
 .module-list .item:nth-child(4n+0){margin-right:0}
 .module-list .item .thumb{height:160px}
 .module-list .item .thumb img{height:100%;width:100%}
-.module-list .item .title{color:#000;line-height:35px;padding:0 12px}
+.module-list .item .title{;line-height:35px;padding:0 12px}
 .module-list .item .date{line-height:30px;padding:0 12px}
 .module-list .item .ft{line-height:35px;border-top:1px solid #e5e6e4;padding:0 12px}
 .module-list .item .del{ position: absolute;top: 0;right: 0; width: 50px; height: 30px; line-height: 30px; background:rgb(0,0,0,0.5); text-align: center;cursor: pointer;z-index: 2;}
 .module-list .item .del i{ color: #FFFFFF;}
 .module-list .item .del i:hover{ color: red;}
 
+.list-loading{ width: 100%; text-align: center; padding: 50px 0;}
 
 
 
@@ -103,6 +113,7 @@ fieldset, iframe, img {
 .play_player .bd{width:100%;height:518px;background:#000}
 .play_player .ft{height:55px;line-height:55px;background:#eae9e9; padding-right: 15px;}
 .play_player .ft a{margin-left:12px;padding:4px 15px;border:1px solid #2BAEB9;color:#2BAEB9;border-radius:5px}
+.play_player .ft a:hover,.play_player .ft a.active{ background: #2BAEB9; color: #FFFFFF;}
 .play_player .ft span{margin-left:12px;float:right}
 .play_player .ft a.active{background:#2BAEB9;color:#FFF}
 .play_lucaowan{width:260px;float:right}

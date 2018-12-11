@@ -611,11 +611,23 @@ class Ajax extends Base
             $where['type_id'] = $type;
         }
         
+        // 父类分类id
+        $ptype = $this->_param['tpid'];
+        if (!empty($ptype)) {
+            unset($where['type_id']);
+            $where['type_id_1'] = $ptype;
+        }
         
         // 每页显示条数
         $limit = $this->_param['limit'];
         if (empty($limit)) {
             $limit = 10;
+        }
+        
+        // 第几页
+        $page = $this->_param['page'];
+        if (empty($page)) {
+            $page = 1;
         }
                 
         // 排序字段
@@ -653,14 +665,16 @@ class Ajax extends Base
             1
         ];        
        
-        
-        $res = model("Vod")->listData($where, $order, 1, $limit);
+     
+        $res = model("Vod")->listData($where, $order, $page, $limit);
         
         $r = [
             'code' => 1,
             'msg' => '',
             'list' => $res['list'],
-            'limit' => $limit
+            'limit' => $limit,
+            'pagecount'=>$res['pagecount'],
+            'page' => $page
         ];
         
         return (json($r));
@@ -715,5 +729,10 @@ class Ajax extends Base
         
         return json(json_decode($res));
     }
+    
+    
+    
+    
+    
 
 }

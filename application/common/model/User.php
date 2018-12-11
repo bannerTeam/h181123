@@ -222,8 +222,21 @@ class User extends Base
             
         }
         
+        if($reg_user_id){
+            
+            $this->logout();
+            
+            $param = [];
+            $param['user_name'] =$data['user_name'];
+            $param['user_pwd'] = $data['user_pwd'];
+            $param['iverify'] = 1;
+            
+            $login = $this->login($param);
+        }
         
-        return ['code' => 1, 'msg' => '注册成功,请登录去会员中心完善个人信息'];
+        
+        
+        return ['code' => 1, 'msg' => '注册成功,请登录去会员中心完善个人信息','login'=>$login];
     }
 
     public function regcheck($t, $str)
@@ -350,7 +363,7 @@ class User extends Base
         cookie('user_check', md5($random . '-' . $row['user_id'] . '-' . $row['group_id']));
         cookie('user_portrait', mac_get_user_portrait($row['user_id']));
 
-        return ['code' => 1, 'msg' => '登录成功'];
+        return ['code' => 1, 'msg' => '登录成功','info'=>'md5'];
     }
 
     public function logout()
