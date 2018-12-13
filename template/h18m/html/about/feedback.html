@@ -24,9 +24,12 @@
 						<input autocomplete="off" type="text" name="verify" id="verify" value="" placeholder="请输入验证码" />
 						<img class="verify_img" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
 					</div>
-					<p>
-						<button id="submit">提交</button>
-					</p>
+					
+					<div class="submit" style="margin-top: 2rem;">
+						<button id="submit">
+							提交
+						</button>
+					</div>
 				</div>				
 			</div>					
 		</div>
@@ -51,7 +54,7 @@
 						ver = $.trim(verify.val());
 
 					if(con.length < 10) {
-						tips("请认真填写");
+						tips("请认真填写,字数不能少于10位");
 						return false;
 					}
 					if(ver == "") {

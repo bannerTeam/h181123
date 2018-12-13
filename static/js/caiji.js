@@ -7,7 +7,7 @@ var list = {
 		{
 				'status': 'ok',
 				'name': '色喇叭',
-				'apiurl': 'http://dlbet33.com/index.php/api',
+				'apiurl': 'http://www.zy.com/api',//http://dlbet33.com/index.php/api
 				'flag': 'selaba',
 				'xt': '1',
 				'group': '',

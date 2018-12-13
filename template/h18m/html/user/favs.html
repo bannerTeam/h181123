@@ -39,18 +39,38 @@
 		</div>
 		<section class="ui-panel">
 					
-			<ul class="ui-grid-trisect" id="vlist">
+			<ul class="ui-grid-single" id="vlist">
 
 				{volist name="list" id="vo"}
-				<li style="width: 49.5%;">					
-					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('{:mac_url_img($vo.data.pic)}')"></span>
-						<div class="cnl-tag tag">
-							{$vo.data.timeadd}
-						</div>
-						<div class="delete" data-id = "{$vo.ulog_id}"><i class="iconfont icon-shanchu"></i></div>
-					</div>					
-					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/{$vo.data.id}" >{$vo.data.name}</a></h4>
+				
+				<li class="weui-flex">
+					<div class="pic weui-flex__item">
+						<a href="/vod/detail/id/{$vo.data.id}">
+							<img src="{:mac_url_img($vo.data.pic)}" />
+						</a>
+					</div>
+					<div class="intro weui-flex__item ">	
+						<div class="vmiddle">
+							<div class="hh"><a href="/vod/detail/id/{$vo.data.id}">{$vo.data.name}
+								</a>								
+							</div>
+							<div class="bb">
+								<span class="add weui-flex__item"><i class="iconfont icon-riqi"></i>&nbsp;{:date('Y-m-d',$vo.data.time_add)}</span>
+							<span class="weui-flex__item"><i class="iconfont icon-shijian"></i>&nbsp;{:mac_to_time($vo.data.duration)}</span>								
+							</div>
+							<div class="ff weui-flex ff-mt">
+								<span class="weui-flex__item"><i class="iconfont icon-yanjing"></i>&nbsp;{$vo.data.hits}次</span>
+								<span class="weui-flex__item btn">
+									<a class="delete" data-id="{$vo.ulog_id}">
+										取消收藏
+									</a>
+								</span>
+							</div>
+						</div>						
+					</div>
 				</li>
+				
+				
 				{/volist}
 
 			</ul>

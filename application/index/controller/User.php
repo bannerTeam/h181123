@@ -144,6 +144,31 @@ class User extends Base
             return json($res);
         }
     }
+    
+    /**
+     * yh:浏览记录
+     */
+    public function ajax_browse()
+    {
+        $param = input();
+        if ($param['ac'] == 'del') {
+            $where = [];
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $where['ulog_type'] = 1;
+            //记录id
+            $where['ulog_id'] = intval($param['id']);
+            $return = model('Ulog')->delData($where);
+            return json($return);
+        }else if ($param['ac'] == 'delr') {
+            $where = [];
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $where['ulog_type'] = 1;
+            //视频ID
+            $where['ulog_rid'] = intval($param['id']);
+            $return = model('Ulog')->delData($where);
+            return json($return);
+        }
+    }
 
     /**
      * 添加浏览记录

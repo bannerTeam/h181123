@@ -69,6 +69,7 @@ function pagination(options) {
 		timeadd:0,
 		by:"",
 		wd: "",		
+		tpl:"",
 		fn: successFn
 	};
 	var o = $.extend(settings, options);
@@ -121,18 +122,49 @@ function pagination(options) {
 
 		var items = data.list,
 			str = "";
-
-		for(var i = 0; i < items.length; i++) {
-			str += `<li style="width: 49.5%;">
-				<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
-					<div class="cnl-tag tag">
-						${date('m-d',items[i].vod_time_add)}
+		
+		if(o.tpl == "single"){
+			for(var i = 0; i < items.length; i++) {
+				str += `<li class="weui-flex">
+					<div class="pic weui-flex__item">
+						<a href="/index.php/vod/detail/id/${items[i].vod_id}.html">
+							<img src="${items[i].vod_pic}" />
+						</a>
 					</div>
-				</div>
-				<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/index.php/vod/detail/id/${items[i].vod_id}.html" >${items[i].vod_name}</a></h4>
-			</li>`;
+					<div class="intro weui-flex__item ">	
+						<div class="vmiddle">
+							<div class="hh"><a href="/index.php/vod/detail/id/${items[i].vod_id}.html">${items[i].vod_name}
+								</a>								
+							</div>
+							<div class="bb">
+								<span class="add weui-flex__item"><i class="iconfont icon-riqi"></i>&nbsp;${date('Y-m-d',items[i].vod_time_add)}</span>
+							<span class="weui-flex__item"><i class="iconfont icon-shijian"></i>&nbsp;${duration_to_time(items[i].vod_duration)}</span>								
+							</div>
+							<div class="ff">
+								<span><i class="iconfont icon-yanjing"></i>&nbsp;${items[i].vod_hits}次</span>	
+							</div>
+						</div>						
+					</div>
+				</li>`;
+			}
+		}else{
+			for(var i = 0; i < items.length; i++) {
+				str += `<li style="width: 49.5%;">
+					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
+						<div class="cnl-tag tag">
+							${duration_to_time(items[i].vod_duration)}
+						</div>
+					</div>
+					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;"><a href="/index.php/vod/detail/id/${items[i].vod_id}.html" >${items[i].vod_name}</a></h4>
+					<p class="clearfix">
+						<span class="l"><i class="iconfont icon-riqi"></i>&nbsp;${date('Y-m-d',items[i].vod_time_add)}</span>
+						<span class="r"><i class="iconfont icon-yanjing"></i>&nbsp;${items[i].vod_hits}</span>							
+					</p>
+				</li>`;
+			}
 		}
-
+		
+		
 		$(o.e).append(str);
 	}
 		
@@ -145,6 +177,32 @@ function pagination(options) {
 		return null;
 	}
 
+}
+
+function duration_to_time($s){
+	$s = Number($s);    
+    var $t = '';
+    if($s < 60){        
+        if($s < 10) {
+            $t = '00:0'+ $s;
+        } else {
+            $t = '00:'+$s;
+        }        
+    }else{
+        
+        $min = Number($s/60);
+        $sec = $s % 60;       
+        
+        if($min < 10){
+            $t += "0";
+        }
+        $t += $min + ":";
+        if($sec < 10){
+            $t += "0";
+        }
+        $t += $sec;        
+    }    
+    return $t;
 }
 
 /** 

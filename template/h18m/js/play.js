@@ -19,6 +19,10 @@ function pageInit(options) {
 	 * 获取列表
 	 */
 	function get_list() {
+		if(!o.loading){
+			return false;
+		}
+		$("#rchange").addClass('ref360');
 		$("#loading").show();
 		o.loading = false;
 		$.ajax({
@@ -37,9 +41,14 @@ function pageInit(options) {
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
 				}
-
+				if(o.page == data.pagecount){
+					o.page = 1;
+				}else{
+					o.page++;
+				}
 				$("#loading").hide();
-
+				$("#rchange").removeClass('ref360');
+				o.loading = true;
 			}
 		});
 	}
@@ -50,19 +59,22 @@ function pageInit(options) {
 			str = "";
 
 		for(var i = 0; i < items.length; i++) {
-			str += `<li>
-				<a href="/vod/detail/id/${items[i].vod_id}.html" >
-				<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
-					<div class="cnl-tag tag">
-						${date('m-d',items[i].vod_time_add)}
+			str += `
+				<li style="width: 49.5%;">
+					<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].vod_pic}')"></span>
+						<div class="cnl-tag tag">
+							${duration_to_time(items[i].vod_duration)}
+						</div>
 					</div>
-				</div>
-				</a>
-				<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/vod/detail/id/${items[i].vod_id}.html" >${items[i].vod_name}</a></h4>
-			</li>`;
+					<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;"><a href="/index.php/vod/detail/id/${items[i].vod_id}.html" >${items[i].vod_name}</a></h4>
+					<p class="clearfix">
+						<span class="l"><i class="iconfont icon-riqi"></i>&nbsp;${date('Y-m-d',items[i].vod_time_add)}</span>
+						<span class="r"><i class="iconfont icon-yanjing"></i>&nbsp;${items[i].vod_hits}</span>							
+					</p>
+				</li>`;
 		}
 
-		$(o.e).append(str);
+		$(o.e).html(str);
 	}
 
 	/**
@@ -78,15 +90,13 @@ function pageInit(options) {
 	}
 
 	$("#collection").click(function() {
-		h18.login(true);
-		if(!is_collection) {
+		if(h18.login(true)) {
 			Collection(this);
 		}
-		$("#collection span").text("已收藏");
-		tips("已收藏");
 	})
+	
 	/**
-	 * 收藏
+	 * 收藏/取消
 	 */
 	function Collection(obj) {
 		if($(obj).data('loading')) {
@@ -97,23 +107,32 @@ function pageInit(options) {
 			url: "/index.php/user/ajax_collection",
 			dataType: "json",
 			data: {
-				ac: "set",
+				ac: $(obj).hasClass('active') ? "delr" : "set",
 				id: o.id
 			},
 			success: function(data) {
-				is_collection = true;
 				if(data.code == 1) {
-					$("#collection span").text("已收藏");
+					if($(obj).hasClass('active')) {
+						$("#collection").text("收藏").removeClass('active');
+						tips("已取消");
+					} else {
+						$("#collection").text("已收藏").addClass('active');
+						tips("收藏成功");
+					}
+				} else {
+					tips(data.msg);
 				}
-				tips(data.msg);
+				$(obj).data('loading', false);
 			}
 		});
 	}
+	
+	
 	/**
 	 * 获取收藏状态
 	 */
 	function get_collection() {
-		!h18.login() && $.ajax({
+		h18.login() && $.ajax({
 			url: "/index.php/user/ajax_collection",
 			dataType: "json",
 			data: {
@@ -123,7 +142,7 @@ function pageInit(options) {
 			success: function(data) {
 				if(data.code == 1) {
 					is_collection = true;
-					$("#collection span").text("已收藏");
+					$("#collection").addClass('active').text("已收藏");		
 				}
 			}
 		});
@@ -163,6 +182,7 @@ function pageInit(options) {
 		} else {
 			tips("已顶");
 		}
+		$(this).addClass('active');
 	})
 	$(".j-down").click(function() {
 		h18.login(true);
@@ -172,13 +192,14 @@ function pageInit(options) {
 		} else {
 			tips("已踩");
 		}
+		$(this).addClass('active');
 	});
 
 	/**
 	 * 获取状态
 	 */
 	function get_up_down() {
-		!h18.login() && $.ajax({
+		h18.login() && $.ajax({
 			url: "/index.php/user/ajax_up_down",
 			dataType: "json",
 			data: {
@@ -188,9 +209,11 @@ function pageInit(options) {
 			success: function(data) {
 				if(data.up > 0) {
 					is_up = true;
+					$(".j-up").addClass('active');
 				}
 				if(data.down > 0) {
 					is_down = true;
+					$(".j-down").addClass('active');
 				}
 			}
 		});
@@ -236,6 +259,12 @@ function pageInit(options) {
 		});
 	}
 
+	/**
+	 * 换一批
+	 */
+	$("#rchange").click(function(){		
+		get_list();
+	})
 	get_list();
 	
 	var browsevod = Number($.cookie('h18_browsevod'));

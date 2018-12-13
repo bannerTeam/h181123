@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta http-equiv="cache-control" content="no-siteapp">
 
-<link href="//at.alicdn.com/t/font_932526_svdzo3ji59.css" rel="stylesheet">
+<link href="//at.alicdn.com/t/font_932526_s1uabsiyze.css" rel="stylesheet">
 <link href="{$maccms.path_tpl}/css/common.css" rel="stylesheet">
 <script src="{$maccms.path_tpl}js/jquery.min.js"></script>
 <!--[if lt IE 9]>
@@ -30,5 +30,22 @@
 		}
 	};
 </script>
+<script>
+	var fun = function(doc, win) {
+		var docEl = doc.documentElement,
+			resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+			recalc = function() {
+				var clientWidth = docEl.clientWidth;
+				if(!clientWidth) return;
 
+				//这里是假设在640px宽度设计稿的情况下，1rem = 20px；
+				//可以根据实际需要修改
+				docEl.style.fontSize = 20 * (clientWidth / 750) + 'px';
+			};
+		if(!doc.addEventListener) return;
+		win.addEventListener(resizeEvt, recalc, false);
+		doc.addEventListener('DOMContentLoaded', recalc, false);
+	}
+	fun(document, window);
+</script>
 

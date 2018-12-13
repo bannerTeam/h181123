@@ -73,7 +73,7 @@
 					<div class="weui-flex__item p-r">
 						<a href="/user/vip">
 						<div class="bd">
-							<i class="iconfont icon-huiyuan"></i>
+							<i class="iconfont icon-huiyuanqia2"></i>
 							<span class="name">升级会员</span>
 							<span>无限看片</span>
 						</div>
@@ -98,12 +98,12 @@
 					<div class="weui-flex__item">
 						<i class="iconfont icon-telegram-plane"></i>
 						<p>官方电报群</p>
-						<span>无限看片</span>
+						<span>火爆交流</span>
 					</div>
 					<div class="weui-flex__item ">
-						<i class="iconfont icon-weixin"></i>
+						<i class="iconfont icon-comments"></i>
 						<p>Potato群</p>
-						<span>在线充值</span>
+						<span>火爆交流</span>
 					</div>
 					<div class="weui-flex__item ">
 						<i class="iconfont icon-xiaoxi"></i>
@@ -160,8 +160,10 @@
 				</div>
 			</div>
 			<div class="line"></div>
-			<div class="um-out">
-				<a href="/user/logout" class="weui-btn  weui-btn_warn">退出</a>
+			<div class="um-out">				
+				{if $user.user_id > 0}
+					<a href="/user/logout" class="weui-btn  weui-btn_warn">退出</a>
+				{/if}
 			</div>
 		</div>
 

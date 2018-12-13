@@ -13,7 +13,7 @@ class Index extends Base
         $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
         $uachar = "/(nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|meizu|cldc|midp|iphone|wap|mobile|android)/i";
         if((preg_match($uachar, $ua))) {
-            $this->redirect('/vod/type/id/23');
+            $this->redirect('/vod/type/id/24');
             exit;
         }
         

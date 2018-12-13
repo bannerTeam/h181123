@@ -9,6 +9,7 @@ function pageInit(options) {
 		limit: 12,
 		id: 0,
 		tid: 0,
+		tpl:"",
 		fn: successFn
 	};
 	var o = $.extend(settings, options);
@@ -56,20 +57,46 @@ function pageInit(options) {
 			str = "";
 
 		for(var i = 0; i < items.length; i++) {
-			str += `<li style="width: 49.5%;">
-				<div class="ui-grid-trisect-img" style="padding-top: 54.47%;"><span style="background-image:url('${items[i].data.pic}')"></span>
-					<div class="cnl-tag tag">
-						${items[i].data.timeadd}
-					</div>
-					<div class="delete" data-id="${items[i].ulog_id}"><i></i>移除</div>
+			str += `
+			<li class="weui-flex">
+				<div class="pic weui-flex__item">
+					<a href="/vod/detail/id/${items[i].data.id}">
+						<img src="${items[i].data.pic}" />
+					</a>
 				</div>
-				<h4 class="ui-nowrap" style="font-size: 100%;font-weight: 400;text-align:center"><a href="/index.php/vod/detail/id/${items[i].data.id}.html" >${items[i].data.name}</a></h4>
-			</li>`;
+				<div class="intro weui-flex__item ">	
+					<div class="vmiddle">
+						<div class="hh"><a href="/vod/detail/id/${items[i].data.id}">${items[i].data.name}
+							</a>								
+						</div>
+						<div class="bb">
+							<span class="add weui-flex__item"><i class="iconfont icon-riqi"></i>&nbsp;${date('Y-m-d',items[i].vod_time_add)}</span>
+						<span class="weui-flex__item"><i class="iconfont icon-shijian"></i>&nbsp;${duration_to_time(items[i].vod_duration)}</span>								
+						</div>
+						<div class="ff weui-flex ff-mt">
+							<span class="weui-flex__item"><i class="iconfont icon-yanjing"></i>&nbsp;${items[i].data.hits}次</span>
+							<span class="weui-flex__item btn">
+								<a class="delete" data-id="${items[i].ulog_id}">
+									${retTxt()}
+								</a>
+							</span>
+						</div>
+					</div>						
+				</div>
+			</li>
+			`;
 		}
 
 		$(o.e).append(str);
 	}
 
+	function retTxt(){
+		if(o.tpl == "browse"){
+			return '删除记录';
+		}else{
+			return '取消收藏';
+		}
+	}
 
 	$("#vlist").on("click", ".delete", function() {	
 		var obj = this,id = $(this).data('id');
@@ -78,7 +105,14 @@ function pageInit(options) {
 			btn: ['确定', '取消'],
 			yes: function(index) {				
 				layer.close(index);
-				delCollection(id);
+				
+				if(o.tpl == "browse"){
+					delBrowse(id);
+				}else{
+					delCollection(id);
+				}
+				
+				
 				$(obj).parents('li').fadeOut("slow");
 				
 				var  total = $.trim(Number($('#videos_total').text()));
@@ -95,6 +129,22 @@ function pageInit(options) {
 	function delCollection(id) {
 		$.ajax({
 			url: "/index.php/user/ajax_collection",
+			dataType: "json",
+			data: {
+				ac: "del",
+				id: id,
+				type: 2
+			}
+		});
+	}
+	
+	
+	/**
+	 * 删除浏览记录
+	 */
+	function delBrowse(id) {
+		$.ajax({
+			url: "/index.php/user/ajax_browse",
 			dataType: "json",
 			data: {
 				ac: "del",
