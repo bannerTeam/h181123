@@ -17,19 +17,30 @@
 		$("#footer_favs").data('url','/user/login');
 	}
 </script>
-<!--<div style="height: 0; width: 0;">
-	<div style="height: 0;font-size: 0;display: none;">{$maccms.site_tj}</div>
-</div>-->
 	
-	
-<div class="search-main">
-	
+<div class="search-main" id="search_main" style="display: none;">
+	<form method="get" action="{:mac_url('vod/search')}" id="search_form">
+	<div class="mould-key weui-flex">
+		<input class="weui-flex__item" name="wd" id="wd" type="text" placeholder="请输入搜索关键字" autocomplete="off" />
+		<span id="search_btn">搜索</span>
+		<span id="search_close" class="close">取消</span>
+	</div>
+	</form>
 	<div class="mould-title">
 		<h3>搜索历史</h3>		
 	</div>
-	
-	<div class="mould-title">
+	<div class="mould-main clearfix" id="search_history" style="padding-bottom: 0;">				
+	</div>	
+	<div class="mould-title ">
 		<h3>热门搜索</h3>
 	</div>
-	
+	<div class="mould-main clearfix">
+		{maccms:foreach name="$maccms.search_hot_arr" id="hot"}
+		<a href="/vod/search/wd/{$hot}" title="{$hot}" ><span>{$hot}</span></a>
+		{/maccms:foreach}			
+	</div>	
 </div>
+
+<!--<div style="height: 0; width: 0;">
+	<div style="height: 0;font-size: 0;display: none;">{$maccms.site_tj}</div>
+</div>-->

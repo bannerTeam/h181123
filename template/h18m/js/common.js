@@ -12,13 +12,35 @@ $(function() {
 	
 	
 	$("#head_search").bind("click", function(){
-		if($("#nav").hasClass("out")){
-			$("#nav").removeClass("out")
-		}else{
-			$("#nav").addClass("out")
+		$("#search_main").show();
+	});
+	
+	$("#search_close").click(function(){
+		$("#search_main").hide();
+	});
+	
+	$("#search_btn").click(function(){
+		var k = $.trim($("#wd").val());
+		if(k == ""){
+			layer.open({
+				content: "请输入搜索关键字",
+				skin: 'msg',
+				time: 2
+			});
+			return false;
 		}
+		$("#search_form")[0].submit();
 	});
 
+	
+	var his = SearchHistory._get(),slist =  his ? his.split(',') : [] , str = "";	
+	for (var i = slist.length - 1; i >=0; i--) {
+		if(slist[i].length > 0){
+			str += `<a href="/vod/search/wd/${slist[i]}" ><span>${slist[i]}</span></a>`;	
+		}
+	}
+	$("#search_history").html(str);
+	
 });
 
 function F_side() {
@@ -40,7 +62,6 @@ function pageFontSize(){
 			recalc = function() {
 				var clientWidth = docEl.clientWidth;
 				if(!clientWidth) return;
-
 				//这里是假设在640px宽度设计稿的情况下，1rem = 20px；
 				//可以根据实际需要修改
 				docEl.style.fontSize = 20 * (clientWidth / 750) + 'px';
@@ -73,6 +94,10 @@ function pagination(options) {
 		fn: successFn
 	};
 	var o = $.extend(settings, options);
+	
+	if($.trim(o.wd).length > 0 ){
+		SearchHistory._set($.trim(o.wd));
+	}
 
 	var totalHeight = 0;
 	$(window).scroll(function() {
@@ -179,6 +204,44 @@ function pagination(options) {
 
 }
 
+/**
+ * 读写搜索记录
+ */
+var SearchHistory = {
+	
+	_set:function(val){
+		
+		var his = this._get(),
+		 arr = his ? his.split(',') : [],
+		 isExists = false;
+		 
+		 val  = $.trim(val);
+		 
+		 for (var i = 0; i < arr.length; i++) {
+		 	if(arr[i] == $.trim(val)){
+		 		isExists = true;
+		 		break;
+		 	}
+		 }		
+		if(!isExists){
+			arr.push(val)
+		}
+		
+		$.cookie('h18_history',arr.join(','), { expires: 7, path: '/' });
+		
+	},
+	_get:function(){
+		
+		return $.cookie('h18_history');
+		
+	}
+	
+}
+
+/**
+ * 格式化视频播放时长
+ * @param {Object} $s
+ */
 function duration_to_time($s){
 	$s = Number($s);    
     var $t = '';

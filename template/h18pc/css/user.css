@@ -65,3 +65,26 @@ border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 .vip-btn{ text-align: center; padding: 30px 0; margin-top: 30px;}
 .vip-btn button{width: 30%;border: 0 none;
 	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer;}
+
+.news{ margin-top: 20px;}
+.news-hd{
+	
+	border-bottom: 2px solid #2BAEB9;
+	overflow: hidden;
+}
+.news-hd a{font-size: 14px; padding: 12px 20px; display: inline-block;}
+.news-hd a.active{ color: #2BAEB9;font-weight: bold;}
+.news-bd{padding-top: 12px;}
+.news-bd li .tt{ height: 35px; line-height: 35px; cursor: pointer;color: #000;}
+.news-bd li .tt b{ margin-right: 10px; color: red; border: 1px solid red; border-radius: 3px; padding: 2px 5px;font-size: 12px;}
+.news-bd li .already{ color: #ababab;}
+.news-bd li .already b{ color: green; border: 1px solid green;}
+.news-bd li .rec{ color: #FF6600;}
+.news-bd li .rec b{ color: #FF6600; border: 1px solid #FF6600;}
+.news-bd li .nrec b{ display: none;}
+.news-bd li:hover .tt{ color: #2BAEB9;}
+.news-bd li .l{ float: left; width: 575px;}
+.news-bd li .r{ float: right; width: 100px;}
+
+.news-bd li .con{ background: #FFFFFF; position: relative; padding: 20px 22px;}
+.news-bd li .con .name{ text-align: right; margin-top: 12px; }

@@ -866,7 +866,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
@@ -888,7 +888,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
@@ -915,7 +915,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
@@ -946,7 +946,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
@@ -1019,7 +1019,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['o.user_id'] = $GLOBALS['user']['user_id'];
@@ -1040,7 +1040,7 @@ class User extends Base
     {
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
-        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+        $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
@@ -1208,6 +1208,87 @@ class User extends Base
         return $this->fetch('user/share');
     }
 
+       
+   
+    /**
+     * 消息
+     *
+     * @return mixed|string
+     */
+    public function news()
+    {       
+        
+        if (request()->isAjax()) {
+            
+            $param = input();
+            
+            if(isset($param['ac']) && $param['ac']=='already'){
+                
+                $id = intval($param['id']);
+                if(empty($id)){
+                    $res['code'] = '1001';
+                    $res['msg'] = '不存在';
+                    return json($res);
+                }
+                $where['id'] = $id;
+                $where['receive_user_id'] = $GLOBALS['user']['user_id'];
+                
+                $data['id'] = $id;
+                $data['status'] = 1;
+                
+                $res = model('News')->saveData($data, $where);
+                
+                return json($res);
+            }
+            
+            $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
+            $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
+            
+            $where = [];
+           
+            $where['receive_user_id'] = $GLOBALS['user']['user_id'];
+            
+            $order= 'send_time desc';
+            
+            $res = model('News')->listData($where, $order, $param['page'], $param['limit']);
+            
+            return json($res);
+        } else {
+            return $this->fetch('user/news');
+        }
+        
+    }
+    
+    /**
+     * 公告
+     *
+     * @return mixed|string
+     */
+    public function notice()
+    {
+        
+        if (request()->isAjax()) {
+            
+            $param = input();
+            $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
+            $param['limit'] = intval($param['limit']) < 1 ? 20 : intval($param['limit']);
+            
+            $where = [];
+            $where['send_time'] = ['<',time()];
+            
+            $order= 'status desc,send_time desc';
+            
+            $res = model('Notice')->listData($where, $order, $param['page'], $param['limit']);
+                        
+            return json($res);
+        } else {
+            return $this->fetch('user/notice');
+        }
+        
+        
+        
+    }
+    
     /**
      * 获取邀请随机数
      */

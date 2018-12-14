@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息</title>
+		{include file="public/include" /}
+		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
+	</head>
+
+	<body>
+
+		{include file="public/header" /}
+
+		<div class="user page-w clearfix">
+			{include file="user/side" /}
+			<div class="user-con">
+				<div class="news clearfix">					
+					<div class="news-hd clearfix">
+						<a class="active" href="/user/news">消息</a>
+						<a href="/user/notice">公告</a>
+					</div>
+					<div class="news-bd clearfix">
+						
+						<ul id="nlist" class="clearfix">
+							
+						</ul>
+						
+						<div class="clearfix" id="paging"></div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<script src="{$maccms.path_tpl}js/user/news.js"></script>
+		<script>
+			pageInit({});
+		</script>
+
+		{include file="public/foot" /}
+	</body>
+
+</html>

@@ -20,7 +20,7 @@ function pageInit(options) {
 	 * 获取列表
 	 */
 	function get_list() {
-		layer.load();
+		var lindex = layer.load();
 		o.loading = false;
 		$.ajax({
 			url: o.url,
@@ -35,7 +35,7 @@ function pageInit(options) {
 				limit: o.limit
 			},
 			success: function(data) {
-				layer.closeAll();
+				layer.close(lindex);
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
 				}
@@ -48,6 +48,7 @@ function pageInit(options) {
 			}
 		});
 	}
+
 
 	function successFn(data) {
 

@@ -55,6 +55,15 @@
 			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/4.png" />修改密码</a>
 		</li>
 		
+		<li {if $pageAction == 'account'}class="active"{/if}>
+			
+			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/account.png" />我的账户</a>
+		</li>
+		<li {if $pageAction == 'news' || $pageAction == 'notice'}class="active"{/if}>
+			
+			<a href="/user/news"><img src="{$maccms.path_tpl}/img/user/news.png" />消息公告</a>
+		</li>
+		
 		<li>
 			<a id="out" href="javascript:;"><img src="{$maccms.path_tpl}/img/user/out.png" />退出</a>
 		</li>

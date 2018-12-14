@@ -151,4 +151,19 @@ margin:.5rem 0 0rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-
 
 .loading{background:#fff;height: 50px;text-align: center;line-height: 50px;box-shadow: 0 0 2px rgba(0,0,0,.05);margin:1.5% 0 1.5% 0;}
 
-.search-main{}
+.search-main{ background: #FFFFFF; position: fixed; left: 0;top: 0; bottom: 0;right: 0; z-index: 200;}
+.search-main .mould-title{padding-top:1rem;padding-bottom:1rem;border-bottom:1px solid #ECEAEA;position: relative;}
+.search-main .mould-title h3{border-left:.5rem solid #2BAEB9;text-indent:1.4rem;height:2.5rem;line-height:2.5rem;font-size:1.4rem}
+
+.search-main .mould-main{ padding: 1.2rem;    overflow: hidden;}
+.search-main .mould-main a{ font-size: 1.2rem; color: #2BAEB9; float: left;width: 25%; text-align: center; overflow: hidden;  margin-bottom: 1rem;}
+.search-main .mould-main a span{border:1px solid #2BAEB9; width: 90%; display: block; border-radius: 5px;
+padding: 0.6rem 0; 
+ white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.search-main .mould-key{ background: #2BAEB9; height: 3.5rem; line-height: 3.5rem;}
+.search-main .mould-key input{ text-indent: 0.5rem; font-size: 1.2rem; border: 1px solid #bebfbf;}
+.search-main .mould-key span{ font-size: 1.2rem; color: #FFFFFF; text-align: center; width: 5rem;}
+.search-main .mould-key span.close{ background: #bebfbf; color: #000000;}
