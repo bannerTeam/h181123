@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请</title>
+		{include file="public/include_user" /}
+		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
+		<style type="text/css">
+			.form .col {
+				margin-bottom: 2rem;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>申请</h3>
+		</div>
+		<div class="page-w" style="padding-top: 3rem;">
+			<div class="form">
+				<div class="col weui-flex">
+					<i class="iconfont icon-qq"></i>
+					<input class="weui-flex__item" id="qq" placeholder="请输入QQ号码" type="text" />
+				</div>
+				<div class="col weui-flex">
+					<i class="iconfont icon-weixin"></i>
+					<input class="weui-flex__item" id="weixin" placeholder="请输入微信号码" />
+				</div>
+				<div class="col weui-flex">
+					<i class="iconfont icon-skype1"></i>
+					<input class="weui-flex__item" id="skype" placeholder="请输入skype号码" />
+				</div>
+				<div class="col weui-flex">
+					<i class="iconfont icon-youjian"></i>
+					<input class="weui-flex__item" id="email" placeholder="请输入邮箱" />
+				</div>
+				<div class="col weui-flex">
+					<i class="iconfont icon-xiaofeiji"></i>
+					<input class="weui-flex__item" id="telegram" placeholder="请输入Telegram号码" />
+				</div>
+				<div class="col">
+					说明，以上信息将作为代理佣金结算的联系窗口，所以请务必填写真实信息，至少填写一项，工作人员会第一时间添加审核
+				</div>
+			</div>
+			<div class="row-btn ">
+				<button id="apply">
+					立即申请
+				</button>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			h18.login(true);
+
+			(function() {
+
+				$("#apply").click(function() {
+					apply()
+				})
+
+				function apply() {
+					var param = {
+						qq: $.trim($("#qq").val()),
+						weixin: $.trim($("#weixin").val()),
+						skype: $.trim($("#skype").val()),
+						email: $.trim($("#email").val()),
+						telegram: $.trim($("#telegram").val())
+					}
+
+					if(param.qq == "" && param.weixin == "" && param.skype == "" && param.email == "" && param.telegram == "") {
+						tool.alert("至少填写一项");
+						return false;
+					}
+
+					if(param.qq != "" && !/^\d{6,12}$/.test(param.qq)) {
+						tool.msg("QQ格式错误");
+						return false;
+					}
+					if(param.email != "" && !/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(param.email)) {
+						tool.msg("邮箱格式错误");
+						return false;
+					}
+					var index = tool.loading();
+					$.ajax({
+						type: "post",
+						data: param,
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								tool.alert('申请成功', function() {
+									location.href = "/proxy/result?id=" + r.id;
+								});
+							} else {
+								tool.alert(r.msg);
+							}
+						}
+					});
+				}
+
+			})()
+		</script>
+
+		{include file="public/foot" /}
+	</body>
+
+</html>

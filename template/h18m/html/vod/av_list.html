@@ -1,0 +1,32 @@
+<section class="ui-panel">
+					
+	<ul class="ui-grid-column" id="vlist">
+
+		{maccms:vod num="10" paging="yes" type="all" by="time"  order="desc"  }
+		<li>
+			<a href="{:mac_url_vod_detail($vo)}">
+				<img src="{:mac_url_img($vo.vod_pic)}" />				
+			</a>
+			<h4 class="ui-nowrap"><a href="{:mac_url_vod_detail($vo)}" >{$vo.vod_name}</a></h4>
+			<div class="other weui-flex clearfix">
+				<span class="weui-flex__item"><i class="iconfont icon-riqi"></i>&nbsp;{:date('Y-m-d',$vo.vod_time_add)}</span>
+				<span class="weui-flex__item"><i class="iconfont icon-thumbs-o-up"></i>&nbsp;{$vo.vod_up}人顶</span>
+				<span class="weui-flex__item"><i class="iconfont icon-yanjing"></i>&nbsp;{$vo.vod_hits}次</span>
+				<span class="weui-flex__item"><i class="iconfont icon-shijian"></i>&nbsp;{:mac_to_time($vo.vod_duration)}</span>
+			</div>
+		</li>
+		{/maccms:vod}	
+
+	</ul>
+	<div class="loading" id="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
+</section>
+<script type="text/javascript">
+	 $('#videos_total').html('{$__PAGING__.record_total}');
+	var s = {
+		tid: "{$typeid}",
+		by:"{$sort}",
+		tpl:"column",
+		limit:20
+	};
+	pagination(s);
+</script>

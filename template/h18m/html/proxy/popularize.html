@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>三级分销-推广链接</title>
+		{include file="public/include_user" /}
+		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
+		<style type="text/css">
+			.share {
+				text-align: center;
+				padding: 5rem 0;
+			}
+			
+			.share {}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>三级分销</h3>
+		</div>
+		<div class="proxy" style="padding-bottom: 2rem;">			
+			<div class="navtab">
+				<ul class="weui-flex">
+					<li class="weui-flex__item"><a href="/proxy/popularize" class="active">推广链接</a></li>
+					<li class="weui-flex__item"><a href="/proxy/brokerage">佣金方案</a></li>
+					<li class="weui-flex__item"><a href="/proxy/performance" class="">推广业绩</a></li>
+					<li class="weui-flex__item"><a href="/proxy/mybrokerage" class="">我的佣金</a></li>
+					<li class="weui-flex__item"><a href="/proxy/brokerage_record" class="">佣金记录</a></li>					
+				</ul>
+			</div>
+			<div class="popul">
+				<h2>H18视频</h2>
+				<div class="qrcode" id="qrcode">
+
+				</div>
+				<p>扫描下载H18视频APP，安卓、苹果自动识别</p>
+				<p>分享有礼，享无限次免费看片特权</p>
+				<p>官方网站：www.h18av.com</p>				
+			</div>
+			<div class="row-btn " style="margin-top: 3rem;">
+				<button>
+					复制链接
+				</button>
+				<button style="margin-top: 2rem;">
+					保存二维码
+				</button>
+			</div>
+			
+			<div id="qrcode_url" style="display: none;"></div>
+		</div>
+
+		<script type="text/javascript">
+			(function() {
+				var wh = $(window).width() * 0.7,
+					code = "{$invite}",
+					l = "http://" + document.domain + "/user/reg?code=" + code;
+				jQuery('#qrcode').qrcode({
+					render: "canvas", //也可以替换为table
+					width: wh,
+					height: wh,
+					text: l
+				});
+				$("#qrcode_url").text(l);
+			})()
+		</script>
+
+		{include file="public/foot" /}
+	</body>
+
+</html>

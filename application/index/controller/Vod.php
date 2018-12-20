@@ -85,10 +85,12 @@ class Vod extends Base
         }else{
             $this->assign('childids', $info['childids']);            
             $this->assign('typeAll', $info['type_id']);
-            $this->assign('typeParent', 1);
-            
+            $this->assign('typeParent', 1);            
         }
         
+        if($info['type_id'] ==23 || (isset($info['parent']) && $info['parent']['type_id'] == 23)){            
+            $this->assign('typeAv', 1);
+        }
         
         return $this->fetch(mac_tpl_fetch('vod', $info['type_tpl'], 'type'));
     }

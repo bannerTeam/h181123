@@ -13,8 +13,25 @@ ul,li{list-style: none;}
     visibility: hidden
 }
 .p-r{ position: relative;}
-
+.fwb{ font-weight: bold;}
 .line{ height: 0.5rem; background: #bbbbbb; width: 100%; clear: both;}
+
+.page-w{ width: 85%; margin: 0 auto;}
+
+.navtab{ padding: 1rem 0;}
+.navtab > ul{ text-align: center;}
+.navtab a{
+	border: 1px solid #2BAEB9;
+    color: #2BAEB9;
+    border-radius: 3px; 
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 5.8rem;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+.navtab a.active{ background: #2BAEB9; color: #FFFFFF;}
+
 
 .chead{ height: 4.5rem; line-height: 4.5rem; position: relative; background: #2BAEB9;}
 .chead .back{ position: absolute; left: 1.4rem;}
@@ -75,10 +92,14 @@ ul,li{list-style: none;}
 .form .col{margin-bottom:4rem}
 .form .col .iconfont{font-size:2rem;width:3rem;padding:.5rem 0}
 .form .col input{font-size:1.2rem;line-height:1.2rem;border:0 none;border-bottom:1px solid rgba(187,187,187,.2);padding:.5rem}
-.submit button{width:100%;background-color:#2BAEB9;color:#FFF;border:0 none;font-size:1.4rem;height:4.2rem;line-height:4.2rem;border-radius:2rem}
+
 .signup .ft{font-size:1.4rem;width:100%;text-align:center;margin-bottom:1rem}
 .signup .ft a{color:#2BAEB9}
 
+.submit button,.row-btn button{width:100%;background-color:#2BAEB9;color:#FFF;border:0 none;font-size:1.4rem;height:4.2rem;line-height:4.2rem;border-radius:2rem}
+
+.row-btn{ text-align: center;}
+.row-btn button{ width: 80%;}
 
 /*页面内部模块标题*/
 .mould-title { padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ECEAEA;}
@@ -118,7 +139,14 @@ ul,li{list-style: none;}
 .about .mould-desc{ margin-bottom: 1rem;}
 
 .about .content{ padding: 2rem 3rem;}
+.about .content .tit{ text-align: center; font-size: 1.6rem; color: #000000;}
+.about .content .con{ margin-top: 1rem;}
 .about .content p{ font-size: 1.4rem; line-height: 2rem; margin-bottom: 0.5rem;}
+
+
+
+
+
 /*商务合作*/
 .coo-tit{}
 .coo-tit{ padding: 2.5rem 0; font-size: 2rem; text-align: center; border-bottom: 1px solid #ECEAEA;}
@@ -136,3 +164,8 @@ ul,li{list-style: none;}
 .feedback p{ margin-top: 2rem; text-align: center;}
 .feedback p button{ border: 1px solid #2BAEB9; background: #FFFFFF; width: 80%; height: 4rem; line-height: 4rem; color: #2BAEB9; font-size: 1.4rem; border-radius: 2rem;}
 
+/*推广*/
+.popul{ text-align: center;}
+.popul h2{ text-align: center; font-size: 2rem;}
+.popul .qrcode{ margin-bottom: 1rem; margin-top: 1rem;}
+.popul p{ font-size: 1.4rem;}

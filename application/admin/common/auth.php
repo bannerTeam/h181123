@@ -218,6 +218,16 @@ return array(
         '102' => array("show"=>1,'name' => '执行SQL语句', 'controller' => 'database',		'action' => 'sql'),
         '103' => array("show"=>1,'name' => '数据批量替换', 'controller' => 'database',		'action' => 'rep'),
     )),
+    '11' => array('name' => '代理', 'icon' => 'xe621', 'sub' => array(
+        '111' => array("show"=>1,'name' => '代理管理', 'controller' => 'proxy',		'action' => 'index'),
+        '11001' => array("show"=>0,'name' => '--申请代理审批', 'controller' => 'proxy',		'action' => 'apply'),
+        '11002' => array("show"=>0,'name' => '--代理提现审批', 'controller' => 'proxy',		'action' => 'withdraw'),
+        '11003' => array("show"=>0,'name' => '--佣金派发', 'controller' => 'proxy',		'action' => 'brokerage'),
+        '11004' => array("show"=>0,'name' => '--会员消费记录', 'controller' => 'proxy',		'action' => 'buy_record'),
+        '11005' => array("show"=>0,'name' => '--推广报表', 'controller' => 'proxy',		'action' => 'popularize'),
+        '11006' => array("show"=>0,'name' => '--终端报表', 'controller' => 'proxy',		'action' => 'client'),
+        
+    )),
 //  '11' => array('name' => '应用', 'icon' => 'xe621', 'sub' => array(
 //      '111' => array("show"=>1,'name' => '应用市场', 'controller' => 'addon',		'action' => 'index', 'param'=>''),
 //

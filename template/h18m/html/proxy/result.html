@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>{$pageTitle}</title>
+		{include file="public/include_user" /}
+<style type="text/css">
+			.form .col {
+				margin-bottom: 2rem;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>{$pageTitle}</h3>
+		</div>
+		<div class="page-w" style="padding-top: 3rem;">
+			<div class="form">
+				{if $obj.qq}
+				<div class="col weui-flex">
+					<i class="iconfont icon-qq"></i>
+					<input class="weui-flex__item" value="{$obj.qq}"  readonly="readonly" type="text" />
+				</div>
+				{/if}
+				{if $obj.weixin}
+				<div class="col weui-flex">
+					<i class="iconfont icon-weixin"></i>
+					<input class="weui-flex__item" value="{$obj.weixin}"  readonly="readonly" />
+				</div>
+				{/if}
+				{if $obj.skype}
+				<div class="col weui-flex">
+					<i class="iconfont icon-skype1"></i>
+					<input class="weui-flex__item" value="{$obj.skype}"  readonly="readonly" />
+				</div>
+				{/if}
+				{if $obj.email}
+				<div class="col weui-flex">
+					<i class="iconfont icon-youjian"></i>
+					<input class="weui-flex__item" value="{$obj.email}" readonly="readonly" />
+				</div>
+				{/if}
+				{if $obj.telegram}
+				<div class="col weui-flex">
+					<i class="iconfont icon-xiaofeiji"></i>
+					<input class="weui-flex__item" value="{$obj.telegram}" readonly="readonly" />
+				</div>
+				{/if}
+				<div class="col">
+					请务必保证信息的真实性，佣金发放时，财务会通过上述联系方式跟您联系，并获取您的收款账户。
+				</div>
+			</div>
+			<div class="row-btn " style="margin-top: 3rem;">
+				<button onclick="location.href='/proxy/popularize'">
+					立即推广
+				</button>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			(function() {
+
+			})()
+		</script>
+
+		{include file="public/foot" /}
+	</body>
+
+</html>

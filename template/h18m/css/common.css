@@ -57,6 +57,9 @@ body{ color: rgb(42,35,51);}
 .chead .back{ position: absolute; left: 1.4rem;}
 .chead .back i{ color: #FFFFFF; font-size: 1.4rem;}
 .chead h3{ color: #FFFFFF; text-align: center; font-size: 1.6rem;}
+
+
+
 /*搜索下拉区域*/
 .currents{width:100%;max-width:750px;min-width:320px;margin:0 auto;background:#FFF;position:absolute;top:0;padding:1rem 0;z-index:2}
 .currents.out{max-width:750px;min-width:320px;display:none}
@@ -114,8 +117,8 @@ margin:.5rem 0 0rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-
 
 
 
-/*单个列表*/
-.ui-grid-single{ padding: 0.5rem 1rem;}
+/*单个列表  一边图一边介绍*/
+.ui-grid-single{ padding: 0.5rem;}
 .ui-grid-single li{ overflow: hidden; margin-bottom: 0.5rem;}
 .ui-grid-single .pic{ width: 50%; overflow: hidden;}
 .ui-grid-single .pic a{display: inline-block;     line-height: 0;}
@@ -133,6 +136,7 @@ margin:.5rem 0 0rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-
 .ui-grid-single .intro{    display: flex;
     align-items: center;}
 .ui-grid-single .vmiddle{  width: 100%;}
+.ui-grid-single .vmiddle .item-60{ width: 55%; display: inline-block;}
 .ui-grid-single .vmiddle .bb{   line-height: 1.6rem; padding-top: 0.5rem;}
 .ui-grid-single .vmiddle .bb .add{ min-width: 50%;}
 .ui-grid-single .ff{}
@@ -148,6 +152,17 @@ margin:.5rem 0 0rem;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-
 	padding: 2px 0;
 }
 .ui-grid-single .ff-mt{ margin-top: 5px;}
+
+.ui-grid-column{}
+.ui-grid-column li{ margin-top: 0.5rem;}
+.ui-grid-column img{ width: 100%;}
+.ui-grid-column h4{ font-weight: 500; }
+.ui-grid-column h4 a{font-size: 1.6rem; color: #4D4E4C;}
+.ui-grid-column .other{ padding: 0.5rem 0.8rem;}
+.ui-grid-column .other span{ font-size: 1.2rem;color: #4D4E4C;}
+.ui-grid-column .other i{ color: #2BAEB9; font-size: 1.3rem;}
+
+
 
 .loading{background:#fff;height: 50px;text-align: center;line-height: 50px;box-shadow: 0 0 2px rgba(0,0,0,.05);margin:1.5% 0 1.5% 0;}
 

@@ -44,12 +44,15 @@
 							<div class="hh"><a href="{:mac_url_vod_detail($vo)}">{$vo.vod_name}
 								</a>								
 							</div>
-							<div class="bb">
-								<span class="add weui-flex__item"><i class="iconfont icon-riqi"></i>&nbsp;{:date('Y-m-d',$vo.vod_time_add)}</span>
+							<div class="bb weui-flex">
+								<span class="add item-60"><i class="iconfont icon-riqi"></i>&nbsp;{:date('Y-m-d',$vo.vod_time_add)}</span>
 							<span class="weui-flex__item"><i class="iconfont icon-shijian"></i>&nbsp;{:mac_to_time($vo.vod_duration)}</span>								
 							</div>
-							<div class="ff">
-								<span><i class="iconfont icon-yanjing"></i>&nbsp;{$vo.vod_hits}次</span>	
+							<div class="ff weui-flex ff-mt">
+								<span class="item-60"><i class="iconfont icon-yanjing"></i>&nbsp;{$vo.vod_hits}次</span>	
+								<span class="weui-flex__item ">
+									<i class="iconfont icon-yanjing"></i>&nbsp;{$vo.vod_up}顶
+								</span>
 							</div>
 						</div>						
 					</div>
