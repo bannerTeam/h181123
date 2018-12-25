@@ -24,12 +24,66 @@
 					<li class="weui-flex__item"><a href="/proxy/brokerage_record" class="">佣金记录</a></li>					
 				</ul>
 			</div>
-			
+			<div class="mybrokerage">
+				<div class="tit">当前佣金余额</div>
+				<div class="acount">{$info.amount}元</div>
+				<div class="inp">
+					<i class="iconfont icon-meiyuan9"></i>
+					<input type="number" value="" autocomplete="off" id="amount" placeholder="请输入提现金额" />
+				</div>
+				<div class="submit">
+					<button id="btn">提交申请</button>
+				</div>
+			</div>
 		</div>
 
 		<script type="text/javascript">
 			(function() {
-
+				
+				var old_amount = Number("{$info.amount}");
+				$("#btn").click(function(){
+					
+					
+					apply();					
+				});
+				
+				function apply(){
+					var amount = $.trim($("#amount").val());
+					
+					if(amount  == ""){
+						tool.alert("请输入提现金额");
+						return false;
+					}
+					if(!/^\d+$/.test(amount)){
+						tool.alert("提现金额只能是整数");
+						return false;
+					}
+					
+					amount = Number(amount);
+					if(amount > old_amount){
+						tool.alert("余额不足");
+						return false;
+					}
+					var index = tool.loading();
+					$.ajax({
+						type:"post",
+						dataType:"json",
+						data:{
+							amount:amount
+						},
+						success:function(res){
+							layer.close(index);
+							if(res.code == 1){
+								tool.alert(res.msg,function(){
+									location.reload()
+								});
+							}else{
+								tool.alert(res.msg);
+							}
+						}
+					});
+				}
+				
 			})()
 		</script>
 

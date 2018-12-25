@@ -430,8 +430,8 @@ class User extends Base
         
         if (request()->isAjax()) {
             return json($res);
-        } else {
-            return redirect('user/index');
+        } else {            
+            return redirect('/');
         }
     }
 

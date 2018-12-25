@@ -17,14 +17,30 @@
 			      </div>
                 </div>
                 <div class="layui-input-inline w150">
-                    <select name="status">
-                        <option value="">状态</option>
-                        <option value="0" {if condition="$param['status'] eq '0'"}selected{/if}>申请中</option>
-                        <option value="1" {if condition="$param['status'] eq '1'"}selected{/if}>通过</option>
-                        <option value="2" {if condition="$param['status'] eq '2'"}selected{/if}>拒绝</option>
+                    <select name="group_id">
+                        <option value="">会员组</option>
+                        {volist name="group_list" id="vo"}
+                        <option value="{$vo.group_id}" {if condition="$param['group_id'] eq $vo.group_id"}selected{/if}>{$vo.group_name}</option>
+                        {/volist}
                     </select>
                 </div>
-
+				<div class="layui-input-inline w150">
+                    <select name="proxy_id">
+                        <option value="">上级代理</option>
+                         {volist name="proxy_list" id="vo"}
+                        <option value="{$vo.id}" {if condition="$param['proxy_id'] eq $vo.id"}selected{/if}>{$vo.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+				<div class="layui-input-inline w150">
+                    <select name="proxy_pid">
+                        <option value="">上上级代理</option>
+                         {volist name="proxy_list" id="vo"}
+                        <option value="{$vo.id}" {if condition="$param['proxy_pid'] eq $vo.id"}selected{/if}>{$vo.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+				
                 <button class="layui-btn mgl-20 j-search" >查询</button>
             </form>
         </div>
@@ -34,14 +50,15 @@
 		<table class="layui-table" lay-size="sm">
 			<thead>
 				<tr>
-					<th width="80">标识</th>
-					<th width="">名称</th>
-					<th>申请时间</th>
-					<th>申请金额</th>
-					<th>申请前金额</th>
-					<th>申请后金额</th>
-					<th width="80">状态</th>
-					<th width="80">操作</th>
+					<th width="60">标识</th>
+					<th>时间</th>
+					<th>名称</th>
+					<th>会员组</th>
+					<th>上级代理</th>
+					<th>上上级代理</th>
+					<th>消费项目</th>
+					<th>消费金额</th>
+					<th>充值方式</th>
 				</tr>
 			</thead>
 
@@ -49,26 +66,27 @@
 			<tr>
 				<td>{$vo.id}</td>
 				<td>
-					{$vo.name}
+					{:date('Y-m-d H:i:s',$vo.add_time)}
 				</td>
-				<td>{:date('Y-m-d H:i:s',$vo.add_time)}</td>
+				<td>{$vo.user_name}</td>
+				<td>
+					{:mac_return_group_name($vo.group_id)}
+				</td>
+				<td>
+					{:mac_return_proxy_name($vo.proxy_id)}
+				</td>
+				<td>
+					{:mac_return_proxy_name($vo.proxy_pid)}
+				</td>
+				
+				<td>
+					{$vo.project}
+				</td>
 				<td>
 					￥{$vo.amount}
 				</td>
 				<td>
-					￥{$vo.before_amount}
-				</td>
-				<td>
-					￥{$vo.after_amount}
-				</td>
-				<td>
-					{if condition="$vo.status eq 1"}<span class="layui-badge layui-bg-green">通过</span>{/if} {if condition="$vo.status eq 2"}<span class="layui-badge ">拒绝</span>{/if} {if condition="$vo.status eq 0"}<span class="layui-badge layui-bg-orange">申请中</span>{/if}
-				</td>
-				<td>
-					{if condition="$vo.status eq 0"}
-					<a class="layui-badge-rim j-complete" data-id="{$vo.id}" href="javascript:;" title="通过">通过</a>
-					<a class="layui-badge-rim j-refuse" data-id="{$vo.id}" href="javascript:;" title="拒绝">拒绝</a>
-					{/if}
+					{$vo.recharge}
 				</td>
 			</tr>
 			{/volist}
@@ -82,59 +100,14 @@
 
 <script>
 	$(function() {
-		$('.j-refuse').click(function() {
-
-			var that = this;
-
-			layer.confirm("确认拒绝吗？", function() {
-
-				operating($(that).data('id'), 2);
-
-			});
-
-		});
-
-		$('.j-complete').click(function() {
-
-			var that = this;
-
-			layer.confirm("确认通过吗？", function() {
-
-				operating($(that).data('id'), 1);
-
-			});
-
-		});
-
-		function operating(id, status) {
-			layer.load()
-			$.ajax({
-				type: "post",
-				dataType: "json",
-				data: {
-					id: id,
-					status: status
-				},
-				success: function(res) {
-					layer.closeAll();
-					if(res.code == 1) {
-						layer.alert(res.msg, function() {
-							location.reload()
-						});
-					} else {
-						layer.alert(res.msg);
-					}
-				}
-			});
-		}
-
+		
 	})
 </script>
 
 {include file="../../../application/admin/view/public/foot" /}
 
 <script type="text/javascript">
-	var curUrl = "{:url('proxy/withdraw',$param)}";
+	var curUrl = "{:url('proxy/expenses_record',$param)}";
 	layui.use(['laypage', 'layer', 'form'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer,

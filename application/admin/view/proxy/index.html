@@ -1,58 +1,173 @@
 {include file="../../../application/admin/view/public/head" /}
 <div class="page-container p10">
-    <div class="my-toolbar-box">
+	<div class="my-toolbar-box">
+		
+		<div class="center mb10">
+            <form class="layui-form " method="post">
+                
+                <div class="layui-input-inline ">
+                	<label class="layui-form-label">开始时间</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="begin_date" value="{$param.begin_date}" name="begin_date" placeholder="yyyy-MM-dd">
+			      </div>
+                </div>
+                <div class="layui-input-inline ">
+                	<label class="layui-form-label">结束时间</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="end_date" value="{$param.end_date}" name="end_date" placeholder="yyyy-MM-dd">
+			      </div>
+                </div>
+                <div class="layui-input-inline w150">
+                    <select name="status">
+                        <option value="">状态</option>
+                        <option value="1" {if condition="$param['status'] eq '1'"}selected{/if}>开启</option>
+                        <option value="2" {if condition="$param['status'] eq '2'"}selected{/if}>关闭</option>
+                    </select>
+                </div>
 
-        <div class="layui-btn-group">
-            <a data-href="{:url('info')}" class="layui-btn layui-btn-primary j-iframe"><i class="layui-icon">&#xe654;</i>添加</a>
+                <button class="layui-btn mgl-20 j-search" >查询</button>
+            </form>
         </div>
 
-    </div>
+		
+	</div>
 
-    <form class="layui-form " method="post" id="pageListForm">
-        <table class="layui-table" lay-size="sm">
-            <thead>
-            <tr>
-                <th width="80">排序</th>
-                <th width="80">标识</th>
-                <th width="80">状态</th>
-                <th width="150">名称</th>
-                <th>图片</th>
-                <th>链接</th>
-                <th width="100">操作</th>
-            </tr>
-            </thead>
+	<form class="layui-form " method="post" id="pageListForm">
+		<table class="layui-table" lay-size="sm">
+			<thead>
+				<tr>
+					<th width="80">标识</th>
+					<th width="">名称</th>
+					<th width="80">状态</th>
+					<th>添加时间</th>
+					<th width="130">操作</th>
+				</tr>
+			</thead>
 
-            {volist name="list" id="vo" key="k"}
-            <tr>
-                <td>{$vo.sort}</td>
-                <td>                	
-                	{volist name="$group" id="go"}
-                     {if condition="$vo.adv_group_id eq $go.id"}{$go.name}{/if}
-                    {/volist}                
-                </td>
-                <td>{if condition="$vo.status eq 1"}<span class="layui-badge layui-bg-green">启用</span>{else}<span class="layui-badge">禁用</span>{/if} </td>
-                <td>{$vo.title}</td>
-                <td>
-                	<a href="{$vo.img}" target="_blank">
-                		<img src="{$vo.img}" style="max-height: 80px; max-width: 200px;" />
-                	</a>
-                </td>
-                <td>{$vo.link}</td>
-                <td>
-                    <a class="layui-badge-rim j-iframe" data-href="{:url('info?id='.$vo.id)}" href="javascript:;" title="编辑">编辑</a>
-                    <a class="layui-badge-rim j-tr-del" data-href="{:url('del?id='.$vo.id)}" href="javascript:;" title="删除">删除</a>
-                </td>
-            </tr>
-            {/volist}
-            </tbody>
-        </table>
+			{volist name="list" id="vo" key="k"}
+			<tr>
+				<td>{$vo.id}</td>
+				<td>
+					{$vo.user_name}
+				</td>
+				<td>
+					{if condition="$vo.status eq 1"}<span class="layui-badge layui-bg-green">开启</span>{/if} {if condition="$vo.status eq 2"}<span class="layui-badge ">关闭</span>{/if} {if condition="$vo.status eq 3"}<span class="layui-badge layui-bg-orange">冻结</span>{/if}
+				</td>
+				<td>{:date('Y-m-d H:i:s',$vo.add_time)}</td>
+				<td>
+					{if condition="$vo.status eq 2"}
+					<a class="layui-badge-rim j-open" data-id="{$vo.id}" data-href="" href="javascript:;" title="开启">开启</a>
+					{elseif condition="$vo.status eq 3"}
+					<a class="layui-badge-rim j-open" data-id="{$vo.id}" data-href="" href="javascript:;" title="开启">开启</a>
+					{else /}
+					<a class="layui-badge-rim j-close" data-id="{$vo.id}" data-href="" href="javascript:;" title="关闭">关闭</a>
+					{/if}
+					<!--<a class="layui-badge-rim j-iframe" data-href="{:url('info?id='.$vo.id)}" href="javascript:;" title="详情">详情</a>-->
 
-    </form>
+				</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+
+		<div id="pages" class="center"></div>
+
+	</form>
 </div>
+
+<script>
+	$(function() {
+
+		/**
+		 * 关闭
+		 */
+		$('.j-close').click(function() {
+
+			var that = this,
+				id = $(that).data('id');
+
+			layer.confirm("确认关闭吗？", function() {
+
+				upStatus(id, 2);
+
+			});
+
+		});
+
+		/**
+		 * 开启
+		 */
+		$('.j-open').click(function() {
+
+			var that = this,
+				id = $(that).data('id');
+
+			layer.confirm("确认开启吗？", function() {
+
+				upStatus(id, 1);
+
+			});
+
+		});
+
+		function upStatus(id, status) {
+			layer.load()
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data: {
+					id: id,
+					status: status
+				},
+				success: function(res) {
+					layer.closeAll();
+					if(res.code == 1) {
+						layer.alert(res.msg, function() {
+							location.reload()
+						});
+					} else {
+						layer.alert(res.msg);
+					}
+				}
+			});
+		}
+
+	})
+</script>
+
 {include file="../../../application/admin/view/public/foot" /}
 
 <script type="text/javascript">
-
+	var curUrl = "{:url('proxy/index',$param)}";
+	layui.use(['laypage', 'layer', 'form','laydate'], function() {
+		var laypage = layui.laypage,
+			layer = layui.layer,
+			form = layui.form,
+			laydate = layui.laydate;
+ 
+		laypage.render({
+			elem: 'pages',
+			count: {$total},
+			limit: {$limit},
+			curr: {$page},
+			layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+			jump: function(obj, first) {
+				if(!first) {
+					location.href = curUrl.replace('%7Bpage%7D', obj.curr).replace('%7Blimit%7D', obj.limit);
+				}
+			}
+		});
+		
+		
+		//时间范围
+	laydate.render({
+	    elem: '#begin_date'
+	  });
+	laydate.render({
+	    elem: '#end_date'
+	  });
+	});
 </script>
 </body>
+
 </html>

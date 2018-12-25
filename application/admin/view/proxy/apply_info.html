@@ -1,0 +1,123 @@
+{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+	<form class="layui-form layui-form-pane" method="post" action="{:url('apply_pass')}">
+				
+		<div class="layui-form-item">
+			<label class="layui-form-label">QQ：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{$info.qq}" placeholder="" id="qq" name="qq">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{$info.weixin}" placeholder="" id="weixin" name="weixin">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">skype：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{$info.skype}" placeholder="" id="skype" name="skype">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{$info.email}" placeholder="" id="email" name="email">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">telegram：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{$info.telegram}" placeholder="" id="telegram" name="telegram">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">申请时间：</label>
+			<div class="layui-input-block">
+				<input style=" background: #efefef;" type="text" class="layui-input" value="{:date('Y-m-d H:i:s',$info.add_time)}" readonly="" disabled="disabled">
+			</div>
+		</div>
+		
+		<div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">备注</label>
+		    <div class="layui-input-block">
+		      <textarea maxlength="200" name="introduce" placeholder="请输入备注" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+		
+		<div class="layui-form-item center">
+			<div class="layui-input-block">				
+				<input type="hidden" value="{$info.user_id}" name="user_id" id="user_id" />
+				<input type="hidden" value="{$info.id}" name="id" id="id" />
+				
+				{if condition="$info.status eq 0"}
+            		<button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" data-child="true">通过</button>
+					<button type="button" class="layui-btn layui-btn-danger j-refuse" >拒绝</button>
+					<button class="layui-btn layui-btn-warm" type="reset">还 原</button>
+            	{/if}
+				
+				
+			</div>
+		</div>
+	</form>
+
+</div>
+<script>
+	
+	$(function(){
+		$('.j-refuse').click(function(){
+			
+			var that = this;
+			
+			layer.confirm("确认拒绝吗？",function(){
+				
+				refuse();
+						
+			});
+			
+		});
+		
+		function refuse(){
+			layer.load()
+			$.ajax({
+				type:"get",
+				dataType:"json",
+				url:"{:url('apply_refuse')}",
+				data:{
+					id:$("#id").val(),
+					status:2
+				},
+				success:function(res){
+					layer.closeAll();
+					if(res.code == 1){
+						layer.alert(res.msg,function(){
+							location.reload()
+						});
+					}else{
+						layer.alert(res.msg);
+					}
+				}
+			});
+		}
+		
+	})
+	
+</script>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+	layui.use(['form', 'layer', 'laydate'], function() {
+		// 操作对象
+		var form = layui.form,
+			layer = layui.layer,
+			$ = layui.jquery;
+
+		var laydate = layui.laydate;
+
+	});
+</script>
+
+</body>
+
+</html>

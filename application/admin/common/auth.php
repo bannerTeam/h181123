@@ -219,13 +219,13 @@ return array(
         '103' => array("show"=>1,'name' => '数据批量替换', 'controller' => 'database',		'action' => 'rep'),
     )),
     '11' => array('name' => '代理', 'icon' => 'xe621', 'sub' => array(
-        '111' => array("show"=>1,'name' => '代理管理', 'controller' => 'proxy',		'action' => 'index'),
-        '11001' => array("show"=>0,'name' => '--申请代理审批', 'controller' => 'proxy',		'action' => 'apply'),
-        '11002' => array("show"=>0,'name' => '--代理提现审批', 'controller' => 'proxy',		'action' => 'withdraw'),
-        '11003' => array("show"=>0,'name' => '--佣金派发', 'controller' => 'proxy',		'action' => 'brokerage'),
-        '11004' => array("show"=>0,'name' => '--会员消费记录', 'controller' => 'proxy',		'action' => 'buy_record'),
-        '11005' => array("show"=>0,'name' => '--推广报表', 'controller' => 'proxy',		'action' => 'popularize'),
-        '11006' => array("show"=>0,'name' => '--终端报表', 'controller' => 'proxy',		'action' => 'client'),
+        '110' => array("show"=>1,'name' => '代理管理', 'controller' => 'proxy',		'action' => 'index'),
+        '111' => array("show"=>1,'name' => '申请代理审批', 'controller' => 'proxy',		'action' => 'apply'),
+        '112' => array("show"=>1,'name' => '代理提现审批', 'controller' => 'proxy',		'action' => 'withdraw'),
+        '113' => array("show"=>1,'name' => '佣金派发', 'controller' => 'proxy',		'action' => 'brokerage'),
+        '114' => array("show"=>1,'name' => '会员消费记录', 'controller' => 'proxy',		'action' => 'expenses_record'),
+        '115' => array("show"=>1,'name' => '推广报表', 'controller' => 'proxy',		'action' => 'popularize'),
+        '116' => array("show"=>1,'name' => '终端报表', 'controller' => 'proxy',		'action' => 'client'),
         
     )),
 //  '11' => array('name' => '应用', 'icon' => 'xe621', 'sub' => array(

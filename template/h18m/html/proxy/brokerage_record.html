@@ -17,20 +17,57 @@
 		<div>
 			<div class="navtab">
 				<ul class="weui-flex">
-					<li class="weui-flex__item"><a href="/proxy/popularize" >推广链接</a></li>
-					<li class="weui-flex__item"><a href="/proxy/brokerage">佣金方案</a></li>
-					<li class="weui-flex__item"><a href="/proxy/performance">推广业绩</a></li>
-					<li class="weui-flex__item"><a href="/proxy/mybrokerage" >我的佣金</a></li>
-					<li class="weui-flex__item"><a href="/proxy/brokerage_record"  class="active">佣金记录</a></li>					
+					<li class="weui-flex__item">
+						<a href="/proxy/popularize">推广链接</a>
+					</li>
+					<li class="weui-flex__item">
+						<a href="/proxy/brokerage">佣金方案</a>
+					</li>
+					<li class="weui-flex__item">
+						<a href="/proxy/performance">推广业绩</a>
+					</li>
+					<li class="weui-flex__item">
+						<a href="/proxy/mybrokerage">我的佣金</a>
+					</li>
+					<li class="weui-flex__item">
+						<a href="/proxy/brokerage_record" class="active">佣金记录</a>
+					</li>
 				</ul>
 			</div>
-			
+			<div class="record">
+				<div class="hd"></div>
+				<div class="bd">
+					<table  border="1" style="border-collapse:collapse; width: 100%;" bordercolor="#e0dddd">
+						<thead>
+							<tr>
+								<th>操作时间</th>
+								<th>操作金额</th>
+								<th>操作后余额</th>
+								<th>操作事项</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody id="vlist">							
+						</tbody>
+						<tfoot id="loading">
+							<tr>
+								<td colspan="5">
+									<div class="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+			</div>
 		</div>
 
+		<script src="{$maccms.path_tpl}js/user/record.js"></script>
 		<script type="text/javascript">
-			(function() {
-
-			})()
+			var s = {
+				limit:20
+			};
+			pageInit(s);
 		</script>
 
 		{include file="public/foot" /}

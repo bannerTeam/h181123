@@ -32,7 +32,6 @@ ul,li{list-style: none;}
 }
 .navtab a.active{ background: #2BAEB9; color: #FFFFFF;}
 
-
 .chead{ height: 4.5rem; line-height: 4.5rem; position: relative; background: #2BAEB9;}
 .chead .back{ position: absolute; left: 1.4rem;}
 .chead .back i{ color: #FFFFFF; font-size: 1.4rem;}
@@ -144,9 +143,6 @@ ul,li{list-style: none;}
 .about .content p{ font-size: 1.4rem; line-height: 2rem; margin-bottom: 0.5rem;}
 
 
-
-
-
 /*商务合作*/
 .coo-tit{}
 .coo-tit{ padding: 2.5rem 0; font-size: 2rem; text-align: center; border-bottom: 1px solid #ECEAEA;}
@@ -169,3 +165,30 @@ ul,li{list-style: none;}
 .popul h2{ text-align: center; font-size: 2rem;}
 .popul .qrcode{ margin-bottom: 1rem; margin-top: 1rem;}
 .popul p{ font-size: 1.4rem;}
+
+.mybrokerage{ padding:2rem;}
+.mybrokerage .tit{ font-size:1.4rem; color: #2BAEB9;}
+.mybrokerage .acount{ margin-top: 2rem; text-align: center; font-size:3rem; color: #2BAEB9;}
+.mybrokerage .inp{ width: 16rem; margin: 0 auto;margin-top: 2rem;}
+.mybrokerage .inp i{font-size:2.6rem; color: #2BAEB9; vertical-align: middle;}
+.mybrokerage .inp input{ padding-left: 0.5rem; width: 10rem;font-size:1.4rem; height: 2.6rem;vertical-align: middle; }
+.mybrokerage .submit{ width: 60%; margin: 0 auto;margin-top: 4rem; }
+
+
+/*记录 */
+.record{}
+.record .bd{ padding: 0 1rem;}
+.record table{ text-align: center;}
+.record thead{}
+.record th{ font-size: 1.2rem; padding: 0.5rem 0; background: #EFEFEF;}
+.record tbody{}
+.record td{font-size: 1.2rem; padding: 0.5rem 0;}
+.record td .s0{ color: #FFB800;}
+.record td .s1{ color: #009688;}
+.record td .s2{ color: #FF5722;}
+
+
+
+
+
+

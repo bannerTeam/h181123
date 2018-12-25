@@ -714,5 +714,18 @@ class User extends Base
             return ['code'=>2009,'msg'=>'验证码发送失败，请重试'];
         }
     }
+    
+    public function getGroupByUserId($user_id){
+        
+        $info = Db::name('group')->alias('g')
+        ->field('group_name')
+        ->join('__USER__ u', 'u.group_id = g.group_id', 'left')
+        ->where($where)
+        ->find();
+        if (empty($info)) {
+            return ['code' => 1002, 'msg' => '获取数据失败'];
+        }
+        return ['code' => 1, 'msg' => '','info'=>$info];
+    }
 
 }

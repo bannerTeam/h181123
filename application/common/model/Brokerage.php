@@ -3,11 +3,11 @@ namespace app\common\model;
 
 use think\Db;
 
-class ProxyApply extends Base
+class Brokerage extends Base
 {
 
     // 设置数据表（不含前缀）
-    protected $name = 'proxy_apply';
+    protected $name = 'brokerage';
 
     // 定义时间戳字段名
     protected $createTime = '';
@@ -38,9 +38,8 @@ class ProxyApply extends Base
             $total = $this->where($where)->count();
         }
         
-        $list = Db::name('proxy_apply')->alias('pa')
-            ->field('pa.*,u.user_name')
-            ->join('__USER__ u', 'pa.user_id = u.user_id', 'left')
+        $list = Db::name('brokerage')
+            ->field($field)
             ->where($where)
             ->order($order)
             ->limit($limit_str)
@@ -129,5 +128,27 @@ class ProxyApply extends Base
             'code' => 1,
             'msg' => '删除成功'
         ];
+    }
+    
+    /**
+     * 自增
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetInc($where,$field,$num = 1){
+        return $this->where($where)->setInc($field, $num);
+    }
+    
+    /**
+     * 自减
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetDec($where,$field,$num = 1){
+        return $this->where($where)->setDec($field, $num);
     }
 }

@@ -3,11 +3,11 @@ namespace app\common\model;
 
 use think\Db;
 
-class ProxyApply extends Base
+class Proxy extends Base
 {
 
     // 设置数据表（不含前缀）
-    protected $name = 'proxy_apply';
+    protected $name = 'proxy';
 
     // 定义时间戳字段名
     protected $createTime = '';
@@ -26,7 +26,28 @@ class ProxyApply extends Base
         $total = $this->where($where)->count();
         return $total;
     }
-
+    
+    
+    public function listAllData($where, $order = 'id desc',$field)
+    {
+        if (! is_array($where)) {
+            $where = json_decode($where, true);
+        }
+                
+        
+        $list = Db::name('proxy')        
+        ->where($where)
+        ->order($order)
+        ->select();
+        
+        
+        return [
+            'code' => 1,
+            'msg' => '数据列表',
+            'list' => $list
+        ];
+    }
+    
     public function listData($where, $order = 'id desc', $page = 1, $limit = 20, $start = 0, $field = '*', $addition = 1, $totalshow = 1)
     {
         if (! is_array($where)) {
@@ -38,9 +59,9 @@ class ProxyApply extends Base
             $total = $this->where($where)->count();
         }
         
-        $list = Db::name('proxy_apply')->alias('pa')
-            ->field('pa.*,u.user_name')
-            ->join('__USER__ u', 'pa.user_id = u.user_id', 'left')
+        $list = Db::name('proxy')->alias('p')
+            ->field('p.*,u.user_name,u.group_id')
+            ->join('__USER__ u', 'p.user_id = u.user_id', 'left')
             ->where($where)
             ->order($order)
             ->limit($limit_str)
@@ -129,5 +150,27 @@ class ProxyApply extends Base
             'code' => 1,
             'msg' => '删除成功'
         ];
+    }
+    
+    /**
+     * 自增
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetInc($where,$field,$num = 1){
+        return $this->where($where)->setInc($field, $num);
+    }
+    
+    /**
+     * 自减
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetDec($where,$field,$num = 1){
+        return $this->where($where)->setDec($field, $num);
     }
 }

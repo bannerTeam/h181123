@@ -153,6 +153,29 @@ class Proxy extends Base
      */
     public function mybrokerage ()
     {
+        if (empty($GLOBALS['user']['user_id'])) {
+            return $this->error('未登录', url('user/login'));
+        }
+        
+        if (Request()->isPost()) {
+            
+            $param = input('post.');
+            $acount = $param['amount'];
+            
+            $res = model('ProxyWithdraw')->apply($GLOBALS['user']['user_id'],$acount);
+            
+            
+            return json($res);
+        }
+        
+        $where['user_id'] = $GLOBALS['user']['user_id'];
+        $res = model('Proxy')->findData($where,'amount');
+        
+        
+        $info =  $res['info'];
+        $this->assign('info',$info);
+        
+        
         return $this->fetch('proxy/mybrokerage');
     }
     
@@ -162,6 +185,33 @@ class Proxy extends Base
      */
     public function brokerage_record ()
     {
+        if (empty($GLOBALS['user']['user_id'])) {
+            return $this->error('未登录', url('user/login'));
+        }
+        
+        if (Request()->isAjax()) {
+            
+            $param = input();
+            
+            $page = intval($param['page']) ? 1 : $param['page'];
+            
+            $order = 'id desc';
+            
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $res = model('ProxyWithdraw')->listData($where, $order, $page);
+            $r = [
+                'code' => 1,
+                'msg' => '',
+                'list' => $res['list'],
+                'limit' => $res['limit'],
+                'pagecount'=>$res['pagecount'],
+                'page' => $res['page']
+            ];
+            
+            return (json($r));
+        }
+        
+        
         return $this->fetch('proxy/brokerage_record');
     }
 
