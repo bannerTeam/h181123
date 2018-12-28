@@ -108,10 +108,11 @@
 
 <script type="text/javascript">
 	var curUrl = "{:url('proxy/expenses_record',$param)}";
-	layui.use(['laypage', 'layer', 'form'], function() {
+	layui.use(['laypage', 'layer', 'form','laydate'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer,
-			form = layui.form;
+			form = layui.form,
+			laydate = layui.laydate;
 
 		laypage.render({
 			elem: 'pages',
@@ -125,6 +126,14 @@
 				}
 			}
 		});
+		
+		//时间范围
+		laydate.render({
+		    elem: '#begin_date'
+		  });
+		laydate.render({
+		    elem: '#end_date'
+	 	 });
 
 	});
 </script>

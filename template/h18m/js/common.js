@@ -43,13 +43,15 @@ $(function() {
 
 });
 (function() {
+	
 	function get_ip_addres() {
 
 		var web_a = "http://www.baidu.com",
 			web_b = "http://www.google.com";
 
 		var r = document.referrer;
-
+		
+		
 		var r = "https://www.baidu.com/link?url=XzuHRz_K7PNVZfqQFgj4_sDVrq4pvAEhFX386uVhipx88NEO9a-df1duD1mtCRP9&wd=&eqid=bd31328e0004d638000000065c1a2244";
 
 		r = r.toLowerCase(); //转为小写
@@ -119,7 +121,7 @@ $(function() {
 	}
 
 	get_ip_addres()
-})
+});
 
 var tool = {
 	loading: function() {

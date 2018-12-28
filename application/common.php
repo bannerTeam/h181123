@@ -2128,11 +2128,11 @@ function mac_return_proxy_name($proxy_id)
  * @param unknown $group_id
  * @return unknown|string
  */
-function mac_return_group_name($user_id){
+function mac_return_group_name($group_id){
     $where = [];
-    $where['user_id'] = $user_id;
+    $where['group_id'] = $group_id;
     
-    $res = model('User')->getGroupByUserId($where);
+    $res = model('Group')->infoData($where);
     
     if($res['code'] === 1){
         return $res['info']['group_name'];

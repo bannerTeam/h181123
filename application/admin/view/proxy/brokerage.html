@@ -1,9 +1,207 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
+{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+	<div class="my-toolbar-box">
+		<div class="center mb10">
+            <form class="layui-form " method="post">
+                
+                <div class="layui-input-inline ">
+                	<label class="layui-form-label">开始时间</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="begin_date" value="{$param.begin_date}" name="begin_date" placeholder="yyyy-MM-dd">
+			      </div>
+                </div>
+                <div class="layui-input-inline ">
+                	<label class="layui-form-label">结束时间</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="end_date" value="{$param.end_date}" name="end_date" placeholder="yyyy-MM-dd">
+			      </div>
+                </div>
+                <div class="layui-input-inline w150">
+                    <select name="use_status">
+                        <option value="">派送状态</option>                        
+                        <option value="0" {if condition="$param['use_status'] eq '0' "}selected{/if}>等待派发</option>
+                        <option value="1" {if condition="$param['use_status'] eq 1"}selected{/if}>已派发</option>
+                        <option value="2" {if condition="$param['use_status'] eq 2"}selected{/if}>拒绝派发</option>
+                      
+                    </select>
+                </div>
+				<div class="layui-input-inline w150">
+                    <select name="use_type">
+                        <option value="">派送方式</option>
+                        <option value="1" {if condition="$param['use_type'] eq 1"}selected{/if}>系统自动</option>
+                        <option value="2" {if condition="$param['use_type'] eq 2"}selected{/if}>手动派发</option>
+                    </select>
+                </div>
+				
+                <button class="layui-btn mgl-20 j-search" >查询</button>
+            </form>
+        </div>
+	</div>
+
+	<form class="layui-form " method="post" id="pageListForm">
+		<table class="layui-table" lay-size="sm">
+			<thead>
+				<tr>
+					<th width="40">标识</th>
+					<th>结算月度</th>
+					<th>结算时间</th>
+					<th>代理名称</th>
+					<th>会员组</th>
+					<th>直接提成</th>
+					<th>二级提成</th>
+					<th>三级提成</th>
+					<th>总提成</th>
+					<th>派发状态</th>
+					<th>派发方式</th>
+					<th>派发时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+
+			{volist name="list" id="vo" key="k"}
+			<tr>
+				<td>{$vo.id}</td>
+				<td>
+					{:date('Y-m',$vo.settle_month)}
+				</td>
+				<td>
+					{:date('Y-m-d H:i',$vo.settle_time)}
+				</td>
+				<td>
+					{:mac_return_proxy_name($vo.proxy_id)}
+				</td>
+				<td>
+					{:mac_return_group_name($vo.group_id)}
+				</td>
+				<td>
+					￥{$vo.amount_1}
+				</td>
+				
+				<td>
+					￥{$vo.amount_2}
+				</td>
+				<td>
+					￥{$vo.amount_3}
+				</td>
+				<td>
+					￥{$vo.amount_1 + $vo.amount_2 + $vo.amount_3}
+				</td>
+				<td>
+					
+					{if $vo.use_status === 1} <span class="layui-badge layui-bg-green">已派发</span>
+					{elseif $vo.use_status == 2 /}<span class="layui-badge ">拒绝派发</span>
+					{else /}<span class="layui-badge layui-bg-orange"> 等待派发</span>
+					{/if}
+				</td>
+				
+				<td>
+					{if $vo.use_type === 1} 系统自动
+					{elseif $vo.use_type == 2 /}手动派发
+					{else /} 
+					{/if}
+				</td>
+				<td>
+					{if $vo.use_status > 0}					
+					{:date('Y-m-d H:i:s',$vo.use_time)}					
+					{/if}
+					
+				</td>
+				<td>
+					{if $vo.use_status == 0}	
+					 <a class="layui-badge-rim j-ok" data-id="{$vo.id}" href="javascript:;" title="通过">派发</a>
+	                 <a class="layui-badge-rim j-close" data-id="{$vo.id}" href="javascript:;" title="拒绝">拒绝</a>
+	                {/if}
+				</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+
+		<div id="pages" class="center"></div>
+
+	</form>
+</div>
+
+
+
+{include file="../../../application/admin/view/public/foot" /}
+<script>
+	$(function(){
+		
+		$('.j-ok').click(function(){
+			
+			var that = this;			
+			layer.confirm("确认派发吗？",function(){				
+				refuse($(that).data('id'),1);						
+			});
+			
+		});
+		
+		$('.j-close').click(function(){
+			
+			var that = this;			
+			layer.confirm("确认拒绝吗？",function(){				
+				refuse($(that).data('id'),2);						
+			});
+			
+		});
+		
+		function refuse(id,status){
+			layer.load()
+			$.ajax({
+				type:"post",
+				dataType:"json",
+				data:{
+					id:id,
+					status:status
+				},
+				success:function(res){
+					layer.closeAll();
+					if(res.code == 1){
+						layer.alert(res.msg,function(){
+							location.reload()
+						});
+					}else{
+						layer.alert(res.msg);
+					}
+				}
+			});
+		}
+		
+	})
+	
+</script>
+<script type="text/javascript">
+	var curUrl = "{:url('proxy/expenses_record',$param)}";
+	layui.use(['laypage', 'layer', 'form','laydate'], function() {
+		var laypage = layui.laypage,
+			layer = layui.layer,
+			form = layui.form,
+			laydate = layui.laydate;
+
+		laypage.render({
+			elem: 'pages',
+			count: {$total},
+			limit: {$limit},
+			curr: {$page},
+			layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+			jump: function(obj, first) {
+				if(!first) {
+					location.href = curUrl.replace('%7Bpage%7D', obj.curr).replace('%7Blimit%7D', obj.limit);
+				}
+			}
+		});
+		
+		//时间范围
+		laydate.render({
+		    elem: '#begin_date'
+		  });
+		laydate.render({
+		    elem: '#end_date'
+	 	 });
+
+	});
+</script>
+</body>
+
 </html>

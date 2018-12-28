@@ -27,7 +27,7 @@ class ExpensesRecord extends Base
         return $total;
     }
 
-    public function listData($where, $order = 'id desc', $page = 1, $limit = 20, $start = 0, $field = '*', $addition = 1, $totalshow = 1)
+    public function listData($where, $order = 'er.id desc', $page = 1, $limit = 20, $start = 0, $field = 'er.*,u.group_id', $addition = 1, $totalshow = 1)
     {
         if (! is_array($where)) {
             $where = json_decode($where, true);
@@ -35,16 +35,21 @@ class ExpensesRecord extends Base
         
         $limit_str = ($limit * ($page - 1) + $start) . "," . $limit;
         if ($totalshow == 1) {
-            $total = $this->where($where)->count();
+            $total = Db::name('expenses_record')->alias('er')           
+            ->join('__USER__ u', 'er.user_id = u.user_id', 'left')
+            ->where($where)
+            ->count();
         }
         
-        $list = Db::name('expenses_record')
+             
+        
+        $list = Db::name('expenses_record')->alias('er')
             ->field($field)
+            ->join('__USER__ u', 'er.user_id = u.user_id', 'left')
             ->where($where)
             ->order($order)
             ->limit($limit_str)
             ->select();
-    
         return [
             'code' => 1,
             'msg' => '数据列表',

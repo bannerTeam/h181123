@@ -408,18 +408,15 @@ class Proxy extends Base
         
         // $where['status'] = array('neq',1);
         
-        $order = 'id desc';
+        $order = 'er.id desc';
         
         
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : $param['page'];
         
-        if(isset($param['status']) && $param['status']!=''){
-            $where['p.status'] = array('eq',$param['status']);
-        }
-        
+       
         if(isset($param['group_id']) && $param['group_id']!=''){
-            $where['u.group_id'] = array('eq',$param['group_id']);
+            $where['group_id'] = array('eq',$param['group_id']);
         }
         
         if(isset($param['proxy_id']) && $param['proxy_id']!=''){
@@ -454,7 +451,6 @@ class Proxy extends Base
         
         $where['add_time'] = array('between', array($starttime,$enttime));
         
-        
         $res = model('ExpensesRecord')->listData($where, $order, $param['page']);
         $this->assign('list', $res['list']);
         $this->assign('total', $res['total']);
@@ -475,13 +471,43 @@ class Proxy extends Base
      */
     public function brokerage()
     {
+        
+        
+        if (Request()->isPost()) {
+            
+            $param = input('post.');
+            
+            $use_status = $param['status'];
+            if(!in_array($use_status, [1,2])){
+                return $this->error('失败');
+            }
+            $id = intval($param['id']);
+            if(empty($id)){
+                return $this->error('不存在');
+            }
+            
+            $data['id']= $id;
+            $data['use_status']= $use_status;
+            $data['use_type']= 2;
+            $data['use_status']= $use_status;
+            $data['use_time']= time();
+            $data['admin_id']= $this->_admin['admin_id'];
+            //更新对应状态，进行操作
+            $res = model('Brokerage')->updateUseStatus($data);
+            if ($res['code'] === 1) {
+                return $this->success('保存成功!');
+            }
+            return $this->error($res['msg']);
+            
+        }
+        
+        
         $where = [];
                
         
         $param = input();
         $param['page'] = intval($param['page']) < 1 ? 1 : $param['page'];
         
-        // $where['status'] = array('neq',1);
         
         $order = 'id desc';
         
@@ -492,7 +518,12 @@ class Proxy extends Base
         if(isset($param['use_status']) && $param['use_status']!=''){
             $where['use_status'] = array('eq',$param['use_status']);
         }
-                
+        
+        //派发方式( 1.系统自动  2.手动派发)
+        if(isset($param['use_type']) && $param['use_type']!=''){
+            $where['use_type'] = array('eq',$param['use_type']);
+        }
+        
         
         //结束时间
         if(isset($param['end_date']) && $param['end_date']!=''){
@@ -516,7 +547,7 @@ class Proxy extends Base
             }
         }
         
-        $where['add_time'] = array('between', array($starttime,$enttime));
+        $where['settle_time'] = array('between', array($starttime,$enttime));
         
         
         $res = model('Brokerage')->listData($where, $order, $param['page']);
@@ -529,7 +560,8 @@ class Proxy extends Base
         $param['limit'] = '{limit}';
         $this->assign('param', $param);
         
-        $this->assign('title', '会员消费记录');
-        return $this->fetch('admin@proxy/expenses_record');
+        $this->assign('title', '佣金派发');
+        return $this->fetch('admin@proxy/brokerage');
     }
 }
+
