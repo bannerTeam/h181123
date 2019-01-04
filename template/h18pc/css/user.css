@@ -63,8 +63,8 @@ border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 .playment li p{ line-height: 30px; text-align: center; }
 
 .vip-btn{ text-align: center; padding: 30px 0; margin-top: 30px;}
-.vip-btn button{width: 30%;border: 0 none;
-	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer;}
+.vip-btn button,.vip-btn .button{width: 30%;border: 0 none;
+	height: 40px;color: #FFFFFF; font-size: 16px; background: #2BAEB9;  border-radius: 5px; cursor: pointer; display: inline-block; line-height: 40px;}
 
 .news{ margin-top: 20px;}
 .news-hd{

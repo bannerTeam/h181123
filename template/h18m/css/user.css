@@ -106,7 +106,7 @@ ul,li{list-style: none;}
 .mould-desc{color: #2BAEB9; font-size: 1.4rem; padding: 1rem 0; text-indent: 2.5rem;}
 
 /*升级VIP*/
-.vipmain{ width: 80%; margin: 0 auto; margin-top: 6rem;}
+.vipmain{ width: 80%; margin: 0 auto; margin-top: 5rem;}
 .vipmain-item{ font-size: 1.6rem; overflow: hidden; text-align: center;
 	 margin-bottom: 3.5rem; border: 1px solid #2BAEB9;border-radius:3rem; height: 5.4rem;}
 .vipmain-item .item-l{ background: #2BAEB9; width: 48%; float: left; color: #FFFFFF;height: 100%;}

@@ -26,7 +26,7 @@
         </div>
 
         <div class="layui-btn-group">
-            <a data-href="{:url('info')}" class="layui-btn layui-btn-primary j-iframe" data-width="600px" data-height="400px"><i class="layui-icon">&#xe654;</i>添加</a>
+            <a data-href="{:url('info')}" class="layui-btn layui-btn-primary j-iframe" data-width="600px" data-height="500px"><i class="layui-icon">&#xe654;</i>添加</a>
             <a data-href="{:url('del')}" class="layui-btn layui-btn-primary j-page-btns confirm"><i class="layui-icon">&#xe640;</i>删除</a>
             <a data-href="{:url('del')}?ids=1&all=1" class="layui-btn layui-btn-primary j-ajax" confirm="确认清空数据吗？操作不可恢复"><i class="layui-icon">&#xe640;</i>清空</a>
         </div>
@@ -41,7 +41,7 @@
                 <th width="150">卡号</th>
                 <th width="100">密码</th>
                 <th width="100">面值</th>
-                <th width="100">积分</th>
+                <th width="100">积分/vip</th>
                 <th width="100">使用人</th>
                 <th width="150">使用时间</th>
                 <th width="50">操作</th>
@@ -55,7 +55,10 @@
                 <td>{$vo.card_no}</td>
                 <td>{$vo.card_pwd}</td>
                 <td>{$vo.card_money}</td>
-                <td>{$vo.card_points}</td>
+                <td>
+                	{$vo.card_points}
+                	/ {:mac_return_vip_name($vo.vip_id)}
+                </td>
                 <td>{$vo.user_id}、{$vo.user.user_name}</td>
                 <td>{if condition="$vo.card_use_time eq 0"} {else}{$vo.card_use_time|mac_day=color}{/if}</td>
                 <td>

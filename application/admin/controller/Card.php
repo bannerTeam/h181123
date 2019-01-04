@@ -51,14 +51,18 @@ class Card extends Base
                 return $this->error('参数错误');
             }
 
-            $res = model('Card')->saveAllData(intval($param['num']),intval($param['money']),intval($param['point']));
+            $res = model('Card')->saveAllData(intval($param['num']),intval($param['money']),intval($param['point']),intval($param['vip_id']));
             if($res['code']>1){
                 return $this->error($res['msg']);
             }
             return $this->success($res['msg']);
         }
-
-
+        
+        
+        $where=[];
+        $res = model('Vip')->listData($where);
+        $this->assign('vips',$res['list']);
+       
         $id = input('id');
         $where=[];
         $where['card_id'] = ['eq',$id];

@@ -77,12 +77,12 @@ class Card extends Base {
         return ['code'=>1,'msg'=>'保存成功'];
     }
 
-    public function saveAllData($num,$money,$point)
+    public function saveAllData($num,$money,$point,$vip_id = 0)
     {
         $data=[];
         for($i=1;$i<=$num;$i++){
             $card_no = mac_get_rndstr(16);
-            $data[$card_no] = ['card_no'=>$card_no,'card_pwd'=>mac_get_rndstr(8),'card_money'=>$money,'card_points'=>$point,'card_add_time'=>time()];
+            $data[$card_no] = ['card_no'=>$card_no,'card_pwd'=>mac_get_rndstr(8),'card_money'=>$money,'vip_id'=>$vip_id,'card_points'=>$point,'card_add_time'=>time()];
         }
         $data = array_values($data);
         $res = $this->allowField(true)->insertAll($data);
@@ -133,15 +133,54 @@ class Card extends Base {
         if(empty($info)){
             return ['code' => 1002, 'msg' => '充值卡信息有误，请重试'];
         }
-
+        
+        //判断卡密是否有 VIP 会员
+        $vip_id = 0;
+        if(intval($info['vip_id']) > 0){
+            $vip_id = $info['vip_id'];
+        }        
+        //卡密 VIP会员天数
+        $vipDuration = 0;
+        if($vip_id){
+            $where3['id']= $vip_id;
+            $vipData = model('Vip')->findData($where3);
+            if($vipData['code'] === 1){
+                //会员天数
+                $vipDuration = $vipData['info']['duration'];                
+            }else{
+                return ['code' => 1004, 'msg' => 'VIP不存在'];
+            }
+        }        
+        
         $where2=[];
         $where2['user_id'] = $user_info['user_id'];
+        $userData = model('User')->infoData($where2);
+        if($userData['code'] > 1){
+            return ['code' => 1003, 'msg' => '会员不存在，请重试'];
+        }
+        
         $update=[];
+        if($vipDuration){
+            //会员Vip结束时间
+            $vip_exp_time = $userData['info']['vip_exp_time'];
+            //判断过期时间 是否大于当前时间，如果大于 时间就 追加
+            if($vip_exp_time > time()){
+                //未到期追加时间
+                $vip_exp_time = $vip_exp_time + (60*60*24) * $vipDuration;
+            }else{
+                $vip_exp_time = time() + (60*60*24) * $vipDuration;
+                $ymd = date('Y-m-d',$vip_exp_time);
+                $vip_exp_time = strtotime($ymd.' 23:59:59');
+                $vip_start_time = strtotime(date('Y-m-d',time()));
+                $update['vip_start_time'] = $vip_start_time;
+            }
+            $update['vip_exp_time'] = $vip_exp_time;
+        }
         $update['user_points'] = $user_info['user_points'] + $info['card_points'];
         $res = model('User')->where($where2)->update($update);
         if($res===false){
             return ['code' => 1003, 'msg' => '更新用户点数失败，请重试'];
-        }
+        }        
 
         $update=[];
         $update['card_sale_status'] = 1;
@@ -150,9 +189,9 @@ class Card extends Base {
         $update['user_id'] = $user_info['user_id'];
         $res = $this->where($where)->update($update);
         if($res===false){
-            return ['code' => 1004, 'msg' => '更新充值卡状态失败，请重试'];
+            return ['code' => 1005, 'msg' => '更新充值卡状态失败，请重试'];
         }
-
+        
         return ['code' => 1, 'msg' => '充值成功，增加积分【'.$info['card_points'].'】'];
     }
 }

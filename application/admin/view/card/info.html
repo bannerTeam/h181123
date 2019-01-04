@@ -13,6 +13,17 @@
             <div class="layui-input-block">
                 <input type="text" class="layui-input" value="" lay-verify="money" placeholder="请输入面值" name="money">
             </div>
+        </div>        
+		<div class="layui-form-item">
+            <label class="layui-form-label">会员卡：</label>
+            <div class="layui-input-block">
+                <select name="vip_id" >
+					<option value="">请选择会员卡</option>
+					{volist name="$vips" id="go"}
+					<option value="{$go.id}" {if condition="$info.vip_id eq $go.id" }selected{/if}>{$go.name}-{$go.cost}</option>
+					{/volist}
+				</select>
+            </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">积分数：</label>
@@ -20,8 +31,6 @@
                 <input type="text" class="layui-input" value="" lay-verify="point" placeholder="请输入积分数" name="point">
             </div>
         </div>
-
-
         <div class="layui-form-item center">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" data-child="true">保 存</button>

@@ -29,10 +29,10 @@ class Vip extends Base {
             $where = json_decode($where,true);
         }
         
-        $list = $this->field($field)->where($where)->order($order)->select();
+        $list = Db::name('vip')->field($field)->where($where)->order($order)->select();
         
         
-        return ['code'=>1,'msg'=>'数据列表','list'=>$list];
+        return ['code'=>1,'msg'=>'数据列表','data'=>'data','list'=>$list];
     }
     
     public function findData($where,$field='*',$order='id desc')

@@ -220,7 +220,7 @@ function mac_get_rndstr($length = 32, $f = '')
     }
     $len = strlen($pattern);
     $res = '';
-    for ($i = 0; $i <= $length; $i ++) {
+    for ($i = 0; $i < $length; $i ++) {
         $res .= $pattern{mt_rand(0, $len)};
     }
     return $res;
@@ -2138,4 +2138,19 @@ function mac_return_group_name($group_id){
         return $res['info']['group_name'];
     }
     return $res['code'];
+}
+
+function mac_return_vip_name($vip_id)
+{
+    $where = [];
+    
+    $where['id'] = [
+        'eq',
+        $vip_id
+    ];
+    $res = model('Vip')->findData($where, '*');
+    if($res['code'] === 1){
+        return $res['info']['name'];
+    }
+    return $res;
 }

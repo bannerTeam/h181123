@@ -21,7 +21,7 @@
 					</div>
 					<div class="clearfix">
 						{volist name="list" id="vo"}
-						<div class="vipmain-item ">
+						<div class="vipmain-item " data-href="{$vo.buy_luoboka}">
 							<div class="item ">
 								<p class="p1">{$vo.name}</p>
 								<p class="p2"><span>￥</span>{:intval($vo.cost)}</p>
@@ -31,7 +31,7 @@
 						{/volist}
 						
 					</div>
-					<div class="vip-title clearfix" style="margin-top: 30px;">
+					<!--<div class="vip-title clearfix" style="margin-top: 30px;">
 						2.选择支付方式
 					</div>
 					<div class="playment clearfix">
@@ -48,10 +48,11 @@
 							</li>
 						</ul>
 
-					</div>
+					</div>-->
 					
 					<div class="vip-btn">
-						<button>立即支付</button>
+					<!--	<button id="buy">立即购买</button>-->
+						<a id="buy" class="button" target="_blank">立即购买</a>						
 					</div>
 				
 				</div>
@@ -61,12 +62,22 @@
 
 		<script>
 			$(function() {
-
+				
+				var buy_url = "";
 				$('.vipmain-item').click(function() {
 
 					$(this).addClass('active').siblings().removeClass('active')
-
+					buy_url = $(this).data('href');
+					
+					$("#buy").attr('href',buy_url);
+					
 				}).eq(0).click();
+				
+				layer.confirm('您购买成功了吗？', {
+				  btn: ['成功','失败'] 
+				}, function(){
+				  location.href = "/user/kalman";
+				});
 
 			})
 		</script>
