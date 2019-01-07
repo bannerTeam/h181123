@@ -72,6 +72,84 @@ class Card extends Base
 
         return $this->fetch('admin@card/info');
     }
+    
+    /**
+     * 卡密导出
+     */
+    public function export(){
+        
+        if (Request()->isPost()) {
+            
+            $param = input();
+            
+            //添加的时间
+            $card_add_time = $param['add_time'];            
+            $add_time = strtotime($card_add_time);
+            if(empty($add_time)){
+                return ['code' => 1001, 'msg' => '请选择添加时间'];
+            }
+            //VIP
+            $vip_id = $param['vip'];
+            if(empty($vip_id)){
+                return ['code' => 1002, 'msg' => '请选择VIP卡类型'];
+            }
+            
+            //VIP
+            $status = intval($param['status']);
+            if(!in_array($status, [1,2,3])){
+                return ['code' => 1003, 'msg' => '请选择状态'];
+            }
+            
+            if($status === 1){
+                $where['user_id'] = 0;
+            }else if($status === 2){
+                $where['user_id'] = array('>',0);
+            }
+            
+            $where['vip_id'] = $vip_id;
+            
+            $where['card_add_time'] = array(['>',strtotime(date('Y-m-d',$add_time))],
+                ['<',strtotime(date('Y-m-d',$add_time).' 23:59:59')],'and');
+            
+            
+            $order='card_id desc';
+            //查询卡密
+            $res = model('Card')->listAllData($where,$order);
+            if(count($res['list']) == 0){
+                return ['code' => 1003, 'msg' => '没有符合条件的数据'];
+            }
+            if($res['code'] === 1){
+                //目录
+                $folder = "./upload/cart/".date('Ym');
+                //文件名称
+                $file_name = date('YmdHis');
+                //创建目录
+                mac_mkdirss($folder);
+                //文件路径
+                $file_path = $folder.'/'.$file_name.".txt";
+                //打开文件
+                $myfile = fopen($file_path, "w");
+                $list = $res['list'];
+                foreach ($list as $k => $v) {
+                    $txt = $v['card_no'] .' '. $v['card_pwd']."\n";
+                    fwrite($myfile, $txt);
+                }
+                fclose($myfile);
+                
+                return ['code' => 1, 'msg' => '成功','file'=> '/'.$file_path,'name'=> '/'.$file_name.".txt"];
+                
+            }
+            
+            return $this->success($res['msg']);
+        }
+        
+              
+        $where=[];
+        $res = model('Vip')->listData($where);
+        $this->assign('vips',$res['list']);
+        
+        return $this->fetch('admin@card/export');
+    }
 
     public function del()
     {

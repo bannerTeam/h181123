@@ -39,6 +39,14 @@ class Card extends Base {
         }
         return ['code'=>1,'msg'=>'数据列表','page'=>$page,'pagecount'=>ceil($total/$limit),'limit'=>$limit,'total'=>$total,'list'=>$list];
     }
+    
+    public function listAllData($where,$order)
+    {
+       
+        $list = Db::name('Card')->where($where)->order($order)->select();
+        
+        return ['code'=>1,'msg'=>'数据列表','list'=>$list];
+    }
 
     public function infoData($where,$field='*')
     {
@@ -134,6 +142,8 @@ class Card extends Base {
             return ['code' => 1002, 'msg' => '充值卡信息有误，请重试'];
         }
         
+        $card_money = info['card_money'];
+        
         //判断卡密是否有 VIP 会员
         $vip_id = 0;
         if(intval($info['vip_id']) > 0){
@@ -141,12 +151,14 @@ class Card extends Base {
         }        
         //卡密 VIP会员天数
         $vipDuration = 0;
+        $vipName = '';
         if($vip_id){
             $where3['id']= $vip_id;
             $vipData = model('Vip')->findData($where3);
             if($vipData['code'] === 1){
                 //会员天数
-                $vipDuration = $vipData['info']['duration'];                
+                $vipDuration = $vipData['info']['duration'];     
+                $vipName =  $vipData['info']['name'];     
             }else{
                 return ['code' => 1004, 'msg' => 'VIP不存在'];
             }
@@ -191,6 +203,40 @@ class Card extends Base {
         if($res===false){
             return ['code' => 1005, 'msg' => '更新充值卡状态失败，请重试'];
         }
+        
+        $proxy_id = 0;
+        $proxy_pid = 0;
+        //邀请人会员ID/推荐人
+        $inviter_user_id = $user_info['inviter_user_id'];
+        $pWhere['user_id'] = $inviter_user_id;
+        //根据推荐人获取上级代理
+        $pRes = model('proxy')->findData($pWhere);
+        if($pRes['code'] === 1){
+            
+            $pData = $pRes['info'];
+            
+            $proxy_id = $pData['id'];
+            $proxy_pid = $pData['pid'];
+            
+            //会员消费记录
+            $erData['user_id']= $user_info['user_id'];
+            $erData['user_name']= $user_info['user_name'];
+            $erData['proxy_id']= $proxy_id;//上级代理
+            $erData['proxy_pid']= $proxy_pid;//上上级代理
+            $erData['project']= $vipName;//*消费项目(例：包年VIP)
+            $erData['amount']= $card_money;
+            $erData['recharge']= '卡密';//*充值方式（例：在线-微信）
+            $erData['add_time']= time();
+            //写入消费记录
+            model('ExpensesRecord')->saveData($erData);
+        }
+       
+        
+        
+      
+        
+        
+        
         
         return ['code' => 1, 'msg' => '充值成功，增加积分【'.$info['card_points'].'】'];
     }

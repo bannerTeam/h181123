@@ -21,6 +21,14 @@ class Proxy extends Base
      */
     public function index()
     {
+        if ($GLOBALS['user']['user_id']) {
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $res = model('Proxy')->findData($where);
+            if($res['code'] === 1){                 
+                header('Location: /proxy/popularize');
+                exit();
+            }
+        }  
         return $this->fetch('proxy/index');
     }
     
@@ -39,12 +47,31 @@ class Proxy extends Base
             $param['ip'] = request()->ip();
             $param['status'] = 0;
             $res = model('ProxyApply')->saveData($param);
-            return json($res);
+            return json($res);            
+        }
+        if (empty($GLOBALS['user']['user_id'])) {
+            return $this->error('未登录', url('user/login'));
+        } 
+        //申请流程跳转
+        $where['user_id'] = $GLOBALS['user']['user_id'];        
+        $res = model('ProxyApply')->findData($where);
+        if($res['code'] == 1){            
+            $info = $res['info'];   
+            //申请中
+            if(empty($info['status'])){
+                
+                header('Location: /proxy/result?id='.$info['id']);
+                exit();
+                
+            }else if($info['status'] == 1){
+                //申请成功直接进入
+                
+                header('Location: /proxy/popularize');
+                exit();
+            }
             
         }
-        
-        
-        
+         
         return $this->fetch('proxy/apply');
     }
 
@@ -109,7 +136,12 @@ class Proxy extends Base
     {
         $user_id = $GLOBALS['user']['user_id'];
         
+        if (empty($GLOBALS['user']['user_id'])) {
+            return $this->error('未登录', url('user/login'));
+        }  
+        
         $invite_code = $GLOBALS['user']['invite_code'];
+        
         // 不存在推荐码，就生成
         if (empty($invite_code)) {
             $len = 6 - strlen($user_id);
@@ -214,5 +246,16 @@ class Proxy extends Base
         
         return $this->fetch('proxy/brokerage_record');
     }
-
+    /**
+     * 获取邀请随机数
+     */
+    private function getInviteRand($len)
+    {
+        $codeSet = '2345678abcdefhijkmnpqrstuvwxyz';
+        $code = '';
+        for ($i = 0; $i < $len; $i ++) {
+            $code = $code . $codeSet[mt_rand(0, 29)];
+        }
+        return $code;
+    }
 }

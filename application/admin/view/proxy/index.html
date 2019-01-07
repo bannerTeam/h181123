@@ -38,7 +38,9 @@
 				<tr>
 					<th width="80">标识</th>
 					<th width="">名称</th>
-					<th width="80">状态</th>
+					<th width="80">状态</th>		
+					<th>直推会员</th>
+					<th>上级代理</th>
 					<th>添加时间</th>
 					<th width="130">操作</th>
 				</tr>
@@ -52,6 +54,12 @@
 				</td>
 				<td>
 					{if condition="$vo.status eq 1"}<span class="layui-badge layui-bg-green">开启</span>{/if} {if condition="$vo.status eq 2"}<span class="layui-badge ">关闭</span>{/if} {if condition="$vo.status eq 3"}<span class="layui-badge layui-bg-orange">冻结</span>{/if}
+				</td>				
+				<td>
+					{$vo.invite_count}
+				</td>
+				<td>
+					{:mac_return_proxy_name($vo.pid)}
 				</td>
 				<td>{:date('Y-m-d H:i:s',$vo.add_time)}</td>
 				<td>

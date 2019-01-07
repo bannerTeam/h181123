@@ -17,10 +17,10 @@ return array (
   ),
   'site' => 
   array (
-    'site_name' => '撸草湾,色站',
+    'site_name' => 'H18av,色站',
     'site_url' => '2.cn',
     'site_wapurl' => 'www.2.cn',
-    'site_keywords' => '免费在线电影,色站',
+    'site_keywords' => '精品在线电影,色站',
     'site_description' => '提供最新最快的色站在线播放',
     'site_icp' => 'icp123',
     'site_qq' => '875731383,654551320',

@@ -2113,6 +2113,9 @@ function mac_withdraw_status($val)
  */
 function mac_return_proxy_name($proxy_id)
 {
+    if(empty($proxy_id)){
+        return '';
+    }
     $where = [];
     $where['id'] = $proxy_id;
    

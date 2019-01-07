@@ -220,7 +220,28 @@ class User extends Base
             $uiData['invite_user_id']=$fields['inviter_user_id'];
             $uiRes = model('UserInvite')->saveData($uiData);
             
+            //注册成功发 消息 给 推荐人
+            $nData['receive_user_id']=$fields['inviter_user_id'];
+            $nData['title']='邀请用户注册';
+            $nData['introduce']= '恭喜您，新用户('.$data['user_name'].')注册成功。';
+            $nData['send_name']= '系统';
+            $nData['send_time']=time();
+            $nData['status']=0;
+            model('News')->saveData($nData);
         }
+        
+        //判断是否是代理
+        if(isset($fields['inviter_user_id']) && $reg_user_id){
+            $where = [];
+            $where['user_id'] = $fields['inviter_user_id'];
+            $res = model('Proxy')->findData($where,'id');
+            if($res['code'] === 1){
+                $where = [];
+                $where['id'] = $res['info']['id'];
+                model('Proxy')->updateSetInc($where,'invite_count');
+            }
+        }
+        
         
         if($reg_user_id){
             

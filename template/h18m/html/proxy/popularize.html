@@ -6,6 +6,7 @@
 		<title>三级分销-推广链接</title>
 		{include file="public/include_user" /}
 		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
+		<script src="/static/zeroclipboard/jquery.zeroclipboard.min.js"></script>
 		<style type="text/css">
 			.share {
 				text-align: center;
@@ -42,7 +43,7 @@
 				<p>官方网站：www.h18av.com</p>				
 			</div>
 			<div class="row-btn " style="margin-top: 3rem;">
-				<button>
+				<button id="copycode">
 					复制链接
 				</button>
 				<button style="margin-top: 2rem;">
@@ -65,8 +66,30 @@
 					text: l
 				});
 				$("#qrcode_url").text(l);
-			})()
+			})();
+			
+			$(function(){		
+				
+				
+				$("#copycode").on("beforecopy copy aftercopy", function(e) {
+						console.log('beforecopy');
+				}).on("copy", function(e) {
+					console.log('copy')
+					e.clipboardData.clearData();
+					e.clipboardData.setData("text/plain", "123456");
+					e.preventDefault();
+					layer.open({
+						content: "复制成功",
+						skin: 'msg',
+						time: 2
+					});
+				});
+				
+				console.log('function')
+			})
 		</script>
+		
+		
 
 		{include file="public/foot" /}
 	</body>

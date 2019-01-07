@@ -1,0 +1,96 @@
+{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    <form class="layui-form layui-form-pane" method="post" action="" id="form">
+            
+        <div class="layui-form-item">
+			<label class="layui-form-label">添加的时间：</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" value="{:date('Y-m-d')}" id="add_time" name="add_time" placeholder="yyyy-MM-dd">
+			</div>
+		</div>
+		<div class="layui-form-item">
+            <label class="layui-form-label">会员卡：</label>
+            <div class="layui-input-block">
+                <select name="vip_id" id="vip_id">
+					<option value="">请选择会员卡</option>
+					{volist name="$vips" id="go"}
+					<option value="{$go.id}" {if condition="$info.vip_id eq $go.id" }selected{/if}>{$go.name}-{$go.cost}</option>
+					{/volist}
+				</select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+			<label class="layui-form-label">状态：</label>
+			<div class="layui-input-block">
+				<input name="status" type="radio" id="rad-1" value="1" title="未使用" checked="checked" >
+				<input name="status" type="radio" id="rad-2" value="2" title="已使用" >
+				<input name="status" type="radio" id="rad-3" value="3" title="全部" >
+			</div>
+		</div>
+        
+        <div class="layui-form-item center">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="submit">导 出</button>
+                <button class="layui-btn layui-btn-warm" type="reset">还 原</button>
+            </div>
+        </div>
+    </form>
+    
+    
+    <div id="download" style="text-align: center; padding: 50px; color: #ff6600;display: none;">   
+    	<div style="font-size: 26px;color: green; padding-bottom: 20px;;">创建成功</div>
+    	<a id="download_a" style="font-size: 18px;" target="_blank"></a>    	
+    </div>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['layer', 'laydate'], function () {
+            var  layer = layui.layer;              
+            var laydate = layui.laydate;
+            
+            laydate.render({
+				elem: '#add_time',
+				value: '{:date("Y-m-d");}',
+    			isInitValue: true
+			});
+            
+            $("#submit").click(function(){
+            	
+            	var param = {
+            		add_time:$("#add_time").val(),
+            		vip:Number($("#vip_id").val()),
+            		status:Number($('[name=status]:checked').val())            		
+            	};
+            	
+            	if(param.vip == 0){
+            		layer.alert("请选择会员卡类型");
+            		return false;
+            	}
+            	
+            	
+            	var l = layer.load();  
+            	$.ajax({
+					type:"post",
+					url:"",
+					data:param,
+					success:function(res){
+						 layer.close(l);
+						if(res.code === 1){
+							$("#download").show();
+							$("#form").remove();
+							$("#download_a").attr('href',res.file);
+							$("#download_a").text("点击下载：" + res.name);
+						}else{
+							layer.alert(res.msg);
+						}
+					}
+				});
+            });			
+
+    });
+</script>
+
+</body>
+</html>

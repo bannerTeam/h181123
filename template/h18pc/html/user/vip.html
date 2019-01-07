@@ -21,7 +21,7 @@
 					</div>
 					<div class="clearfix">
 						{volist name="list" id="vo"}
-						<div class="vipmain-item " data-href="{$vo.buy_luoboka}">
+						<div class="vipmain-item " data-href="/third/jump?url={$vo.buy_luoboka}">
 							<div class="item ">
 								<p class="p1">{$vo.name}</p>
 								<p class="p2"><span>￥</span>{:intval($vo.cost)}</p>
@@ -73,11 +73,16 @@
 					
 				}).eq(0).click();
 				
-				layer.confirm('您购买成功了吗？', {
-				  btn: ['成功','失败'] 
-				}, function(){
-				  location.href = "/user/kalman";
-				});
+				
+				$("#buy").click(function(){
+					layer.confirm('您购买成功了吗？', {
+					  btn: ['成功','失败'] 
+					}, function(){
+					  location.href = "/user/kalman";
+					});
+				})
+				
+				
 
 			})
 		</script>

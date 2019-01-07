@@ -101,7 +101,15 @@
 									content: '注册成功',
 									btn: '确定',
 									yes: function() {
-										location.href = "/user/login.html";
+										var re = document.referrer;
+										if(re == ""){
+											location.href = "/";
+										}
+										else if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
+											location.href = "/user/index.html";
+										} else {
+											location.href = re;
+										}
 									}
 								});
 

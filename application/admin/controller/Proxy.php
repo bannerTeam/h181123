@@ -295,6 +295,13 @@ class Proxy extends Base
             return $this->error('通过失败，请重试!');
         }
         
+        $uWhere['user_id'] = $user_id;
+        $uRes = model('User')->infoData($uWhere, 'user_name,inviter_user_id');
+        if ($uRes['code'] > 1) {
+            return $this->error('用户不存在!');
+        }
+        $uInfo = $uRes['info'];
+        
         $where['user_id'] = $user_id;
         $res = model('Proxy')->findData($where, 'id');
         if ($res['code'] === 1) {
@@ -309,8 +316,22 @@ class Proxy extends Base
         if ($res['code'] === 1) {
             $where['id'] = $id;
             
+            $proxy_id = 0;
+            //邀请人会员ID/推荐人
+            $inviter_user_id = $uInfo['inviter_user_id'];                      
+            if($inviter_user_id){
+                $pWhere['user_id'] = $inviter_user_id;
+                $pRes = model('Proxy')->findData($pWhere, 'id');
+                if ($pRes['code'] === 1) {
+                    $proxy_id  = $pRes['info']['id'];
+                }                
+            }
+                        
             unset($param['id']);
             $pdata = $param;
+            //上级代理ID
+            $pdata['pid'] = $proxy_id;
+            $pdata['name'] = $uInfo['user_name'];
             $pdata['user_id'] = $user_id;
             $pdata['amount'] = 0;
             $pdata['status'] = 1;

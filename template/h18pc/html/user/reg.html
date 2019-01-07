@@ -107,14 +107,16 @@
 						success: function(r) {
 							layer.close(index);
 							if(r.code == 1) {
-
 								//信息框
 								layer.open({
 									content: '注册成功',
 									btn: '确定',
 									yes: function() {
 										var re = document.referrer;
-										if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
+										if(re == ""){
+											location.href = "/";
+										}
+										else if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
 											location.href = "/user/index.html";
 										} else {
 											location.href = re;
