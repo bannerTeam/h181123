@@ -24,11 +24,13 @@ class Proxy extends Base
         if ($GLOBALS['user']['user_id']) {
             $where['user_id'] = $GLOBALS['user']['user_id'];
             $res = model('Proxy')->findData($where);
-            if($res['code'] === 1){                 
+            if($res['code'] === 1){   
+                $_SESSION['proxy_id'] = $res['info']['id'];
                 header('Location: /proxy/popularize');
                 exit();
             }
-        }  
+        }
+        
         return $this->fetch('proxy/index');
     }
     
@@ -174,7 +176,37 @@ class Proxy extends Base
      * @return mixed|string
      */
     public function performance ()
-    {         
+    {        
+        
+        if (empty($GLOBALS['user']['user_id'])) {
+            return $this->error('未登录', url('user/login'));
+        }
+        
+        if (Request()->isAjax()) {
+            
+            self::get_proxy_id();
+            
+            $param = input();
+            
+            $page = intval($param['page']) ? $param['page'] : 1;
+            $limit = intval($param['limit']) ? $param['limit'] : 20;
+            
+            $order = 'u.user_id';
+            
+            $where['ui.invite_user_id'] = $GLOBALS['user']['user_id'];
+            $res = model('UserInvite')->getExpensesRecord($where, $order, $page,$limit);
+            $r = [
+                'code' => 1,
+                'msg' => '',
+                'list' => $res['list'],
+                'limit' => $res['limit'],
+                'pagecount'=>$res['pagecount'],
+                'page' => $res['page']
+            ];
+            
+            return (json($r));
+        }
+        
         return $this->fetch('proxy/performance');
     }
         
@@ -246,6 +278,20 @@ class Proxy extends Base
         
         return $this->fetch('proxy/brokerage_record');
     }
+    
+    private function get_proxy_id(){
+        
+        if ($GLOBALS['user']['user_id'] && isset($_SESSION['proxy_id'])) {
+            $where['user_id'] = $GLOBALS['user']['user_id'];
+            $res = model('Proxy')->findData($where,'id,status');
+            if($res['code'] === 1){
+                $_SESSION['proxy_id'] = $res['info']['id'];               
+            }
+        }
+        
+        
+    }
+    
     /**
      * 获取邀请随机数
      */

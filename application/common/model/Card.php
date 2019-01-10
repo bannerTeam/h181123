@@ -142,7 +142,7 @@ class Card extends Base {
             return ['code' => 1002, 'msg' => '充值卡信息有误，请重试'];
         }
         
-        $card_money = info['card_money'];
+        $card_money = $info['card_money'];
         
         //判断卡密是否有 VIP 会员
         $vip_id = 0;

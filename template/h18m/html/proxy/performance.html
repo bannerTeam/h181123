@@ -24,13 +24,40 @@
 					<li class="weui-flex__item"><a href="/proxy/brokerage_record" class="">佣金记录</a></li>					
 				</ul>
 			</div>
-			
+			<div class="record">
+				<div class="hd"></div>
+				<div class="bd">
+					<table  border="1" style="border-collapse:collapse; width: 100%;" bordercolor="#e0dddd">
+						<thead>
+							<tr>
+								<th>会员</th>
+								<th>注册时间</th>
+								<th>消费金额</th>
+								<th>消费时间</th>
+							</tr>
+						</thead>
+						<tbody id="vlist">
+							
+						</tbody>
+						<tfoot id="loading">
+							<tr>
+								<td colspan="4">
+									<div class="loading" style="display: block;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+			</div>
 		</div>
 
+		<script src="{$maccms.path_tpl}js/user/performance.js"></script>
 		<script type="text/javascript">
-			(function() {
-
-			})()
+			var s = {
+				limit:15
+			};
+			pageInit(s);
 		</script>
 
 		{include file="public/foot" /}

@@ -1,25 +1,26 @@
 <?php
 namespace app\common\model;
+
 use think\Db;
 use think\Cache;
 
-class UserInvite extends Base {
-    
+class UserInvite extends Base
+{
+
     // 设置数据表（不含前缀）
     protected $name = 'user_invite';
 
     // 定义时间戳字段名
     protected $createTime = '';
+
     protected $updateTime = '';
 
     // 自动完成
-    protected $auto       = [];
-    protected $insert     = [];
-    protected $update     = [];
+    protected $auto = [];
 
-   
+    protected $insert = [];
 
-   
+    protected $update = [];
 
     public function countData($where)
     {
@@ -27,110 +28,205 @@ class UserInvite extends Base {
         return $total;
     }
 
-    public function listData($where,$order,$page=1,$limit=20,$start=0,$field='*',$addition=1,$totalshow=1)
+    public function listData($where, $order, $page = 1, $limit = 20, $start = 0, $field = '*', $addition = 1, $totalshow = 1)
     {
-        if(!is_array($where)){
-            $where = json_decode($where,true);
+        if (! is_array($where)) {
+            $where = json_decode($where, true);
         }
-        $limit_str = ($limit * ($page-1) + $start) .",".$limit;
-        if($totalshow==1) {
+        $limit_str = ($limit * ($page - 1) + $start) . "," . $limit;
+        if ($totalshow == 1) {
             $total = $this->where($where)->count();
         }
-        $list = Db::name('Adv')->field($field)->where($where)->order($order)->limit($limit_str)->select();
+        $list = Db::name('Adv')->field($field)
+            ->where($where)
+            ->order($order)
+            ->limit($limit_str)
+            ->select();
         
-
-        return ['code'=>1,'msg'=>'数据列表','page'=>$page,'pagecount'=>ceil($total/$limit),'limit'=>$limit,'total'=>$total,'list'=>$list];
+        return [
+            'code' => 1,
+            'msg' => '数据列表',
+            'page' => $page,
+            'pagecount' => ceil($total / $limit),
+            'limit' => $limit,
+            'total' => $total,
+            'list' => $list
+        ];
     }
-    
-    public function infoData($where,$field='*',$cache=0)
+
+    public function infoData($where, $field = '*', $cache = 0)
     {
-        if(empty($where) || !is_array($where)){
-            return ['code'=>1001,'msg'=>'参数错误'];
+        if (empty($where) || ! is_array($where)) {
+            return [
+                'code' => 1001,
+                'msg' => '参数错误'
+            ];
         }
-        $info = $this->field($field)->where($where)->find();
+        $info = $this->field($field)
+            ->where($where)
+            ->find();
         if (empty($info)) {
-            return ['code' => 1002, 'msg' => '获取数据失败'];
+            return [
+                'code' => 1002,
+                'msg' => '获取数据失败'
+            ];
         }
         $info = $info->toArray();
-                  
         
-        return ['code'=>1,'msg'=>'获取成功','info'=>$info];
+        return [
+            'code' => 1,
+            'msg' => '获取成功',
+            'info' => $info
+        ];
     }
 
     public function saveData($data)
-    {       
-        
-        if(empty($data['reg_user_id']) || empty($data['invite_user_id'])){
-            return ['code'=>1001,'msg'=>'参数错误'];
+    {
+        if (empty($data['reg_user_id']) || empty($data['invite_user_id'])) {
+            return [
+                'code' => 1001,
+                'msg' => '参数错误'
+            ];
         }
-       
-        if($data['reg_user_id'] == $data['invite_user_id']){
-            return ['code'=>1002,'msg'=>'相同的用户'];
+        
+        if ($data['reg_user_id'] == $data['invite_user_id']) {
+            return [
+                'code' => 1002,
+                'msg' => '相同的用户'
+            ];
         }
         
         $data['add_time'] = time();
         
-       
-        $res = $this->allowField(true)->insert($data);        
+        $res = $this->allowField(true)->insert($data);
         
-        if(false === $res){
-            return ['code'=>1003,'msg'=>'保存失败：'.$this->getError() ];
+        if (false === $res) {
+            return [
+                'code' => 1003,
+                'msg' => '保存失败：' . $this->getError()
+            ];
         }
-        return ['code'=>1,'msg'=>'保存成功'];
+        return [
+            'code' => 1,
+            'msg' => '保存成功'
+        ];
     }
 
     public function delData($where)
     {
-     
-        
         $res = $this->where($where)->delete();
-        if($res===false){
-            return ['code'=>1001,'msg'=>'删除失败：'.$this->getError() ];
+        if ($res === false) {
+            return [
+                'code' => 1001,
+                'msg' => '删除失败：' . $this->getError()
+            ];
         }
-        return ['code'=>1,'msg'=>'删除成功'];
+        return [
+            'code' => 1,
+            'msg' => '删除成功'
+        ];
     }
 
-    public function fieldData($where,$col,$val)
+    public function fieldData($where, $col, $val)
     {
-        if(!isset($col) || !isset($val)){
-            return ['code'=>1001,'msg'=>'参数错误'];
+        if (! isset($col) || ! isset($val)) {
+            return [
+                'code' => 1001,
+                'msg' => '参数错误'
+            ];
         }
-
+        
         $data = [];
         $data[$col] = $val;
-        $res = $this->allowField(true)->where($where)->update($data);
-        if($res===false){
-            return ['code'=>1001,'msg'=>'设置失败：'.$this->getError() ];
+        $res = $this->allowField(true)
+            ->where($where)
+            ->update($data);
+        if ($res === false) {
+            return [
+                'code' => 1001,
+                'msg' => '设置失败：' . $this->getError()
+            ];
         }
-
-        $list = $this->field('art_id,art_name,art_en')->where($where)->select();
-        foreach($list as $k=>$v){
-            $key = 'art_detail_'.$v['art_id'];
+        
+        $list = $this->field('art_id,art_name,art_en')
+            ->where($where)
+            ->select();
+        foreach ($list as $k => $v) {
+            $key = 'art_detail_' . $v['art_id'];
             Cache::rm($key);
-            $key = 'art_detail_'.$v['art_en'];
+            $key = 'art_detail_' . $v['art_en'];
             Cache::rm($key);
         }
-
-        return ['code'=>1,'msg'=>'设置成功'];
+        
+        return [
+            'code' => 1,
+            'msg' => '设置成功'
+        ];
     }
 
-    public function updateToday($flag='art')
+    public function updateToday($flag = 'art')
     {
         $today = strtotime(date('Y-m-d'));
         $where = [];
-        $where['art_time'] = ['gt',$today];
-        if($flag=='type'){
+        $where['art_time'] = [
+            'gt',
+            $today
+        ];
+        if ($flag == 'type') {
             $ids = $this->where($where)->column('type_id');
-        }
-        else{
+        } else {
             $ids = $this->where($where)->column('art_id');
         }
-        if(empty($ids)){
+        if (empty($ids)) {
             $ids = [];
-        }else{
+        } else {
             $ids = array_unique($ids);
         }
-        return ['code'=>1,'msg'=>'获取成功','data'=> join(',',$ids) ];
+        return [
+            'code' => 1,
+            'msg' => '获取成功',
+            'data' => join(',', $ids)
+        ];
     }
 
+    /**
+     * 获取会员消费注册记录
+     * @param unknown $where
+     * @param unknown $order
+     * @param number $page
+     * @param number $limit
+     * @param number $start
+     * @param string $field
+     * @return number[]|string[]|unknown[]
+     */
+    public function getExpensesRecord($where, $order, $page = 1, $limit = 20, $start = 0, $field = 'u.user_id,u.user_name,u.user_reg_time,er.add_time,er.amount ', $addition = 1, $totalshow = 1)
+    {
+        $limit_str = ($limit * ($page - 1) + $start) . "," . $limit;
+        if ($totalshow == 1) {
+            $total = Db::name('user_invite')->alias('ui')
+                ->join('mac_user u', 'ui.reg_user_id = u.user_id ')
+                ->join('mac_expenses_record er', 'er.user_id = u.user_id')
+                ->where($where)
+                ->count();
+        }
+        
+        $list = Db::name('user_invite')->alias('ui')
+            ->join('mac_user u', 'ui.reg_user_id = u.user_id ')
+            ->join('mac_expenses_record er', 'er.user_id = u.user_id')
+            ->where($where)
+            ->order($order)
+            ->limit($limit_str)
+            ->select();
+        
+        return [
+            'code' => 1,
+            'msg' => '数据列表',
+            'page' => $page,
+            'pagecount' => ceil($total / $limit),
+            'limit' => $limit,
+            'total' => $total,
+            'list' => $list
+        
+        ];
+    }
 }

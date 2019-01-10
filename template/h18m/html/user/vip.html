@@ -21,14 +21,14 @@
 						
 			{volist name="list" id="vo"}
 			<div class="vipmain-item">
-				<a href="{$vo.buy_luoboka}" target="_blank"
-				<div class="item-l">
-					<p>{$vo.name}</p>
-					<p>￥{:intval($vo.cost)}</p>
-				</div>
-				<div class="item-r j-describe">
-					<p class="">{$vo.describe}</p>					
-				</div>
+				<a href="/third/jump?url={$vo.buy_luoboka}" target="_blank">
+					<div class="item-l">
+						<p>{$vo.name}</p>
+						<p>￥{:intval($vo.cost)}</p>
+					</div>
+					<div class="item-r j-describe">
+						<p class="">{$vo.describe}</p>					
+					</div>
 				</a>
 			</div>
 			{/volist}
