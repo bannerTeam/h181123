@@ -3,21 +3,20 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>推广奖励</title>
-		{include file="public/include" /}	
-		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
+		<title>推广链接-三级分销</title>
+		{include file="public/include"}
 		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
-		
 		<script src="/static/zeroclipboard/jquery.zeroclipboard.min.js"></script>
+		
+		<script src="/static/clipboard/clipboard.min.js"></script>
 	</head>
 
 	<body>
-		{include file="public/header" /}
-		
-		<div class="user page-w clearfix">
-			{include file="user/side" /}
-			<div class="user-con">
-				<div class="popul">
+		{include file="public/header"}
+
+		<div class="page-w">
+			
+			<div class="popul">
 				<div class="mould1 clearfix">
 					<div class="title">您的专属推广二维码图片</div>
 					<div class="l">
@@ -40,40 +39,23 @@
 							<a class="copy-btn" id="copy_qcode">复制二维码图片</a>
 						</div>
 					</div>
-					<div class="r visitor" style="width: 445px;">
-						<div class="total" style="padding-bottom: 20px;">
-							<p>
-							{if $user_vip}
-								无限
-								{elseif $user.user_id > 0}
-								{$vod_browse} / 2
-								{else /}
-								{$vod_browse} / 1
-							{/if}
-							</p>
-							<p>今日剩余看片次数</p>
+					<div class="r visitor">
+						<div class="total">
+							<p>{$vod_browse} / 1</p>
+							<p>今日剩余看片次数（游客）</p>
 						</div>
-						<div class="introduce" style="margin-top: 30px;">
+						<div class="introduce">
 							<p>如何提升看片次数？</p>
-							<p>将左侧的二维码图片或下面的推广链接推荐给朋友，即可获得金币；</p>
-							<p>每成功推荐1个注册会员，可获得金币 +2，金币可用于免费看片等多种用途</p>
-							<p>注：相同IP/机器码的多个注册会员视为同一个会员，只记录1次。</p>							
+							<p>1、游客可免费看片2次，注册会员可免费看片5次，赶紧注册会员吧，立即可提高看片次数+3；</p>
+							<p>2、注册会员之后，可通过推广的方式增加免费看片次数；每成功推荐1个注册会员，永久增加每日免费看片次数 +1 次</p>							
 						</div>
-						<div class="invite">
-							已成功推荐：{:mac_return_invite_count()}
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<!--金币增加： + 20-->
-						</div>
-						<div class="title" style="margin-top: 20px;">您的专属推广链接</div>
-						<div class="box-url">
-							<input type="text" value="" id="url" readonly="readonly" />
-						</div>
-						<div class="copy-url">
-							<a class="copy-btn" id="copycode">复制推广链接</a>
+						<div class="signup">
+							<a href="/user/reg">注册</a>
+							<a href="/user/login">登录</a>
 						</div>
 					</div>
 				</div>
-				<div class="mould2" style="margin-top: 20px;">
+				<div class="mould2">
 					<div class="title">如何推广</div>
 					<div class="introduce">
 						<p>1、将推广链接通过QQ、微信、论坛等各种渠道分享出去，只要有人通过链接访问，即成为你的下级会员与代理</p>
@@ -87,7 +69,10 @@
 					</div>
 				</div>
 			</div>
-			</div>
+			
+			
+			
+			
 		</div>
 		<script type="text/javascript">
 			
@@ -95,7 +80,7 @@
 			(function() {
 				
 				
-				var code = "{:mac_return_invite()}",
+				var code = "{$invite}",
 					l = "http://" + document.domain + "/user/reg?code=" + code;
 				jQuery('#qrcode').qrcode({
 					render: "canvas", //也可以替换为table
@@ -122,10 +107,30 @@
 					layer.msg("复制成功");					
 				});
 				
+				
+				
+				//.img-div触发复制事件
+				var clipboard = new ClipboardJS('.img-div', {				
+					target: function(trigger) {
+						return $(trigger).find("a")[0];　　
+					}
+				});
+				clipboard.on('success', function(e) {
+					//复制成功后需要执行的function
+					//您可以加入成功提示
+					console.info('成功');
+				
+					e.clearSelection();
+				});
+				clipboard.on('error', function(e) {
+					//复制失败后需要执行的function
+					//您可以加入失败提示
+					console.error('失败');
+				});
+				
 			})();
 		</script>
-		
-		{include file="public/foot" /}
+		{include file="public/foot"}
 	</body>
 
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>我的信息</title>
+		<meta name="keywords" content="{$maccms.site_keywords}" />
+		<meta name="description" content="{$maccms.site_description}" /> 
+		{include file="public/include" /}
+		<link href="{$maccms.path_tpl}css/user.css" rel="stylesheet">
+	</head>
+
+	<body style="">
+		{include file="public/header" /}
+		
+		<div class="user page-w clearfix">
+			{include file="user/side" /}
+			<div class="user-con">				
+				<div>				
+				<div class="form" style="margin-top: 100px;">
+					<div class="col weui-flex">
+						<label>QQ</label>
+						<input class="weui-flex__item" id="qq" autocomplete="off" value="{$info.user_qq}" placeholder="请输入QQ" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<label>微信</label>
+						<input class="weui-flex__item" id="weixin" autocomplete="off" value="{$info.weixin}" placeholder="请输入微信" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<label>skype</label>
+						<input class="weui-flex__item" id="skype" autocomplete="off" value="{$info.skype}" placeholder="请输入skype" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<label>邮箱</label>
+						<input class="weui-flex__item" id="email" autocomplete="off" value="{$info.email}" placeholder="请输入邮箱" type="text" />
+					</div>
+					<div class="col weui-flex">
+						<label>Telegram</label>
+						<input class="weui-flex__item" id="telegram" autocomplete="off" value="{$info.telegram}" placeholder="请输入Telegram" type="text" />
+					</div>
+					<div class="submit">
+						<button id="btn_submit">
+							提&nbsp;&nbsp;交
+						</button>
+						<p id="tip" class="tip"></p>
+					</div>
+				</div>
+				</div>		
+
+			</div>
+		</div>
+		
+		
+		<script type="text/javascript">
+			$(function() {
+				$("body").bind('keyup', function(event) {
+					if(event.keyCode == 13) {
+						$('#btn_submit').click();
+						return false;
+					}
+				});
+				$(".form input").bind({
+					"click":function(){
+						tips();
+					}
+				})
+				$('#btn_submit').click(function() {
+
+					var param = {
+						qq: $.trim($("#qq").val()),
+						weixin: $.trim($("#weixin").val()),
+						skype: $.trim($("#skype").val()),
+						email: $.trim($("#email").val()),
+						telegram: $.trim($("#telegram").val())
+					}
+
+					if(param.qq == "" && param.weixin == "" && param.skype == "" && param.email == "" && param.telegram == "") {
+						tips("至少填写一项");
+						return false;
+					}
+
+					if(param.qq != "" && !/^\d{6,12}$/.test(param.qq)) {
+						tips("QQ格式错误");
+						return false;
+					}
+					if(param.email != "" && !/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(param.email)) {
+						tips("邮箱格式错误");
+						return false;
+					}
+					var index = layer.load(1, {
+					  shade: [0.1,'#000'] 
+					});
+					$.ajax({
+						type: "post",
+						dataType: "json",
+						data: param,
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {								
+								layer.alert("信息保存成功",function(){
+									location.reload();
+								});
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+
+				});
+				
+				
+
+				function tips(msg) {
+					if(msg){
+						$("#tip").css({
+							"visibility":"visible"
+						}).text(msg);
+					}else{
+						$("#tip").css({
+							"visibility":"hidden"
+						}).text("");
+					}
+					
+				}
+			});
+		</script>
+		{include file="public/foot" /}
+	</body>
+
+</html>

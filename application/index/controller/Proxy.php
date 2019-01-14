@@ -1,7 +1,7 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-
+use think\Cookie;
 /**
  * 代理，三级分销
  * @author DEFAULT
@@ -30,6 +30,8 @@ class Proxy extends Base
                 exit();
             }
         }
+        
+        $this->assign('proxyIndex',1);
         
         return $this->fetch('proxy/index');
     }
@@ -129,6 +131,30 @@ class Proxy extends Base
         return $this->fetch('proxy/result');
     }
     
+    /**
+     * PC 推广奖励
+     */
+    public function share(){
+        
+        if ($GLOBALS['user']['user_id']) {
+            header('Location: /user/index');
+            exit();
+        }
+        
+        $this->assign('vod_browse', 0);
+        
+        // 判断是否有cookie
+        $browsevod = Cookie::get('browsevod', 'h18_');
+        if ($browsevod) {
+            $this->assign('vod_browse', 1);
+        }
+        
+        
+        $this->assign('proxyShare', 1);
+        
+        return $this->fetch('proxy/share');
+        
+    }
     
     /**
      * 推广链接 
@@ -191,7 +217,7 @@ class Proxy extends Base
             $page = intval($param['page']) ? $param['page'] : 1;
             $limit = intval($param['limit']) ? $param['limit'] : 20;
             
-            $order = 'u.user_id';
+            $order ='u.user_id desc,er.add_time desc';
             
             $where['ui.invite_user_id'] = $GLOBALS['user']['user_id'];
             $res = model('UserInvite')->getExpensesRecord($where, $order, $page,$limit);

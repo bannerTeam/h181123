@@ -35,6 +35,9 @@
 		</div>		
 	</div>
 	<ul>
+		<li>			
+			<a><img src="{$maccms.path_tpl}/img/user/jb.png" />金币余额：{$user_points}</a>
+		</li>
 		<li {if $pageAction == 'share'}class="active"{/if} >
 			<a href="/user/share">
 				<img src="{$maccms.path_tpl}/img/user/3.png" />
@@ -46,8 +49,7 @@
 		<li {if $pageAction == 'kalman'}class="active"{/if}>
 			<a href="/user/kalman"><img src="{$maccms.path_tpl}/img/user/1.png" />卡密充值,快速到账</a>
 		</li>
-		<li {if $pageAction == 'email'}class="active"{/if}>
-			
+		<li {if $pageAction == 'email'}class="active"{/if} style="display: none;">			
 			<a href="/user/email"><img src="{$maccms.path_tpl}/img/user/security.png" />邮箱设置</a>
 		</li>
 		<li {if $pageAction == 'password'}class="active"{/if}>
@@ -55,9 +57,9 @@
 			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/4.png" />修改密码</a>
 		</li>
 		
-		<li {if $pageAction == 'account'}class="active"{/if}>
+		<li {if $pageAction == 'info'}class="active"{/if}>
 			
-			<a href="/user/password"><img src="{$maccms.path_tpl}/img/user/account.png" />我的账户</a>
+			<a href="/user/info"><img src="{$maccms.path_tpl}/img/user/account.png" />我的信息</a>
 		</li>
 		<li {if $pageAction == 'news' || $pageAction == 'notice'}class="active"{/if}>
 			

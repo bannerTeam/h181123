@@ -5,7 +5,26 @@
 		<meta charset="UTF-8">
 		<title>升级VIP</title>
 		{include file="public/include_user" /}
-
+		<style>
+			.km_pay {}
+			
+			.km_pay .form {
+				margin: 0 20px;
+				padding: 10px 0;
+			}
+			
+			.km_pay .form .col {
+				margin-bottom: 20px;
+			}
+			
+			.iframe {
+				width: 100%;
+			}
+			
+			.iframe iframe {
+				width: 100%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -14,8 +33,29 @@
 			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
 			<h3>升级VIP</h3>
 		</div>
-		
-		<div class="payment">
+		<div class="km_pay">
+			<div class="form">
+				<div class="col weui-flex">
+					<i class="iconfont icon-huiyuanqia"></i>
+					<input class="weui-flex__item" id="card_no" placeholder="请输入充值卡号" type="text" />
+				</div>
+				<div class="col weui-flex">
+					<i class="iconfont icon-mima"></i>
+					<input class="weui-flex__item" id="card_pwd" placeholder="请输入充值卡密码" type="text" />
+				</div>
+				<div class="submit">
+					<button id="btn_submit">
+						提交
+					</button>
+				</div>
+			</div>
+			<div class="iframe">
+				<iframe id="iframe" src="/third/jump?url=http://www.luoboka.com/product/CAF8D85BFA93749D" border="0" frameborder="0"></iframe>
+			</div>
+
+		</div>
+
+		<!--<div class="payment">
 			<div class="hd">
 				<div class="mould-title">
 					<h3>已选择套餐</h3>
@@ -36,8 +76,28 @@
 				</div>
 			</div>
 			
-		</div>
-	
+		</div>-->
+
+		<script type="text/javascript">
+			$(function() {
+				var ch = $(".chead").outerHeight(),
+					fh = $(".form").outerHeight(),
+					wh = $(window).height();
+
+				$("#iframe").css({
+					height: wh - ch - fh
+				});
+				
+				$("#btn_submit").click(function(){
+					tool.alert($("#iframe").attr("src"));
+				})
+			})
+		$("#footer").remove();
+			
+		</script>
+		<style>
+			#footer{ height: 0; width: 0; display: none;}
+		</style>
 		{include file="public/foot" /}
 	</body>
 

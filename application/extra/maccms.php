@@ -70,15 +70,15 @@ return array (
     'status' => '1',
     'reg_open' => '1',
     'reg_status' => '1',
-    'reg_points' => '10',
-    'invite_reg_points' => '10',
+    'reg_points' => '5',
+    'invite_reg_points' => '2',
     'trysee' => '0',
-    'portrait_status' => '1',
+    'portrait_status' => '0',
     'portrait_size' => '100x100',
   ),
   'gbook' => 
   array (
-    'status' => '1',
+    'status' => '0',
     'audit' => '0',
     'login' => '0',
     'verify' => '1',
@@ -87,7 +87,7 @@ return array (
   ),
   'comment' => 
   array (
-    'status' => '1',
+    'status' => '0',
     'audit' => '0',
     'login' => '0',
     'verify' => '1',
@@ -101,7 +101,7 @@ return array (
     'thumb_type' => '1',
     'watermark' => '0',
     'watermark_location' => '7',
-    'watermark_content' => 'maccms.com',
+    'watermark_content' => 'h18av.com',
     'watermark_size' => '25',
     'watermark_color' => '#FF0000',
     'mode' => '0',
@@ -201,7 +201,7 @@ return array (
       'status' => '1',
       'charge' => '0',
       'pagesize' => '20',
-      'imgurl' => 'http://img.maccms.com/',
+      'imgurl' => 'http://img.h18av.com/',
       'typefilter' => 'and type_mid=1 and type_status=0',
       'datafilter' => '',
       'from' => '',
@@ -348,14 +348,7 @@ art/search => art/search
 
 label/:file => label/index',
   ),
-  'email' => 
-  array (
-    'host' => 'smtp.office365.com',
-    'port' => '587',
-    'username' => 'h18av@outlook.com',
-    'password' => '1qaz2WSX3edc',
-    'test' => 'lucaowan@outlook.com',
-  ),
+  'email' => NULL,
   'play' => 
   array (
     'width' => '0',

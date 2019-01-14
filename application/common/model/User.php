@@ -89,6 +89,25 @@ class User extends Base
         }
         return ['code' => 1, 'msg' => '保存成功'];
     }
+    
+    public function saveData1($data)
+    {
+        $res === false;
+        
+        if (!empty($data['user_id'])) {
+            
+            $where = [];
+            $where['user_id'] = ['eq', $data['user_id']];
+            
+            unset($data['user_id']);
+            
+            $res = $this->where($where)->update($data);
+        } 
+        if (false === $res) {
+            return ['code' => 1003, 'msg' => '' . $this->getError()];
+        }
+        return ['code' => 1, 'msg' => '保存成功'];
+    }
 
     public function delData($where)
     {
@@ -240,7 +259,14 @@ class User extends Base
                 $where['id'] = $res['info']['id'];
                 model('Proxy')->updateSetInc($where,'invite_count');
             }
+            
+            //在会员邀请统计
+            $where = [];
+            $where['user_id'] = $fields['inviter_user_id'];
+            $this->updateSetInc($where,'invite_count');
         }
+        
+        
         
         
         if($reg_user_id){
@@ -309,6 +335,8 @@ class User extends Base
         }
         return model('User')->saveData($data);
     }
+    
+    
 
     public function login($param)
     {
@@ -747,6 +775,28 @@ class User extends Base
             return ['code' => 1002, 'msg' => '获取数据失败'];
         }
         return ['code' => 1, 'msg' => '','info'=>$info];
+    }
+    
+    /**
+     * 自增
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetInc($where,$field,$num = 1){
+        return $this->where($where)->setInc($field, $num);
+    }
+    
+    /**
+     * 自减
+     * @param unknown $where
+     * @param unknown $field
+     * @param number $num
+     * @return unknown
+     */
+    public function updateSetDec($where,$field,$num = 1){
+        return $this->where($where)->setDec($field, $num);
     }
 
 }

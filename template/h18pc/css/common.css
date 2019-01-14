@@ -205,9 +205,70 @@ fieldset, iframe, img {
 /*分页*/
 .mac_pages_empty{text-align:center;clear:both;padding:100px 0; }
 .mac_pages{height:50px;text-align:center;text-overflow:ellipsis;display:block;overflow:hidden;width:100%;margin-top: 20px;padding:20px 0;}
-.mac_pages .page_info .page_link{padding:9px 16px;color:#666;background-color:#ddd;border:0 none;white-space:nowrap;display:inline-block}
+.mac_pages .page_info .page_link{padding:9px 16px;color:#666;background-color:#ddd;border:0 none;white-space:nowrap;display:inline-block;vertical-align: middle; margin: 0 5px;}
 .mac_pages .page_info .page_current,.mac_pages .page_info .page_link:hover{font-style:normal;background-color:#2BAEB9;color:#fff;white-space:nowrap}
 .mac_pages .page_info .page_btn{font-style:normal;background-color:#f2990d;color:#fff;padding:2px 5px 2px 5px;white-space:nowrap}
 @media screen and (max-width:600px){.mac_pages{height:auto;margin-top:20px}
 .mac_pages .page_info .page_link{margin-bottom:15px}
 }
+
+/*推广*/
+.popul{ width: 960px;  margin: 50px auto;}
+.popul .title{ font-size: 18px; color: #000000; font-weight: bold; line-height: 40px;}
+.popul .mould1 .l{ float: left;460px}
+.popul .box { width: 400px; border: 1px solid #2BAEB9; text-align: center; padding: 20px 0;font-size: 16px; margin-top: 10px;}
+.popul .box .box-1{ font-size: 24px; color: #000000;font-weight: bold;line-height: 55px;}
+.popul .box .box-2{ width: 270px; height: 270px; margin: 0 auto;}
+.popul .box .box-3{ line-height: 30px; margin-top: 15px;}
+.popul .box .box-4{line-height: 30px;}
+.popul .box-5{ text-align: center; padding: 20px 0;}
+.popul .mould1 .r{ float: right; width: 400px;}
+.box-url{width: 400px; border: 1px solid #2BAEB9;margin-top: 10px;}
+.box-url input{ text-align: center; border: 0 none; color: #2BAEB9; font-size: 16px; height: 45px; line-height: 45px; width: 100%;}
+.copy-url{  text-align: right; margin-top: 20px;}
+.copy-btn{ cursor: pointer; background: #2BAEB9; color: #FFFFFF; font-size: 16px; padding: 6px 12px; border-radius: 5px;}
+.copy-btn:hover{background: #20cad8;color: #FFFFFF;font-size: 16px;}
+.popul .introduce{}
+.popul .introduce p{ line-height: 25px;;}
+
+
+/*佣金方案*/
+.article{ font-size: 16px;width: 960px;  margin: 50px auto;color: #000000;}
+.article h3{ text-align: center; font-weight: bold; font-size: 34px; margin-bottom: 50px;}
+.article .title{ font-weight: bold; line-height: 40px;}
+.article .introduce{ padding-left: 28px; padding-bottom: 20px; padding-top: 10px;}
+.article p{ line-height: 34px;}
+
+/*记录 */
+.record{}
+.record .bd{ padding: 0 1rem;}
+.record table{ text-align: center;}
+.record thead{}
+.record th{ font-size: 14px; padding: 5px 0; background: #EFEFEF;}
+.record tbody{}
+.record td{font-size: 14px; padding: 5px 0;}
+.record td .s0{ color: #FFB800;}
+.record td .s1{ color: #009688;}
+.record td .s2{ color: #FF5722;}
+.record .empty{ padding: 50px;;}
+
+/*我的佣金*/
+.mybrokerage{text-align: center;margin: 0 auto;width: 330px;}
+.mybrokerage .inner{  border: 1px solid #2BAEB9; width: 330px; color: #2BAEB9; padding: 30px 0 20px 0;}
+.mybrokerage .acount {font-size: 36px; font-weight: bold;}
+.mybrokerage .acount span{ font-size: 14px;}
+.mybrokerage .tit{ font-size: 14px;}
+.mybrokerage .inp{ margin-top: 20px;}
+.mybrokerage .inp span{ display: inline-block; vertical-align: middle;width:80px; text-align: left;}
+.mybrokerage .inp input{ height: 35px; line-height: 35px; width: 240px; text-indent: 12px;} 
+
+/*推广奖励 未登录*/
+.visitor{}
+.visitor .total{ margin-top: 10px; border: 1px solid #2BAEB9; color: #2BAEB9; width: 300px; padding: 30px 0; text-align: center;font-weight: bold;}
+.visitor .total p:first-child{font-size: 48px;}
+.visitor .total p:last-child{font-size: 14px; margin-top: 22px;}
+.visitor .introduce{ color: #000000; margin-top: 50px;}
+.visitor .introduce p:first-child{font-size: 18px; font-weight: bold; margin-bottom: 10px;}
+.visitor .signup{margin-top: 50px;}
+.visitor .signup a{font-size: 18px; display: inline-block; width: 155px; height: 50px; line-height: 50px; margin-right: 20px; color: #2BAEB9; border: 1px solid #2BAEB9; text-align: center;}
+.visitor .signup a:hover{ background: #2BAEB9; color: #FFFFFF;}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>推广业绩-三级分销</title>
+		{include file="public/include"}
+
+	</head>
+
+	<body>
+		{include file="public/header"}
+
+		<div class="page-w">
+			<div class="filter">
+				<div class="hd">分类</div>
+				<div class="bd">
+					<a class="" href="/proxy/popularize">推广链接</a>
+					<a class="" href="/proxy/brokerage">佣金方案</a>
+					<a class="active" href="/proxy/performance">推广业绩</a>
+					<a class="" href="/proxy/mybrokerage">我的佣金</a>
+					<a class="" href="/proxy/brokerage_record">佣金记录</a>
+				</div>
+			</div>
+			<div class="article">
+				<h3>
+					推广业绩
+				</h3>
+				<div style="min-height: 400px;">
+					<div class="record">
+						<div class="bd">
+							<table  border="1" style="border-collapse:collapse; width: 100%;" bordercolor="#e0dddd">
+								<thead>
+									<tr>
+										<th>会员</th>
+										<th>注册时间</th>
+										<th>消费金额</th>
+										<th>消费时间</th>
+									</tr>
+								</thead>
+								<tbody id="vlist">
+									
+								</tbody>
+							</table>
+						</div>
+						<div class="clearfix">
+							<div id="paging"></div>
+						</div>
+						
+		
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script src="{$maccms.path_tpl}js/performance.js"></script>
+		<script type="text/javascript">
+			h18.login(true);
+
+			(function() {
+				pageInit();
+			})();
+		</script>
+		{include file="public/foot"}
+	</body>
+
+</html>

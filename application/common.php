@@ -2157,3 +2157,58 @@ function mac_return_vip_name($vip_id)
     }
     return $res;
 }
+
+/**
+ * 获取邀请码
+ */
+function mac_return_invite(){
+    
+    if(isset($GLOBALS['user'])){
+        
+        $invite_code = $GLOBALS['user']['invite_code'];
+        // 不存在推荐码，就生成
+        if (empty($invite_code)) {
+            $len = 6 - strlen($user_id);
+            if ($len > 0) {
+                $rand = mac_get_rand($len);
+                $invite_code = $rand . $user_id;
+            } else {
+                $invite_code = $user_id;
+            }
+            $where['user_id'] = $user_id;
+            model('User')->fieldData($where, 'invite_code', $invite_code);
+        }
+        
+        return $invite_code;
+    }
+    
+    return '';
+    
+}
+/**
+ * 获取 已邀请 数量
+ */
+function mac_return_invite_count(){
+    
+    if(isset($GLOBALS['user'])){        
+        
+        return $GLOBALS['user']['invite_count'];;
+    }
+    
+    return 0;
+    
+}
+
+
+/**
+ * 获随机数
+ */
+function mac_get_rand($len)
+{
+    $codeSet = '2345678abcdefhijkmnpqrstuvwxyz';
+    $code = '';
+    for ($i = 0; $i < $len; $i ++) {
+        $code = $code . $codeSet[mt_rand(0, 29)];
+    }
+    return $code;
+}

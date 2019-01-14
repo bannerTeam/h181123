@@ -75,7 +75,7 @@ border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 .news-hd a{font-size: 14px; padding: 12px 20px; display: inline-block;}
 .news-hd a.active{ color: #2BAEB9;font-weight: bold;}
 .news-bd{padding-top: 12px;}
-.news-bd li .tt{ height: 35px; line-height: 35px; cursor: pointer;color: #000;}
+.news-bd li .tt{ height: 35px; line-height: 35px; cursor: pointer;color: #000;overflow: hidden;}
 .news-bd li .tt b{ margin-right: 10px; color: red; border: 1px solid red; border-radius: 3px; padding: 2px 5px;font-size: 12px;}
 .news-bd li .already{ color: #ababab;}
 .news-bd li .already b{ color: green; border: 1px solid green;}
@@ -88,3 +88,9 @@ border: 1px solid #2BAEB9; padding: 0 12px; color: #2BAEB9; border-radius: 5px;}
 
 .news-bd li .con{ background: #FFFFFF; position: relative; padding: 20px 22px;}
 .news-bd li .con .name{ text-align: right; margin-top: 12px; }
+
+/*会员中心首页*/
+.user-con{}
+.user-con .popul{ width: 900px;}
+.user-con .popul .mould1 .r{ float: left; margin-left: 50px;}
+.user-con .invite{ color: #2BAEB9;  font-size: 18px; font-weight: bold; margin-top: 20px;}

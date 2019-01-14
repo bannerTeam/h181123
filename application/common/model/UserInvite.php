@@ -199,7 +199,7 @@ class UserInvite extends Base
      * @param string $field
      * @return number[]|string[]|unknown[]
      */
-    public function getExpensesRecord($where, $order, $page = 1, $limit = 20, $start = 0, $field = 'u.user_id,u.user_name,u.user_reg_time,er.add_time,er.amount ', $addition = 1, $totalshow = 1)
+    public function getExpensesRecord($where, $order ='u.user_id desc,er.add_time desc', $page = 1, $limit = 20, $start = 0, $field = 'u.user_id,u.user_name,u.user_reg_time,er.add_time,er.amount ', $addition = 1, $totalshow = 1)
     {
         $limit_str = ($limit * ($page - 1) + $start) . "," . $limit;
         if ($totalshow == 1) {
@@ -211,13 +211,14 @@ class UserInvite extends Base
         }
         
         $list = Db::name('user_invite')->alias('ui')
+            ->field($field)        
             ->join('mac_user u', 'ui.reg_user_id = u.user_id ')
-            ->join('mac_expenses_record er', 'er.user_id = u.user_id')
-            ->where($where)
+            ->join('mac_expenses_record er', 'er.user_id = u.user_id','left')
+            ->where($where)            
             ->order($order)
             ->limit($limit_str)
             ->select();
-        
+         
         return [
             'code' => 1,
             'msg' => '数据列表',

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请-三级分销</title>
+		{include file="public/include"}
+		<style>
+			.user-signup {
+				float: none;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		{include file="public/header"}
+
+		<div class="page-w">
+			<div class="user-signup user-reg" style="margin-top: 50px;">
+				<div class="user-main">
+					<div class="hd"></div>
+					<div class="bd">
+						<h3>申请资料</h3>
+						<div class="form">
+							<div class="col weui-flex">
+								<label>QQ</label>
+								<input class="weui-flex__item" id="qq" placeholder="请输入QQ号码" type="text" autocomplete="off">
+							</div>
+							<div class="col weui-flex">
+								<label>微信</label>
+								<input class="weui-flex__item" id="weixin" placeholder="请输入微信号码" type="text" autocomplete="off">
+							</div>
+							<div class="col weui-flex">
+								<label>skype</label>
+								<input class="weui-flex__item" id="skype" placeholder="请输入skype号码" type="text" autocomplete="off">
+							</div>
+							<div class="col weui-flex">
+								<label>邮箱</label>
+								<input class="weui-flex__item" id="email" placeholder="请输入邮箱号码" type="text" autocomplete="off">
+							</div>
+							<div class="col weui-flex">
+								<label>Telegram</label>
+								<input class="weui-flex__item" id="telegram" placeholder="请输入Telegram号码" type="text" autocomplete="off">
+							</div>							
+							<div class="col ">								
+					说明：以上信息将作为代理佣金结算的联系窗口，所以请务必填写真实信息，至少填写一项，工作人员会第一时间添加审核。				
+							</div>	
+							
+							<div class="submit">
+								<button id="apply">提交申请</button>
+								<p id="tip" class="tip"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			h18.login(true);
+
+			(function() {
+
+				$("#apply").click(function() {
+					apply()
+				})
+
+				function apply() {
+					var param = {
+						qq: $.trim($("#qq").val()),
+						weixin: $.trim($("#weixin").val()),
+						skype: $.trim($("#skype").val()),
+						email: $.trim($("#email").val()),
+						telegram: $.trim($("#telegram").val())
+					}
+
+					if(param.qq == "" && param.weixin == "" && param.skype == "" && param.email == "" && param.telegram == "") {
+						tips("至少填写一项");
+						return false;
+					}
+
+					if(param.qq != "" && !/^\d{6,12}$/.test(param.qq)) {
+						tips("QQ格式错误");
+						return false;
+					}
+					if(param.email != "" && !/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(param.email)) {
+						tips("邮箱格式错误");
+						return false;
+					}
+					var index = layer.load();
+					$.ajax({
+						type: "post",
+						data: param,
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								layer.open({
+									content: '申请成功',
+									btn: '确定',
+									yes: function() {
+										location.href = "/proxy/result?id=" + r.id;
+									}
+								});
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+				}
+
+			})();
+			
+			function tips(msg) {
+				if(msg){
+					$("#tip").css({
+						"visibility":"visible"
+					}).text(msg);
+				}else{
+					$("#tip").css({
+						"visibility":"hidden"
+					}).text("");
+				}
+				
+			}
+		</script>
+		{include file="public/foot"}
+	</body>
+
+</html>

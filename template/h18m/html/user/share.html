@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>推广/分享</title>
 		{include file="public/include_user" /}
 		<script src="{$maccms.path_tpl}js/jquery.qrcode.min.js"></script>
+		<script src="/static/zeroclipboard/jquery.zeroclipboard.min.js"></script>
 		<style type="text/css">
 			.share {
 				text-align: center;
-				padding: 5rem 0;
+				padding: 2rem 0 5rem 0;
 			}
 			
-			.share {}
+			.share .hd{ font-size: 3.2rem; padding-bottom: 1rem;}
+			.share .desc p{font-size: 1.4rem; }
 		</style>
 	</head>
 
@@ -24,17 +25,29 @@
 		</div>
 
 		<div class="share">
+			<div class="hd">H18视频</div>
 			<div class="qrcode" id="qrcode">
-
 			</div>
-			<div id="qrcode_url" style="display: none;">
-				
+			<div id="qrcode_url" style="display: none;">				
+			</div>
+			<div class="desc">
+				<p>扫描下载H18视频APP，安卓、苹果自动识别</p>
+				<p>分享有礼，享无限次免费看片特权</p>
+				<p>官方网站：www.h18av.com</p>
+			</div>
+			<div class="row-btn " style="margin-top: 2rem;">
+				<button id="btn_share">
+					复制链接
+				</button>
+				<button id="save_share" style="margin-top: 2rem;">
+					保存二维码
+				</button>
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			(function() {
-				var wh = $(window).width() * 0.6,
+				var wh = $(window).width() * 0.7,
 					code = "{$invite}",
 					l = "http://" + document.domain + "/user/reg?code=" + code;
 				jQuery('#qrcode').qrcode({
@@ -44,7 +57,50 @@
 					text: l
 				});
 				$("#qrcode_url").text(l);
-			})()
+				
+				
+				//从 canvas 提取图片 image  
+				function convertCanvasToImage(canvas) {  
+				    //新Image对象，可以理解为DOM  
+				    var image = new Image();  
+				    // canvas.toDataURL 返回的是一串Base64编码的URL
+				    // 指定格式 PNG  
+				    image.src = canvas.toDataURL("image/png");  
+				    
+				    return image;  
+				}  
+				
+				//获取网页中的canvas对象  
+				var mycans=$('canvas')[0];   
+				//调用convertCanvasToImage函数将canvas转化为img形式   
+				var img=convertCanvasToImage(mycans);  
+				//将img插入容器 
+				$('#qrcode').append(img); 
+				$('canvas').hide();
+				
+				
+				$("#btn_share").on("beforecopy copy aftercopy", function(e) {
+						console.log('beforecopy');
+				}).on("copy", function(e) {
+					console.log('copy')
+					e.clipboardData.clearData();
+					e.clipboardData.setData("text/plain", l);
+					e.preventDefault();
+					layer.open({
+						content: "复制成功",
+						skin: 'msg',
+						time: 2
+					});
+				});
+			
+				
+				$("#save_share").click(function(){
+					tool.alert('长按图片下载到手机');
+				});
+				
+			})();
+			
+			
 		</script>
 
 		{include file="public/foot" /}

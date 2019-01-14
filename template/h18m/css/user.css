@@ -187,8 +187,17 @@ ul,li{list-style: none;}
 .record td .s1{ color: #009688;}
 .record td .s2{ color: #FF5722;}
 
-
-
+/*消息/通知*/
+.news{}
+.news .item{}
+.news .item .tit{ font-size:1.4rem; line-height: 3rem; border-bottom:1px solid #ECEAEA; color: #000000;}
+.news .item .more{font-size:1.2rem;border:1px solid #a9a9a9; padding: 1rem; margin-top: 1rem; display: none;}
+.news .item .more .hd{ text-align: center;line-height: 2.8rem; }
+.news .item .more .bd{line-height: 1.4rem;}
+.news .item .more .ft{ text-align: right;}
+.news .open .more{ display: block;}
+.news .already .tit{ color: #969090;}
+.news .rec .tit{ color: #ff6600;}
 
 
 

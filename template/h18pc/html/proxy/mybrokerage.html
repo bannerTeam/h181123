@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的佣金-三级分销</title>
+		{include file="public/include"}
+
+	</head>
+
+	<body>
+		{include file="public/header"}
+
+		<div class="page-w">
+			<div class="filter">
+				<div class="hd">分类</div>
+				<div class="bd">
+					<a class="" href="/proxy/popularize">推广链接</a>
+					<a class="" href="/proxy/brokerage">佣金方案</a>
+					<a class="" href="/proxy/performance">推广业绩</a>
+					<a class="active" href="/proxy/mybrokerage">我的佣金</a>
+					<a class="" href="/proxy/brokerage_record">佣金记录</a>
+				</div>
+			</div>
+			<div class="article">
+				<h3>
+					我的佣金
+				</h3>
+				<div class="mybrokerage" style="min-height: 400px;">
+					<div class="inner">
+						<div class="acount"><span>￥</span>{$info.amount}</div>
+						<div class="tit">当前佣金余额</div>
+					</div>
+					<div class="inp">
+						<span class="">提现金额:</span>						
+						<input type="number" value="" autocomplete="off" id="amount" maxlength="5" placeholder="请输入提现金额" />
+					</div>
+					<style>
+						.btn {
+						    width: 200px;
+						    background-color: #2BAEB9;
+						    color: #FFF !important;
+						    border: 0 none;
+						    font-size: 14px;
+						    line-height: 40px;
+						    border-radius: 4px;
+						    display: inline-block;
+						}
+						.btn:hover{ background: #20cad8;}
+					</style>
+					<div style="text-align: center; padding: 50px;;">
+						<a href="#" id="btn" class="btn">提现申请</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			(function() {
+
+				var old_amount = Number("{$info.amount}");
+				$("#btn").click(function() {
+
+					apply();
+				});
+
+				function apply() {
+					var amount = $.trim($("#amount").val());
+
+					if(amount == "") {
+						layer.alert("请输入提现金额");
+						return false;
+					}
+					if(!/^\d+$/.test(amount)) {
+						layer.alert("提现金额只能是整数");
+						return false;
+					}
+
+					amount = Number(amount);
+					if(amount > old_amount) {
+						layer.alert("余额不足");
+						return false;
+					}
+					var index = layer.load();
+					$.ajax({
+						type: "post",
+						dataType: "json",
+						data: {
+							amount: amount
+						},
+						success: function(res) {
+							layer.close(index);
+							if(res.code == 1) {
+								layer.alert(res.msg, function() {
+									location.reload()
+								});
+							} else {
+								layer.alert(res.msg);
+							}
+						}
+					});
+				}
+
+			})()
+		</script>
+
+		{include file="public/foot"}
+	</body>
+
+</html>

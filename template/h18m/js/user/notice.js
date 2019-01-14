@@ -1,19 +1,18 @@
 function pageInit(options) {
 
-	$("#loading").hide();
 	var settings = {
-		e: "#vlist",
+		e: "#nlist",
 		loading: true,
-		url: "/proxy/performance",
+		url: "/user/notice",
 		page: 1,
-		limit: 15,
+		limit: 20,
+		pagecount: 1,
 		id: 0,
 		tid: 0,
-		tpl:"",
 		fn: successFn
 	};
 	var o = $.extend(settings, options);
-	
+
 	var totalHeight = 0;
 	$(window).scroll(function() {
 		//浏览器的高度加上滚动条的高度
@@ -25,7 +24,6 @@ function pageInit(options) {
 			}
 		}
 	});
-	
 	/**
 	 * 获取列表
 	 */
@@ -40,54 +38,54 @@ function pageInit(options) {
 				limit: o.limit
 			},
 			success: function(data) {
-
+					
+				if(data.pagecount > data.page){
+					o.page++;
+					o.loading = true;
+				}					
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
-				}
+				}				
+				$("#loading").hide();
 
-				if(data.pagecount > Number(data.page)) {
-					o.loading = true;
-					o.page = Number(data.page) + 1;
-				} else {
-					$("#loading").hide();
-				}
 
 			}
 		});
 	}
 	get_list();
+
 	function successFn(data) {
 
 		var items = data.list,
 			str = "";
 
 		for(var i = 0; i < items.length; i++) {
-			str +=`
-			<tr>
-				<td>${items[i].user_name}</td>
-				<td>${date('Y-m-d H:i',items[i].user_reg_time)}</td>
-				<td>${items[i].amount ? items[i].amount : ""}</td>
-				<td>${items[i].add_time ? date('Y-m-d H:i',items[i].add_time) : ""}</td>
-			</tr>
-			`;
+			str += `
+			<li data-id="${items[i].id}" class="item ${items[i].status > 0 ? 'rec' : 'nrec'}">
+				<p class="tit">${items[i].title}</p>
+				<div class="more">
+					<div class="hd">${items[i].title}</div>
+					<div class="bd">${items[i].introduce}</div>
+					<div class="ft">
+						<p>${items[i].send_name}</p>
+						<p>${date('Y-m-d H:m',items[i].send_time)}</p>
+					</div>
+				</div>
+			</li>`;
 		}
 
 		$(o.e).append(str);
-	}
-	
-	function format_status(status){
-		
-		switch (status){
-			case 1:
-				return 's1';
-			case 2:
-				return 's2';			
-		}
-		return 's0';
-		
-		
+
 	}
 
+	
+
+	//展开
+	$("#nlist").on("click", ".item", function() {
+		$(this).toggleClass('open');
+		
+	})
+	
 	
 	
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请-三级分销</title>
+		{include file="public/include"}
+		<style>
+			.user-signup {
+				float: none;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		{include file="public/header"}
+
+		<div class="page-w">
+			<div class="user-signup user-reg" style="margin-top: 50px;">
+				<div class="user-main">
+					<div class="hd"></div>
+					<div class="bd">
+						<h3>申请中,等待审核</h3>
+						<div class="form">
+							{if $obj.qq}
+							<div class="col weui-flex">
+								<label>QQ</label>
+								<input class="weui-flex__item" id="qq" value="{$obj.qq}" readonly="readonly" type="text" autocomplete="off">
+							</div>
+							{/if}
+							{if $obj.weixin}
+							<div class="col weui-flex">
+								<label>微信</label>
+								<input class="weui-flex__item" id="weixin" value="{$obj.weixin}" readonly="readonly"  type="text" autocomplete="off">
+							</div>
+							{/if}
+							{if $obj.skype}
+							<div class="col weui-flex">
+								<label>skype</label>
+								<input class="weui-flex__item" id="skype" value="{$obj.skype}" readonly="readonly"  type="text" autocomplete="off">
+							</div>
+							{/if}
+							{if $obj.email}
+							<div class="col weui-flex">
+								<label>邮箱</label>
+								<input class="weui-flex__item" id="email" value="{$obj.email}" readonly="readonly"  type="text" autocomplete="off">
+							</div>
+							{/if}
+							{if $obj.telegram}
+							<div class="col weui-flex">
+								<label>Telegram</label>
+								<input class="weui-flex__item" id="telegram"  value="{$obj.telegram}" readonly="readonly"  type="text" autocomplete="off">
+							</div>	
+							{/if}
+							<div class="col ">								
+					以上信息将作为代理佣金结算的联系窗口，工作人员会第一时间添加审核。				
+							</div>	
+							
+							<div class="submit">
+								<button id="apply">立即推广</button>
+								<p id="tip" class="tip"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			h18.login(true);
+
+			(function() {
+
+				$("#apply").click(function() {
+					location.href = "/proxy/popularize";
+				})
+
+				
+			})();
+			
+		</script>
+		{include file="public/foot"}
+	</body>
+
+</html>

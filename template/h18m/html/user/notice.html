@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息公告</title>
+		{include file="public/include_user" /}
+
+	</head>
+
+	<body>
+
+		<div class="chead">
+			<a class="back" href="javascript:history.back(-1)"><i class="iconfont icon-fanhui"></i></a>
+			<h3>消息公告</h3>
+		</div>
+		<div class="news" style="padding-bottom: 2rem; padding-left: 2rem; padding-right: 2rem;">
+			<div class="navtab">
+				<ul class="weui-flex">
+					<li class="weui-flex__item">
+						<a href="/user/news">消息</a>
+					</li>
+					<li class="weui-flex__item">
+						<a href="/user/notice" class="active">公告</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="">
+				<ul id="nlist">
+				</ul>
+				<div id="loading">
+					<div class="loading" style="text-align: center;"><span><img src="{$maccms.path_tpl}img/m_loading.gif"  height="16" align="absmiddle"></span></div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="{$maccms.path_tpl}js/user/notice.js"></script>
+		<script>
+			pageInit({});
+		</script>
+
+		{include file="public/foot" /}
+	</body>
+
+</html>

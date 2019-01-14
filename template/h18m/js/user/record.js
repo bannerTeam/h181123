@@ -41,6 +41,10 @@ function pageInit(options) {
 			},
 			success: function(data) {
 
+				if(data.pagecount > data.page){
+					o.page++;
+					o.loading = true;
+				}	
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
 				}

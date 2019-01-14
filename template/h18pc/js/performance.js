@@ -1,11 +1,11 @@
 function pageInit(options) {
 
 	var settings = {
-		e: "#nlist",
+		e: "#vlist",
 		loading: true,
-		url: "/user/news",
+		url: "",
 		page: 1,
-		limit: 20,
+		limit: 10,
 		pagecount: 1,
 		id: 0,
 		tid: 0,
@@ -26,7 +26,7 @@ function pageInit(options) {
 				limit: o.limit
 			},
 			success: function(data) {
-
+				
 				o.pagecount = data.pagecount;
 				if(o.fn && $.isFunction(o.fn)) {
 					o.fn(data);
@@ -45,26 +45,21 @@ function pageInit(options) {
 
 		var items = data.list,
 			str = "";
+		
+		if(items.length == 0){
+			str = '<tr><td colspan="4" class="empty">没有符合条件数据</td></tr>';
+			$(o.e).html(str);
+			return true;
+		}
 
 		for(var i = 0; i < items.length; i++) {
 			str += `
-				<li>
-					<div data-id="${items[i].id}" class="clearfix tt ${items[i].status > 0 ? 'already' : ''}">
-						<span class="l"><b>${items[i].status > 0 ? '已读' : '未读'}</b>${items[i].title}</span>
-						<span class="r">${date('Y-m-d',items[i].send_time)}</span>
-					</div>
-					<div class="con hide">
-						<p>
-							${items[i].introduce}
-						</p>
-						<p class="name">
-							${items[i].send_name}
-							<br/>
-							${date('Y-m-d H:m',items[i].send_time)}
-						</p>
-						<span class="up"></span>
-					</div>								
-				</li>`;
+			<tr>
+				<td>${items[i].user_name}</td>
+				<td>${date('Y-m-d H:i',items[i].user_reg_time)}</td>
+				<td>${items[i].amount ? items[i].amount : ""}</td>
+				<td>${items[i].add_time ? date('Y-m-d H:i',items[i].add_time) : ""}</td>
+			</tr>`;
 		}
 
 		$(o.e).html(str);
@@ -73,7 +68,7 @@ function pageInit(options) {
 
 	function paging() {
 		
-		if(o.pagecount == 1){
+		if(o.pagecount <= 1){
 			$("#paging").html("");
 			return false;
 		}
@@ -103,28 +98,7 @@ function pageInit(options) {
 		}
 	})
 
-	//展开
-	$("#nlist").on("click", ".tt", function() {
-		$(this).next().toggleClass('hide');
-		if(!$(this).hasClass('already')){
-			$(this).addClass('already').find('b').text('已读');
-			
-			already($(this).data('id'));			
-		}
-	})
-
-
-
 	
-	function already(id) {
-		$.ajax({
-			url: "/user/news",
-			dataType: "json",
-			data: {
-				ac: "already",
-				id: id
-			}
-		});
-	}
+
 
 }

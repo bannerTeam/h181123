@@ -46,7 +46,7 @@
 				<button id="copycode">
 					复制链接
 				</button>
-				<button style="margin-top: 2rem;">
+				<button id="save_share" style="margin-top: 2rem;">
 					保存二维码
 				</button>
 			</div>
@@ -66,6 +66,26 @@
 					text: l
 				});
 				$("#qrcode_url").text(l);
+				
+				//从 canvas 提取图片 image  
+				function convertCanvasToImage(canvas) {  
+				    //新Image对象，可以理解为DOM  
+				    var image = new Image();  
+				    // canvas.toDataURL 返回的是一串Base64编码的URL
+				    // 指定格式 PNG  
+				    image.src = canvas.toDataURL("image/png");  
+				    
+				    return image;  
+				}  
+				
+				//获取网页中的canvas对象  
+				var mycans=$('canvas')[0];   
+				//调用convertCanvasToImage函数将canvas转化为img形式   
+				var img=convertCanvasToImage(mycans);  
+				//将img插入容器 
+				$('#qrcode').append(img); 
+				$('canvas').hide();
+				
 			})();
 			
 			$(function(){		
@@ -84,8 +104,12 @@
 						time: 2
 					});
 				});
+
+				$("#save_share").click(function(){
+					tool.alert('长按图片下载到手机');
+				});
 				
-				console.log('function')
+				
 			})
 		</script>
 		

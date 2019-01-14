@@ -66,7 +66,8 @@ class User extends Base
              */
             $this->assign('obj', $GLOBALS['user']);
         }
-        
+        //会员积分
+        $this->assign('user_points', $GLOBALS['user']['user_points']);
         $this->assign('pageAction', strtolower($ac));
         $this->assign('pageUser', true);
     }
@@ -407,7 +408,14 @@ class User extends Base
     }
 
     public function index()
-    {
+    {       
+        //判断手机访问直接跳转 分类页面
+        $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+        $uachar = "/(nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|meizu|cldc|midp|iphone|wap|mobile|android)/i";
+        if(!(preg_match($uachar, $ua))) {
+            $this->redirect('/user/share');
+            exit;
+        }
         return $this->fetch('user/index');
     }
 
@@ -560,8 +568,18 @@ class User extends Base
     public function info()
     {
         if (Request()->isPost()) {
+            
             $param = input();
-            $res = model('User')->info($param);
+            
+            $data['user_id'] = $GLOBALS['user']['user_id'];
+            $data['user_qq'] = htmlspecialchars(urldecode(trim($param['qq'])));
+            $data['weixin'] = htmlspecialchars(urldecode(trim($param['weixin'])));
+            $data['skype'] = htmlspecialchars(urldecode(trim($param['skype'])));
+            $data['email'] = htmlspecialchars(urldecode(trim($param['email'])));
+            $data['telegram'] = htmlspecialchars(urldecode(trim($param['telegram'])));
+            
+            
+            $res = model('User')->saveData1($data);
             if ($res['code'] == 1) {
                 $this->success($res['msg']);
                 exit();
@@ -569,6 +587,10 @@ class User extends Base
             $this->error($res['msg']);
             exit();
         }
+        
+        $w['user_id'] = $GLOBALS['user']['user_id'];
+        $res = model('User')->infoData($w);
+        $this->assign('info', $res['info']);
         return $this->fetch('user/info');
     }
 
@@ -1069,7 +1091,7 @@ class User extends Base
         
         return $this->fetch('user/vip');
     }
-
+    
     /**
      * 选择支付
      */

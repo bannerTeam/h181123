@@ -55,8 +55,8 @@
 			{/maccms:type}
 			<li class="{if $vodindex}active{/if}"><a href="{:mac_url('vod/index',['timeadd'=>'week','by'=>'hits'])}">热门视频</a></li>
 			<li class="{if $aboutVip}active{/if}"><a href="/about/vip">加入VIP</a></li>
-			<li><a href="#">推广奖励</a></li>
-			<li><a href="#">三级分销</a></li>
+			<li class="{if $proxyShare}active{/if}"><a href="/proxy/share">推广奖励</a></li>
+			<li class="{if $proxyIndex}active{/if}"><a href="/proxy/index">三级分销</a></li>
 			<li class="{if $aboutWebsite}active{/if}"><a href="/about/website">网址找回</a></li>
 			<li class="{if $aboutCooperation}active{/if}"><a href="/about/cooperation">招商合作</a></li>
 		</ul>
