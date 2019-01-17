@@ -145,7 +145,13 @@ fieldset, iframe, img {
 .user-signup .form button{width:240px;border:0 none;height:40px;color:#FFF;font-size:16px;background:#2BAEB9;cursor:pointer}
 .user-signup .form .tip{visibility:hidden;color:red;clear:both;height:35px;line-height:35px}
 .user-signup .ft{text-align:center;padding:30px 0}
-
+.phone_code_input{}
+.user-signup .phone_code{width: 100px; text-align: right;}
+.user-signup .phone_code a{border: 1px solid #2BAEB9; color: #2BAEB9;border-radius: 2px;
+    height: 35px;width: 80px;
+    line-height: 35px; display: inline-block;  font-size: 12px; text-align: center;}
+.user-signup .phone_code a:hover{ background: #2BAEB9; color: #FFFFFF;}
+.user-signup .phone_code a.disable,.user-signup .phone_code a.disable:hover{border: 1px solid #a9a9a9; color: #a9a9a9;background: #f6f6f6;}
 
 /*加入vip*/
 .mod_hand_banner{padding-top:3px;width:100%;height:280px;background:#65b9c9 url(../img/vip/bg_hand_banner.jpg) no-repeat center top}

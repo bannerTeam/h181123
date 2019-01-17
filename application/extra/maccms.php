@@ -1,20 +1,5 @@
 <?php
-return array (
-  'db' => 
-  array (
-    'type' => 'mysql',
-    'path' => '',
-    'server' => '127.0.0.1',
-    'port' => '3306',
-    'name' => 'maccms8',
-    'user' => 'root',
-    'pass' => 'root',
-    'tablepre' => 'mac_',
-    'backup_path' => './application/data/backup/database/',
-    'part_size' => 20971520,
-    'compress' => 1,
-    'compress_level' => 4,
-  ),
+return array (  
   'site' => 
   array (
     'site_name' => 'H18av,色站',

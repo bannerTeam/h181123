@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Config;
 
 class Ajax extends Base
 {
@@ -502,7 +503,7 @@ class Ajax extends Base
 
     /**
      * 视频列表
-     * 
+     *
      * @return \think\response\Json
      */
     public function get_vod_list()
@@ -516,18 +517,19 @@ class Ajax extends Base
         
         // 分类id
         $type = $this->_param['tid'];
-        if (!empty($type)) {
-                        
+        if (! empty($type)) {
+            
             $param['id'] = $type;
             $type_info = mac_label_type($param);
-            if($type_info['childids']){
-                $where['type_id'] = ['in',explode(",", $type_info['childids'])];
-            }else{
+            if ($type_info['childids']) {
+                $where['type_id'] = [
+                    'in',
+                    explode(",", $type_info['childids'])
+                ];
+            } else {
                 $where['type_id'] = $type;
-            }            
+            }
         }
-        
-       
         
         // 每页显示条数
         $limit = $this->_param['limit'];
@@ -537,8 +539,11 @@ class Ajax extends Base
         
         // 搜索关键字
         $wd = $this->_param['wd'];
-        if(!empty($wd)) {
-            $where['vod_name|vod_en|vod_sub'] = ['like', '%' . $wd . '%'];
+        if (! empty($wd)) {
+            $where['vod_name|vod_en|vod_sub'] = [
+                'like',
+                '%' . $wd . '%'
+            ];
         }
         
         // 排序字段
@@ -576,7 +581,7 @@ class Ajax extends Base
             1
         ];
         
-        //返回总条数
+        // 返回总条数
         $total = model("Vod")->countData($where);
         $total = ($total == 0) ? 1 : $total;
         $total_pages = ceil($total / $limit);
@@ -595,8 +600,7 @@ class Ajax extends Base
         
         return (json($r));
     }
-    
-    
+
     /**
      * 相同视频列表（无分页）
      *
@@ -604,16 +608,16 @@ class Ajax extends Base
      */
     public function get_vod_relevant()
     {
-                
+        
         // 分类id
         $type = $this->_param['tid'];
-        if (!empty($type)) {
+        if (! empty($type)) {
             $where['type_id'] = $type;
         }
         
         // 父类分类id
         $ptype = $this->_param['tpid'];
-        if (!empty($ptype)) {
+        if (! empty($ptype)) {
             unset($where['type_id']);
             $where['type_id_1'] = $ptype;
         }
@@ -629,7 +633,7 @@ class Ajax extends Base
         if (empty($page)) {
             $page = 1;
         }
-                
+        
         // 排序字段
         $by = $this->_param['by'];
         
@@ -663,9 +667,8 @@ class Ajax extends Base
         $where['vod_status'] = [
             'eq',
             1
-        ];        
-       
-     
+        ];
+        
         $res = model("Vod")->listData($where, $order, $page, $limit);
         
         $r = [
@@ -673,13 +676,13 @@ class Ajax extends Base
             'msg' => '',
             'list' => $res['list'],
             'limit' => $limit,
-            'pagecount'=>$res['pagecount'],
+            'pagecount' => $res['pagecount'],
             'page' => $page
         ];
         
         return (json($r));
     }
-    
+
     /**
      * 相同视频列表（无分页）
      *
@@ -687,19 +690,17 @@ class Ajax extends Base
      */
     public function get_favs()
     {
-        
         $param = input();
-        $page = intval($param['page']) <1 ? 1 : intval($param['page']);
-        $limit = intval($param['limit']) <20 ? 20 : intval($param['limit']);
+        $page = intval($param['page']) < 1 ? 1 : intval($param['page']);
+        $limit = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
         
         $where = [];
         $where['user_id'] = $GLOBALS['user']['user_id'];
         $where['ulog_type'] = 2;
         $order = 'ulog_id desc';
-        $res = model('Ulog')->listData($where,$order,$page,$limit);
-              
+        $res = model('Ulog')->listData($where, $order, $page, $limit);
         
-        //返回总条数
+        // 返回总条数
         $total = $res['total'];
         $total = ($total == 0) ? 1 : $total;
         $total_pages = ceil($total / $limit);
@@ -714,25 +715,176 @@ class Ajax extends Base
             'limit' => $limit
         ];
         
-        
-        
         return (json($r));
     }
-    
+
     /**
      * 获取播放器的广告
+     *
      * @return \think\response\Json
      */
-    public function get_playbanner(){
-        
+    public function get_playbanner()
+    {
         $res = file_get_contents('./data/adv.txt');
         
         return json(json_decode($res));
     }
-    
-    
-    
-    
-    
 
+    /**
+     * 验证用户名
+     */
+    public function check_user_name()
+    {
+        $r = [
+            'code' => 0,
+            'msg' => '错误'
+        ];
+        $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : "";
+        
+        $res = model('User')->checkUsername($user_name);
+        if ($res['code'] === 1) {
+            
+            $token = md5(date('Y-m-d').$user_name);            
+            return json([
+                'token' => $token,
+                'code' => 1,
+                'msg' => '成功'
+            ]);
+            
+        } else {
+            
+            return json($res);
+        }
+    }
+
+    /**
+     * 获取手机号验证码
+     */
+    public function get_phone_code()
+    {
+        $global = Config::get('global');
+        
+        if ($global['sendPhone'] !== true) {
+            return json($r = [
+                'code' => 0,
+                'msg' => '手错误'
+            ]);
+        }
+        
+        $r = [
+            'code' => 0,
+            'msg' => '手机号错误'
+        ];
+        
+        $phone = isset($_POST['user_phone']) ? $_POST['user_phone'] : "";
+        $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : "";
+        
+        $token = isset($_POST['token']) ? $_POST['token'] : "";
+        
+        if(md5(date('Y-m-d').$user_name) != $token){
+            $r['msg'] = '页面过期,重新注册';
+            return json($r);
+        }
+        
+        $res = preg_match("/^1\d{10}$/", $phone);
+        
+        if ($res) {
+            
+            $ip = request()->ip();
+            
+            // cookie 判断发送次数
+            $number = intval(cookie('send_phone'));
+            if ($number >= 3) {
+                $r['msg'] = '今日发送次数已用完';
+                return json($r);
+            }
+            
+            // 判断手机是否存在
+            $w['user_phone'] = $phone;
+            $res = model('User')->infoData($w, 'user_id', false);
+            if ($res['code'] === 1) {
+                $r['msg'] = '手机号已存在';
+                return json($r);
+            }
+            
+            // 判断 今天手机号发送次数
+            $w = [];
+            $w['phone'] = $phone;
+            $w['add_time'] = [
+                '>',
+                strtotime(date('Y-m-d'))
+            ];
+            $res = model('SendPhone')->getCount($w);
+            if ($res['code'] > 1 || $res['info'] >= 3) {
+                $r['msg'] = '今日发送次数已达上限';
+                return json($r);
+            }
+            // 判断IP发送次数
+            
+            // 验证码
+            $code = rand(111111, 999999);
+            
+            // 发送短信
+            $data['user_name'] = $user_name;
+            $data['phone'] = $phone;
+            $data['code'] = $code;
+            
+            // 有效期 半小时
+            $data['exp_time'] = time() + (60 * 30);
+            $data['type'] = 1;
+            $data['ip'] = $ip;
+            $res = model('SendPhone')->saveData($data);
+            
+            if ($res['code'] === 1) {
+                
+                $data = [];
+                
+                $id = $res['id'];
+                
+                // 11位手机号
+                $data['mobile'] = $phone;
+                // 6位数验证码
+                $data['code'] = $code;
+                
+                // 秘钥
+                $auth = 'yunpian13038732225';
+                // key 生成规则：md5( 当前日期 + 手机号 + 验证码 + 秘钥)
+                $data['key'] = md5(date('Ymd') . $data['mobile'] . $data['code'] . $auth);
+                
+                $result = self::get_post_curl('http://api.f99.space/send.php', $data);
+                
+                // 如果发送失败，把状态码保存数据库方便调试
+                if ($result != 'success') {
+                    $sd['id'] = $id;
+                    $sd['remark'] = $result;
+                    model('SendPhone')->saveData($sd);
+                }
+                cookie('send_phone', $number + 1, 60 * 60 * 2);
+                
+                $r = [
+                    'code' => 1,
+                    'msg' => '发送成功',
+                    'result' => $result
+                ];
+            }
+        }
+        
+        return (json($r));
+    }
+
+    /**
+     * php模拟post请求
+     */
+    private function get_post_curl($url, $data)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false); // required as of PHP 5.6.0
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch); /* 释放 */
+        return $result;
+    }
 }

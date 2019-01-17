@@ -3,6 +3,8 @@ namespace app\index\controller;
 use think\Controller;
 use think\Config;
 use think\Request;
+use Yunpian\Sdk\YunpianClient;
+
 
 class Demo extends Base
 {
@@ -219,5 +221,40 @@ class Demo extends Base
         $r = $mail->send();
         var_dump($r);
         exit;
+    }
+    
+    /**
+     * 短信接入
+     */
+    public function yunpian(){
+        
+        //11位手机号
+        $data['mobile'] = '13038732225';
+        //6位数验证码
+        $data['code'] = rand(111111,999999);
+        //key  生成规则：md5( 当前日期 + 手机号 + 验证码 + 秘钥)
+        $data['key'] = md5(date('Ymd').$data['mobile'].$data['code'].'yunpian13038732225');;
+        
+        $result = self::get_post_curl('http://api.f99.space/send.php',$data);
+        
+        print_r($result);
+        exit();
+        
+    }
+    
+    /**
+     * php模拟post请求
+     */
+    function get_post_curl($url, $data){
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false); // required as of PHP 5.6.0
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch); /*释放*/
+        return $result;
     }
 }

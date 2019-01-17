@@ -4,3 +4,4 @@ upload/
 .settings/
 .project
 .buildpath
+/vendor/

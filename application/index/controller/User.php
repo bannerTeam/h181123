@@ -5,6 +5,7 @@ use think\Controller;
 use think\Cookie;
 use think\Request;
 use login\ThinkOauth;
+use think\Config;
 use app\index\event\LoginEvent;
 define('THIRD_LOGIN_CALLBACK', 'http://' . $_SERVER['SERVER_NAME'] . '/index.php/user/logincallback/type/');
 
@@ -26,6 +27,7 @@ class User extends Base
             'reg',
             'findpass',
             'oauth',
+            'share',
             'callback'
         ])) {
             $this->assign('vod_browse', 0);
@@ -610,6 +612,8 @@ class User extends Base
     {
         if (Request()->isPost()) {
             
+            $global = Config::get('global');
+            
             $param = input();
             
             $param['inviter_user_code'] = '';
@@ -620,6 +624,8 @@ class User extends Base
             if ($invite_code) {
                 $param['inviter_user_code'] = $invite_code;
             }
+            
+            $param['sendPhone'] = $global['sendPhone'];
             
             $res = model('User')->register($param);
             
@@ -639,6 +645,8 @@ class User extends Base
                 'prefix' => 'h18_'
             ]);
         }
+        $global = Config::get('global');
+        $this->assign('sendPhone',$global['sendPhone']);
         
         return $this->fetch('user/reg');
     }

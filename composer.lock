@@ -4,58 +4,190 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d67203b6e9fc952ae681c538683a497",
+    "content-hash": "1928bc0211b86e9a981d76ebbfd0c5fd",
     "packages": [
         {
-            "name": "karsonzhang/fastadmin-addons",
-            "version": "1.1.3",
+            "name": "guzzlehttp/guzzle",
+            "version": "6.3.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/karsonzhang/fastadmin-addons.git",
-                "reference": "83ae4011e4c726ca2aa69b360bdbcd37be0dc32a"
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/karsonzhang/fastadmin-addons/zipball/83ae4011e4c726ca2aa69b360bdbcd37be0dc32a",
-                "reference": "83ae4011e4c726ca2aa69b360bdbcd37be0dc32a",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0",
-                "topthink/think-helper": ">=1.0.4",
-                "topthink/think-installer": ">=1.0.10"
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.4",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+                "psr/log": "^1.0"
+            },
+            "suggest": {
+                "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
-                "think-config": {
-                    "addons": "src/config.php"
+                "branch-alias": {
+                    "dev-master": "6.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2018-04-22T15:46:56+00:00"
+        },
+        {
+            "name": "guzzlehttp/promises",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "think\\": "src/"
+                    "GuzzleHttp\\Promise\\": "src/"
                 },
                 "files": [
-                    "src/common.php"
+                    "src/functions_include.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "xiaobo.sun",
-                    "email": "xiaobo.sun@qq.com"
-                },
-                {
-                    "name": "karsonzhang",
-                    "email": "karsonzhang@163.com"
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "addons package for fastadmin",
-            "homepage": "https://github.com/karsonzhang/fastadmin-addons",
-            "time": "2018-03-28T01:12:58+00:00"
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "time": "2016-12-20T10:07:11+00:00"
+        },
+        {
+            "name": "guzzlehttp/psr7",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "9f83dded91781a01c63574e387eaa769be769115"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/9f83dded91781a01c63574e387eaa769be769115",
+                "reference": "9f83dded91781a01c63574e387eaa769be769115",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/http-message": "~1.0",
+                "ralouphie/getallheaders": "^2.0.5"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "psr-7",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "time": "2018-12-04T20:46:45+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -124,6 +256,147 @@
             "time": "2018-11-16T00:41:32+00:00"
         },
         {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "ralouphie/getallheaders",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ralouphie/getallheaders.git",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.0",
+                "satooshi/php-coveralls": ">=1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/getallheaders.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                }
+            ],
+            "description": "A polyfill for getallheaders.",
+            "time": "2016-02-11T07:05:27+00:00"
+        },
+        {
+            "name": "topthink/framework",
+            "version": "v5.0.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/framework.git",
+                "reference": "c255c22b2f5fa30f320ecf6c1d29f7740eb3e8be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/c255c22b2f5fa30f320ecf6c1d29f7740eb3e8be",
+                "reference": "c255c22b2f5fa30f320ecf6c1d29f7740eb3e8be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "topthink/think-installer": "~1.0"
+            },
+            "require-dev": {
+                "johnkary/phpunit-speedtrap": "^1.0",
+                "mikey179/vfsstream": "~1.6",
+                "phpdocumentor/reflection-docblock": "^2.0",
+                "phploc/phploc": "2.*",
+                "phpunit/phpunit": "4.8.*",
+                "sebastian/phpcpd": "2.*"
+            },
+            "type": "think-framework",
+            "autoload": {
+                "psr-4": {
+                    "think\\": "library/think"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "liu21st",
+                    "email": "liu21st@gmail.com"
+                }
+            ],
+            "description": "the new thinkphp framework",
+            "homepage": "http://thinkphp.cn/",
+            "keywords": [
+                "framework",
+                "orm",
+                "thinkphp"
+            ],
+            "time": "2019-01-11T08:04:58+00:00"
+        },
+        {
             "name": "topthink/think-captcha",
             "version": "v1.0.7",
             "source": {
@@ -158,42 +431,6 @@
             ],
             "description": "captcha package for thinkphp5",
             "time": "2016-07-06T01:47:11+00:00"
-        },
-        {
-            "name": "topthink/think-helper",
-            "version": "v1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/top-think/think-helper.git",
-                "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-helper/zipball/0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
-                "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "think\\helper\\": "src"
-                },
-                "files": [
-                    "src/helper.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
-                }
-            ],
-            "description": "The ThinkPHP5 Helper Package",
-            "time": "2017-04-05T07:15:37+00:00"
         },
         {
             "name": "topthink/think-image",
@@ -277,49 +514,50 @@
             "time": "2017-05-27T06:58:09+00:00"
         },
         {
-            "name": "topthink/think-queue",
-            "version": "v1.1.4",
+            "name": "yunpian/yunpian-php-sdk",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/top-think/think-queue.git",
-                "reference": "ad709611d516e13d6760234bc98e91faa901cae8"
+                "url": "https://github.com/yunpian/yunpian-php-sdk.git",
+                "reference": "ea176d9b70d16e561acef55756862b2ec304be85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-queue/zipball/ad709611d516e13d6760234bc98e91faa901cae8",
-                "reference": "ad709611d516e13d6760234bc98e91faa901cae8",
+                "url": "https://api.github.com/repos/yunpian/yunpian-php-sdk/zipball/ea176d9b70d16e561acef55756862b2ec304be85",
+                "reference": "ea176d9b70d16e561acef55756862b2ec304be85",
                 "shasum": ""
             },
             "require": {
-                "topthink/think-helper": ">=1.0.4",
-                "topthink/think-installer": ">=1.0.10"
+                "guzzlehttp/guzzle": "~6.0",
+                "php": ">=5.6.0"
             },
-            "type": "think-extend",
-            "extra": {
-                "think-config": {
-                    "queue": "src/config.php"
-                }
+            "require-dev": {
+                "phpunit/phpunit": "~5.7"
             },
+            "type": "library",
             "autoload": {
                 "psr-4": {
-                    "think\\": "src"
-                },
-                "files": [
-                    "src/common.php"
-                ]
+                    "Yunpian\\Sdk\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
+                    "name": "dzh",
+                    "email": "daizhong@yunpian.com",
+                    "role": "Developer"
                 }
             ],
-            "description": "The ThinkPHP5 Queue Package",
-            "time": "2017-06-25T00:49:56+00:00"
+            "description": "Yunpian PHP SDK",
+            "homepage": "https://github.com/yunpian/yunpian-php-sdk",
+            "keywords": [
+                "sdk",
+                "yunpian"
+            ],
+            "time": "2017-12-28T08:09:44+00:00"
         }
     ],
     "packages-dev": [],
@@ -328,6 +566,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": []
 }

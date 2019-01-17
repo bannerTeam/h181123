@@ -15,7 +15,7 @@
 			<div class="hd"></div>
 			<div class="bd" style="margin-bottom:5rem;">
 				<h3>会员注册</h3>
-				<div class="form">
+				<div class="form "  id="form_username">
 					<div class="col weui-flex">
 						<i class="iconfont icon-xingmingyonghumingnicheng"></i>
 						<input class="weui-flex__item" id="user_name" placeholder="请输入用户名" type="text" />
@@ -28,7 +28,7 @@
 						<i class="iconfont icon-mima1"></i>
 						<input class="weui-flex__item" id="user_pwd2" placeholder="请再次输入密码" type="password" />
 					</div>
-					<div class="col weui-flex">
+					<div class="col weui-flex" id="col_verify">
 						<i class="iconfont icon-yanzhengma" style="line-height: 2rem;"></i>
 						<input class="weui-flex__item" id="verify" placeholder="请输入验证码" type="text" />
 						<img style="background: transparent;width: 8rem;" class="user_reg_but" id="verify_img" src="/verify/index.html" onclick="this.src=this.src+'?'" alt="单击刷新">
@@ -39,45 +39,173 @@
 						</button>
 					</div>
 				</div>
+				
+				<div class="form hide" id="form_phone">
+					<div class="col weui-flex">
+						<i class="iconfont icon-shoujihao"></i>
+						<input class="weui-flex__item" id="user_phone" placeholder="请输入手机号" type="text" />
+					</div>					
+					<div class="col weui-flex">
+						<i class="iconfont icon-yanzhengma" style="line-height: 2rem;"></i>
+						<input class="weui-flex__item" id="verify_phone" placeholder="请输入验证码" type="text" />
+						<span class="phone_code">
+							<a href="javascript:;" id="btn_phone_code">获取验证码</a>							
+						</span>
+					</div>
+					<div class="submit">
+						<button id="btn_submit_phone">
+							提交注册
+						</button>
+					</div>
+				</div>
 			</div>
 			<div class="ft">
 				<a href="/user/login">已有账号？立即登录</a>
 			</div>			
 		</div>
 		
-		
-
 		<script type="text/javascript">
 			$(function() {
+
+				var sendPhone = "{$sendPhone}";
+
+				if(sendPhone == "1") {
+					$("#col_verify").hide();
+				}
+
 				$("body").bind('keyup', function(event) {
 					if(event.keyCode == 13) {
-						$('#btn_submit').click();
+						
+						if($("#form_phone").is(':visible')){
+							$('#btn_submit_phone').click();
+						}else{
+							$('#btn_submit').click();
+						}			
+						
 						return false;
 					}
 				});
+				
+
+				var param = {
+					user_name: "",
+					user_phone: "",
+					phone_code:"",
+					user_pwd: "",
+					token:""
+				};
+
+				var btn_phone_code = $("#btn_phone_code");
+				//获取验证码 btn
+				btn_phone_code.click(function() {
+					get_phone_code();
+				})
+
+				//发送验证码
+				function get_phone_code() {
+					param.user_phone = $.trim($("#user_phone").val());
+					if(!/^1\d{10}$/.test(param.user_phone)) {
+						tips('手机号格式错误');
+						param.user_phone = "";
+						return false;
+					}
+					if(btn_phone_code.hasClass('disable')) {
+						return false;
+					}
+					btn_phone_code.addClass('disable');
+					countDown(60);
+					$.ajax({
+						url: "/ajax/get_phone_code",
+						type: "post",
+						dataType: "json",
+						data: param,
+						success: function(r) {							
+							if(r.code == 1) {
+
+							} else {
+								clearSetTimeout();
+								tips(r.msg);
+							}
+						}
+					});
+				}
+
+				/**
+				 * 倒计时
+				 */
+				var setTimeoutObj = null;
+				function countDown(s) {
+					if(s > 0 && s <= 60) {
+						btn_phone_code.text('(' + s + 's)');
+						setTimeoutObj = setTimeout(function() {
+							countDown(--s);
+						}, 1000);
+					} else {
+						btn_phone_code.removeClass('disable');
+						btn_phone_code.text('重新获取');
+					}
+				}
+				
+				function clearSetTimeout(){
+					setTimeoutObj && clearTimeout(setTimeoutObj);
+					btn_phone_code.removeClass('disable');
+					btn_phone_code.text('重新获取');
+				}
+
 				$('#btn_submit').click(function() {
 
-					if($('#user_name').val() == '') {
+					param.user_name = $.trim($('#user_name').val());
+					param.user_pwd = $.trim($('#user_pwd').val());
+					param.user_pwd2 = $.trim($('#user_pwd2').val());
+					param.verify = $.trim($('#verify').val());
+
+					if(param.user_name == '') {
 						tips('请输入用户名');
 						$("#user_name").focus();
 						return false;
 					}
-					if($('#user_pwd').val() == '') {
+					if(param.user_name.length < 6 || param.user_name.length > 20) {
+						tips('用户名长度6-20个字符');
+						$("#user_name").focus();
+						return false;
+					}
+					if(/^\d+$/.test(param.user_name)) {
+						tips('用户名不能纯数字');
+						$("#user_name").focus();
+						return false;
+					}
+
+					if(param.user_pwd == '') {
 						tips('请输入密码');
 						$("#user_pwd").focus();
 						return false;
 					}
-					if($('#user_pwd').val() != $('#user_pwd2').val()) {
+					if(param.user_pwd.length < 6 || param.user_pwd.length > 20) {
+						tips('密码长度6-20个字符');
+						$("#user_pwd").focus();
+						return false;
+					}
+					if(param.user_pwd != param.user_pwd2) {
 						tips('两次密码不一致');
 						$("#user_pwd2").focus();
 						return false;
 					}
 
-					if($('#verify').val() == '') {
-						tips('请输入验证码');
-						$("#verify").focus();
-						return false;
+					if(sendPhone == "1") {
+						check_username(param)
+					} else {
+						if($('#verify').val() == '') {
+							tips('请输入验证码');
+							$("#verify").focus();
+							return false;
+						}
+						reg_username(param);
 					}
+
+				});
+
+				//用户名直接注册
+				function reg_username(param) {
 					var index = layer.open({
 						type: 2
 					});
@@ -85,27 +213,19 @@
 						url: "/user/reg",
 						type: "post",
 						dataType: "json",
-						data: {
-							user_name: $.trim($('#user_name').val()),
-							user_pwd: $.trim($('#user_pwd').val()),
-							user_pwd2: $.trim($('#user_pwd2').val()),
-							verify: $.trim($('#verify').val()),
-							iverify: true
-						},
+						data: param,
 						success: function(r) {
 							layer.close(index);
 							if(r.code == 1) {
-
 								//信息框
 								layer.open({
 									content: '注册成功',
 									btn: '确定',
 									yes: function() {
 										var re = document.referrer;
-										if(re == ""){
+										if(re == "") {
 											location.href = "/";
-										}
-										else if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
+										} else if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
 											location.href = "/user/index.html";
 										} else {
 											location.href = re;
@@ -121,7 +241,88 @@
 						}
 					});
 
-				});
+				}
+
+				//验证 用户名 
+				function check_username(param) {
+					var index = layer.open({
+						type: 2
+					});
+					$.ajax({
+						url: "/ajax/check_user_name",
+						type: "post",
+						dataType: "json",
+						data: param,
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								param.token = r.token;
+								$("#form_username").addClass('hide');
+								$("#form_phone").removeClass('hide');
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+
+				}
+				
+				$("#btn_submit_phone").click(function(){
+					reg_username_phone();
+				})
+
+				//用户名  + 手机 注册 
+				function reg_username_phone(){
+					
+					if(param.user_phone == "") {
+						tips('请获取验证码');
+						return false;
+					}
+					
+					if(!/^1\d{10}$/.test(param.user_phone)) {
+						tips('手机号格式错误');
+						return false;
+					}					
+					param.phone_code = $.trim($('#verify_phone').val());
+					if(param.phone_code == '') {
+						tips('请输入验证码');
+						$("#verify_phone").focus();
+						return false;
+					}
+					
+					var index = layer.open({
+						type: 2
+					});
+					$.ajax({
+						url: "/user/reg",
+						type: "post",
+						dataType: "json",
+						data: param,
+						success: function(r) {
+							layer.close(index);
+							if(r.code == 1) {
+								//信息框
+								layer.open({
+									content: '注册成功',
+									btn: '确定',
+									yes: function() {
+										var re = document.referrer;
+										if(re == ""){
+											location.href = "/";										}
+										else if(re.indexOf('/reg') > 0 || re.indexOf('/login') > 0) {
+											location.href = "/user/index.html";
+										} else {
+											location.href = re;
+										}
+									}
+								});
+
+							} else {
+								tips(r.msg);
+							}
+						}
+					});
+				}
 
 				function tips(msg) {
 					layer.open({
@@ -132,6 +333,9 @@
 				}
 			});
 		</script>
+		
+
+		
 
 	</body>
 

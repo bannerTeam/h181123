@@ -5,6 +5,7 @@ body{ font-size: 1.6rem;font-family: Microsoft Yahei;}
 *:focus { outline: none; } 
 textarea { resize:none; }
 ul,li{list-style: none;}
+.hide{ display: none;}
 .clearfix:after,.clearfix:before{
 	content: "";
     display: block;
@@ -91,6 +92,13 @@ ul,li{list-style: none;}
 .form .col{margin-bottom:4rem}
 .form .col .iconfont{font-size:2rem;width:3rem;padding:.5rem 0}
 .form .col input{font-size:1.2rem;line-height:1.2rem;border:0 none;border-bottom:1px solid rgba(187,187,187,.2);padding:.5rem}
+
+.form .phone_code{width: 90px; text-align: right;}
+.form .phone_code a{border: 1px solid #2BAEB9; color: #2BAEB9;border-radius: 2px;
+    height: 35px;width: 80px;
+    line-height: 35px; display: inline-block;  font-size: 12px; text-align: center;}
+.form .phone_code a.disable{border: 1px solid #a9a9a9; color: #a9a9a9;background: #f6f6f6;}
+
 
 .signup .ft{font-size:1.4rem;width:100%;text-align:center;margin-bottom:1rem}
 .signup .ft a{color:#2BAEB9}

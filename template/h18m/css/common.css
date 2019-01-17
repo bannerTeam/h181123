@@ -15,7 +15,7 @@ blockquote,body,button,dd,div,dl,dt,form,h1,h2,h3,h4,h5,h6,input,li,ol,p,pre,td,
 html{
 	font-size: 20px;
 }
-
+.hide{ display: none;}
 .bs-bb
 {
 	box-sizing:border-box;
